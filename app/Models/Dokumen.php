@@ -10,6 +10,6 @@ class Dokumen extends Model
     use HasFactory;
     protected $table = 'dokumen';
     protected $fillable = [
-        'no_dok','no_batch','nama_perusahaan','tanggal_daftar','jenis_dokumen','status','update'
+        'no_dok','nama_perusahaan','jenis_dokumen','tanggal_dokumen'
     ];
 }

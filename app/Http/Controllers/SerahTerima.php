@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use App\Models\Dokumen;
 use App\Models\Perusahaan;
 // use App\Models\tmpDataBatch;
@@ -55,27 +56,16 @@ class SerahTerima extends Controller
             'no_dokumen' => 'required',
             'jenis_dokumen' => 'required',
             'tanggal' => 'required'
-            ]);
+        ]);
 
-            $dokumen = Dokumen::create([
-                // 'batch' => $request->batch,
-                // 'no_batch' => $request->nomor_batch,
-                // 'tahun' => $request->tahun,
-                'no_dok' => $request->no_dokumen,
-                'nama_perusahaan' => $request->nama_pt,
-                'jenis_dokumen' => $request->jenis_dokumen,
-                'tanggal_daftar' => $request->tanggal,
-            ]);
-
-            dd($dokumen);
-
-            if($dokumen){
-                //redirect dengan pesan sukses
-                return redirect()->route('SerahTerima.create')->with(['success' => 'Data Berhasil Dibuat !']);
-            }else{
-                //redirect dengan pesan error
-                return redirect()->route('SerahTerima.create')->with(['error' => 'Data Gagal Dibuat !']);
-            }
-
+        foreach ($request->nama_pt as $key =>$nama_pt) {
+            $data = new Dokumen();
+            $data->nama_perusahaan = $nama_pt;
+            $data->no_dok = $request->no_dokumen[$key];
+            // $data->no_batch = $request->nomor_batch[$key];
+            $data->jenis_dokumen = $request->jenis_dokumen[$key];
+            $data->tanggal_dokumen = $request->tanggal[$key];
+            $data->save();
+        }
     }
 }

@@ -35,7 +35,7 @@
                   <th>Tanggal</th>
                 </tr>
                 <tbody id="kotak">
-                <?php $count = 3; ?>
+                <?php $count = 51; ?>
                 @for ($i = 1; $i < $count; $i++)
                 <tr id="rowForm">
                   <td><?= $i ?></td>
@@ -56,7 +56,7 @@
                       @endforeach
                     </select>
                   </td>
-                  <td><input type="text" class="form-control" placeholder="dd/mm/yyy" name="tanggal[]"></td>
+                  <td><input type="date" class="form-control" placeholder="mm/dd/yyy" name="tanggal[]"></td>
                 </tr>
                 @endfor
                 </tbody>
