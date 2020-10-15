@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Models\Perusahaan;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +23,8 @@ Route::resource('perusahaan', PerusahaanController::class);
 Route::post('/perusahaan.import', 'PerusahaanController@importExcel');
 // Route::post('/perusahaan/fetch', 'PerusahaanController@fetch')->name('Perusahaan.fetch');
 Route::post('/perusahaan/getPerusahaan/','PerusahaanController@getPerusahaan')->name('perusahaan.getPerusahaan');
+Route::get('/api/perusahaan', function () {
+});
 
 // Route SerahTerima
 Route::resource('serahTerima', SerahTerima::class);

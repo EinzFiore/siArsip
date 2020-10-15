@@ -41,24 +41,24 @@ class PerusahaanController extends Controller
     // }
 
     function getPerusahaan(Request $request){
-            $search = $request->search;
-            if($search == ''){
-                $perusahaan = Perusahaan::orderby('nama_perusahaan','asc')->select('id_perusahaan','nama_perusahaan')->limit(5)->get();
-            }else{
-                $perusahaan = Perusahaan::orderby('nama_perusahaan','asc')->select('id_perusahaan','nama_perusahaan')->where('nama_perusahaan', 'like', '%' .$search . '%')->limit(5)->get();
-            }
+        $search = $request->search;
 
-            $response = array();
-            foreach($perusahaan as $pt){
-                $response[] = array(
-                    "id"=>$pt->id,
-                    "text"=>$pt->name
-                );
-            }
-
-            echo json_encode($response);
-            exit;
+        if($search == ''){
+           $pt = Perusahaan::orderby('nama_perusahaan','asc')->select('nama_perusahaan')->limit(5)->get();
+        }else{
+           $pt = Perusahaan::orderby('nama_perusahaan','asc')->select('nama_perusahaan')->where('nama_perusahaan', 'like', '%' .$search . '%')->limit(5)->get();
         }
+  
+        $response = array();
+        foreach($pt as $p){
+           $response[] = array(
+                "text"=>$p->nama_perusahaan
+           );
+        }
+  
+        echo json_encode($response);
+        exit;
+    }
 
     function importExcel(Request $request){
         // validasi file

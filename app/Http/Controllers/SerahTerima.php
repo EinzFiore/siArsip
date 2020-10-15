@@ -48,21 +48,24 @@ class SerahTerima extends Controller
     // }
 
     function createProses(Request $request){
-        $this->validate($request, [
-            'batch' => 'required',
-            'nomor_batch' => 'required',
-            'tahun' => 'required',
-            'nama_pt' => 'required',
-            'no_dokumen' => 'required',
-            'jenis_dokumen' => 'required',
-            'tanggal' => 'required'
-        ]);
+        // $this->validate($request, [
+        //     'batch' => 'required',
+        //     'tahun_batch' => 'required',
+        //     'nama_pt' => 'required',
+        //     'no_dokumen' => 'required',
+        //     'jenis_dokumen' => 'required',
+        //     'tanggal' => 'required'
+        // ]);
 
         foreach ($request->nama_pt as $key =>$nama_pt) {
+            $batch = $request->batch;
+            $tahun_batch = $request->tahun_batch;
+            $data = count($request->nama_pt);
+            dd($data);
+
             $data = new Dokumen();
             $data->nama_perusahaan = $nama_pt;
             $data->no_dok = $request->no_dokumen[$key];
-            // $data->no_batch = $request->nomor_batch[$key];
             $data->jenis_dokumen = $request->jenis_dokumen[$key];
             $data->tanggal_dokumen = $request->tanggal[$key];
             $data->save();

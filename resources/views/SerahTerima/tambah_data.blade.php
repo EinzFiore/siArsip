@@ -15,15 +15,11 @@
               <div class="batch d-flex">
                 <div class="form-group mr-2">
                   <label>Batch</label>
-                  <input type="text" name="batch[]" value="{{ $tmpData['batch'] ?? "" }}">
-                </div>
-                <div class="form-group mr-2">
-                  <label>Nomor</label>
-                  <input type="text" name="nomor_batch[]" value="{{ $tmpData['no_batch'] ?? "" }}">
+                  <input type="text" name="batch[]">
                 </div>
                 <div class="form-group">
                   <label>Tahun</label>
-                  <input type="text" name="tahun[]" value="{{ $tmpData['tahun_batch'] ?? "" }}">
+                  <input type="text" name="tahun_batch[]">
                 </div>
               </div>
               <table class="table table-striped table-md">
@@ -33,32 +29,33 @@
                   <th>Nomor Dokumen</th>
                   <th>Jenis Dokumen</th>
                   <th>Tanggal</th>
+                  <th>Baris</th>
                 </tr>
                 <tbody id="kotak">
-                <?php $count = 51; ?>
-                @for ($i = 1; $i < $count; $i++)
-                <tr id="rowForm">
-                  <td><?= $i ?></td>
-                  <td>
-                    <select class="form-control select2" name="nama_pt[]">
-                      <option>Nama Perusahaan</option>
-                      @foreach ($perusahaan as $pt)
-                        <option value="{{$pt}}">{{$pt}}</option>
-                      @endforeach
-                    </select>
-                  </td>
-                  <td><input type="number" class="form-control" placeholder="Nomor Dokumen" name="no_dokumen[]"></td>
-                  <td>
-                    <select class="form-control" name="jenis_dokumen[]">
-                      <option>Jenis Dokumen</option>
-                      @foreach ($jenisDokumen as $jenisDok)
-                        <option value="{{$jenisDok}}">{{$jenisDok}}</option>
-                      @endforeach
-                    </select>
-                  </td>
-                  <td><input type="date" class="form-control" placeholder="mm/dd/yyy" name="tanggal[]"></td>
-                </tr>
-                @endfor
+                  <tr id="rowForm">
+                    <td>1</td>
+                    <td>
+                      <select class="form-control select2" name="nama_pt[]">
+                        <option>-- Nama Perusahaan --</option>
+                        @foreach ($perusahaan as $pt)
+                            <option value="<?= $pt ?>"><?= $pt ?></option>
+                        @endforeach
+                      </select>
+                    </td>
+                    <td><input type="number" class="form-control" placeholder="Nomor Dokumen" name="no_dokumen[]"></td>
+                    <td>
+                      <select class="form-control" name="jenis_dokumen[]">
+                        <option>Jenis Dokumen</option>
+                        @foreach ($jenisDokumen as $jenisDok)
+                          <option value="{{$jenisDok}}">{{$jenisDok}}</option>
+                        @endforeach
+                      </select>
+                    </td>
+                    <td><input type="date" class="form-control" placeholder="mm/dd/yyy" name="tanggal[]"></td>
+                    <td>
+                      <button class="btn btn-primary" id="add">Tambah</button>
+                    </td>
+                  </tr>
                 </tbody>
               </table>
               <div class="card-footer">

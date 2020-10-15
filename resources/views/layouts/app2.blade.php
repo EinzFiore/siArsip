@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>@yield('title')</title>
 
   <!-- General CSS Files -->
@@ -47,9 +48,56 @@
 
   <!-- General JS Scripts -->
   <script type="text/javascript">
-    $(document).ready(function() {
-        $('.select2').select2();
+    $(document).ready(function(){
+    $( ".select2" ).select2();
     });
+  </script>
+
+  <script>
+    const baris = 
+      `
+        <tr id="rowForm">
+          <td>1</td>
+          <td>
+            <select class="form-control select2" name="nama_pt[]">
+              <option>-- Nama Perusahaan --</option>
+              @foreach ($perusahaan as $pt)
+                <option value="<?= $pt ?>"><?= $pt ?></option>
+              @endforeach
+            </select>
+          </td>
+          <td><input type="number" class="form-control" placeholder="Nomor Dokumen" name="no_dokumen[]"></td>
+          <td>
+            <select class="form-control" name="jenis_dokumen[]">
+              <option>Jenis Dokumen</option>
+              @foreach ($jenisDokumen as $jenisDok)
+                <option value="{{$jenisDok}}">{{$jenisDok}}</option>
+              @endforeach
+            </select>
+          </td>
+          <td><input type="date" class="form-control" placeholder="mm/dd/yyy" name="tanggal[]"></td>
+          <td>
+            <button class="btn btn-danger" id="remove">Hapus</button>
+          </td>
+        </tr>
+      `;
+    $(document).ready(function(){
+      $('button#add').click(function(event){
+        var tambahkotak = $('#kotak');
+        event.preventDefault();
+        $(baris).appendTo(tambahkotak);
+        $(".select2").select2();
+      });
+
+      function attachSelect2(baris){
+        baris.find('input[name^="nama_pt[]"]').select2();
+      }
+      
+      $('button#remove').on('click',function(){	
+        $(this).parent('div').remove();	
+      });		
+    });
+
   </script>
   
   <script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.js"></script>
@@ -58,8 +106,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-  @yield('select2')
-
   <script>
     $(document).ready(function(){
       $('.data').DataTable();
