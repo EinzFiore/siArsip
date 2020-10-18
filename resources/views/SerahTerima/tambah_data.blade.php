@@ -15,11 +15,17 @@
               <div class="batch d-flex">
                 <div class="form-group mr-2">
                   <label>Batch</label>
-                  <input type="text" name="batch[]">
+                  <input type="text" id="batch" name="batch[]">
                 </div>
-                <div class="form-group">
+                <div class="form-group mr-2">
                   <label>Tahun</label>
-                  <input type="text" name="tahun_batch[]">
+                  <input type="text" id="tahun" name="tahun_batch[]">
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" onchange="batchFunction()" name="cek" id="cek">
+                  <label class="form-check-label" for="defaultCheck1">
+                    Gunakan Batch
+                  </label>
                 </div>
               </div>
               <table class="table table-striped table-md">
@@ -29,6 +35,8 @@
                   <th>Nomor Dokumen</th>
                   <th>Jenis Dokumen</th>
                   <th>Tanggal</th>
+                  <th>Batch</th>
+                  <th>Tahun</th>
                   <th>Baris</th>
                 </tr>
                 <tbody id="kotak">
@@ -52,8 +60,10 @@
                       </select>
                     </td>
                     <td><input type="date" class="form-control" placeholder="mm/dd/yyy" name="tanggal[]"></td>
+                    <td><input type="text" class="form-control newBatch" name="newBatch[]" required></td>
+                    <td><input type="text" class="form-control newYear" name="newYear[]" required></td>
                     <td>
-                      <button class="btn btn-primary" onclick="numberAdd()" id="add">Tambah</button>
+                      <button class="btn btn-primary" id="add">Tambah</button>
                     </td>
                   </tr>
                 </tbody>
@@ -99,6 +109,8 @@
           </select>
         </td>
         <td><input type="date" class="form-control" placeholder="mm/dd/yyy" name="tanggal[]"></td>
+        <td><input type="text" id="newBatch" class="form-control newBatch" name="newBatch[]" required></td>
+            <td><input type="text" id="newYear" class="form-control newYear" name="newYear[]" required></td>
         <td>
           <button class="btn btn-danger" id="remove">Hapus</button>
         </td>

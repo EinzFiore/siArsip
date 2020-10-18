@@ -95,5 +95,25 @@
         
     @endif
 </script>
+
+{{-- Check box --}}
+<script> 
+  function batchFunction() 
+  { 
+    if (document.getElementById('cek').checked) 
+    { 
+      for(let i = 0; i<100; i++){
+        document.getElementsByClassName('newBatch')[i].value=document.getElementById('batch').value; 
+        document.getElementsByClassName('newYear')[i].value=document.getElementById('tahun').value;
+      }
+    } 
+    else
+    { 
+      document.getElementById('newBatch').value=""; 
+      document.getElementById('newYear').value=""; 
+    } 
+  } 
+  </script> 
+
 </body>
 </html>
