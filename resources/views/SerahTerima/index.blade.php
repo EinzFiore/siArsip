@@ -10,17 +10,24 @@
         <thead>
           <tr>
             <th scope="col">#</th>
-            <th scope="col">Nomor Surat</th>
-            <th scope="col">Tanggal</th>
+            <th scope="col">Nama Perusahaan</th>
+            <th scope="col">Nomor Dokumen</th>
+            <th scope="col">Tanggal Dokumen</th>
+            <th scope="col">Jenis Dokumen</th>
+            <th scope="col">Status Dokumen</th>
             <th scope="col">Action</th>
           </tr>
         </thead>
         <tbody>
+          <?php $no = 1; ?>
           @forelse ($serahTerima as $sr)
           <tr>
-            <th scope="row">1</th>
-          <td>{{$sr->no_surat}}</td>
-          <td>{{$sr->tanggal}}</td>
+            <th scope="row"><?= $no++ ?></th>
+          <td>{{$sr->nama_perusahaan}}</td>
+          <td>{{$sr->no_dok}}</td>
+          <td>{{$sr->tanggal_dokumen}}</td>
+          <td>{{$sr->jenis_dokumen}}</td>
+          <td><span class="badge badge-success">{{$sr->status}}</span></td>
             <td>
               <button class="btn btn-warning">Edit</button>
               <button class="btn btn-danger">Hapus</button>
