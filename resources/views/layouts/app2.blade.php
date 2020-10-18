@@ -53,52 +53,7 @@
     });
   </script>
 
-  <script>
-    const baris = 
-      `
-        <tr id="rowForm">
-          <td>1</td>
-          <td>
-            <select class="form-control select2" name="nama_pt[]">
-              <option>-- Nama Perusahaan --</option>
-              @foreach ($perusahaan as $pt)
-                <option value="<?= $pt ?>"><?= $pt ?></option>
-              @endforeach
-            </select>
-          </td>
-          <td><input type="number" class="form-control" placeholder="Nomor Dokumen" name="no_dokumen[]"></td>
-          <td>
-            <select class="form-control" name="jenis_dokumen[]">
-              <option>Jenis Dokumen</option>
-              @foreach ($jenisDokumen as $jenisDok)
-                <option value="{{$jenisDok}}">{{$jenisDok}}</option>
-              @endforeach
-            </select>
-          </td>
-          <td><input type="date" class="form-control" placeholder="mm/dd/yyy" name="tanggal[]"></td>
-          <td>
-            <button class="btn btn-danger" id="remove">Hapus</button>
-          </td>
-        </tr>
-      `;
-    $(document).ready(function(){
-      $('button#add').click(function(event){
-        var tambahkotak = $('#kotak');
-        event.preventDefault();
-        $(baris).appendTo(tambahkotak);
-        $(".select2").select2();
-      });
-
-      function attachSelect2(baris){
-        baris.find('input[name^="nama_pt[]"]').select2();
-      }
-      
-      $('button#remove').on('click',function(){	
-        $(this).parent('div').remove();	
-      });		
-    });
-
-  </script>
+  @yield('form-input')
   
   <script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

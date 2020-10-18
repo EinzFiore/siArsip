@@ -24,7 +24,7 @@
               </div>
               <table class="table table-striped table-md">
                 <tr>
-                  <th>#</th>
+                  {{-- <th>#</th> --}}
                   <th>Nama Perusahaan</th>
                   <th>Nomor Dokumen</th>
                   <th>Jenis Dokumen</th>
@@ -33,7 +33,7 @@
                 </tr>
                 <tbody id="kotak">
                   <tr id="rowForm">
-                    <td>1</td>
+                    {{-- <td>1</td> --}}
                     <td>
                       <select class="form-control select2" name="nama_pt[]">
                         <option>-- Nama Perusahaan --</option>
@@ -53,7 +53,7 @@
                     </td>
                     <td><input type="date" class="form-control" placeholder="mm/dd/yyy" name="tanggal[]"></td>
                     <td>
-                      <button class="btn btn-primary" id="add">Tambah</button>
+                      <button class="btn btn-primary" onclick="numberAdd()" id="add">Tambah</button>
                     </td>
                   </tr>
                 </tbody>
@@ -68,59 +68,55 @@
     </div>
   </div>
 </div>
+@endsection
 
-{{-- <script>
-  baris = '';
-  function addBaris(){
-    return `
-    <tr id="newBaris">
-      <td>1</td>
-      <td>
-        <select class="form-control select2" id="select2" name="nama_pt[]">
-          <option>Nama Perusahaan</option>
-          @foreach ($perusahaan as $pt)
-            <option value="{{$pt}}">{{$pt}}</option>
-          @endforeach
-        </select>
-      </td>
-      <td><input type="number" class="form-control" name="no_dokumen[]"></td>
-      <td>
-        <select class="form-control" name="jenis_dokumen[]">
-          <option>Jenis Dokumen</option>
-          @foreach ($jenisDokumen as $jenisDok)
-            <option value="{{$jenisDok}}">{{$jenisDok}}</option>
-          @endforeach
-        </select>
-      </td>
-      <td><input type="text" class="form-control" placeholder="dd/mm/yyy" name="tanggal[]"></td>
-      <td><button class="btn btn-danger" id="remove">Hapus</button></td>
-    </tr>
+@section('form-input')
+<script>
+  // i = 1;
+  // function numberAdd(){
+  //   i++;       
+  //   document.querySelectorAll('#number').innerHTML=i;
+  // };
+
+  const baris = 
+    `
+      <tr id="rowForm">
+        <td>
+          <select class="form-control select2" name="nama_pt[]">
+            <option>-- Nama Perusahaan --</option>
+            @foreach ($perusahaan as $pt)
+              <option value="<?= $pt ?>"><?= $pt ?></option>
+            @endforeach
+          </select>
+        </td>
+        <td><input type="number" class="form-control" placeholder="Nomor Dokumen" name="no_dokumen[]"></td>
+        <td>
+          <select class="form-control" name="jenis_dokumen[]">
+            <option>Jenis Dokumen</option>
+            @foreach ($jenisDokumen as $jenisDok)
+              <option value="{{$jenisDok}}">{{$jenisDok}}</option>
+            @endforeach
+          </select>
+        </td>
+        <td><input type="date" class="form-control" placeholder="mm/dd/yyy" name="tanggal[]"></td>
+        <td>
+          <button class="btn btn-danger" id="remove">Hapus</button>
+        </td>
+      </tr>
     `;
-  }
 
-  baris += addBaris();
   $(document).ready(function(){
-    function startRefresh() {
-        $.get('', function(data) {
-            $(document.body).html(data);    
-        });
-    }
-
-    // tambah baris
     $('button#add').click(function(event){
       var tambahkotak = $('#kotak');
-      event.preventDefault();	
+      event.preventDefault();
       $(baris).appendTo(tambahkotak);
-      // setTimeout(startRefresh,1000);		
+      $(".select2").select2();
     });
-    
-    // hapus baris
-    $('body').on('click','button#remove',function(){	
-      $(this).parent('tr').remove();	
-    });		
+
+    $('body').on('click','#remove',function(){
+		$(this).parents('tr#rowForm').remove();	
+	});		  
   });
 
-  // reload page
-
-</script> --}}
+</script>
 @endsection
