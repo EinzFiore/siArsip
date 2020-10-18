@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use App\Models\Batch;
+use App\Models\Dokumen;
 use Illuminate\Http\Request;
 
 class BatchController extends Controller
@@ -15,29 +17,25 @@ class BatchController extends Controller
     function tambahBatch(Request $request){
         $this->validate($request, [
             'batch'    => 'required',
-            'no_batch' => 'required',
             'tahun_batch' => 'required'
-            ]);
-
-        // $data = [
-        //     'batch' => $request->batch,
-        //     'nomor' => $request->no_batch,
-        //     'tahun_batch' => $request->tahun_batch
-        // ];
-
-        // dd($data);
-        // die;
+        ]);
 
         $batch = Batch::create([
-            'batchDoc' => $request->batch,
-            'nomor' => $request->no_batch,
+            'batches' => $request->batch,
             'tahun_batch' => $request->tahun_batch
         ]);
 
         if($batch){
-            return redirect()->route('bc25.create')->with(['success' => 'Batch Berhasil Dibuat!']);
+            alert()->success('Batch telah berhasil ditambahkan !', 'Success!')->autoclose(3500);
+            return redirect()->route('batch');
         } else {
-            return redirect()->route('bc25.create')->with(['error' => 'Batch Gagal Dibuat!']);
+            alert()->error('Batch gagal ditambahkan !', 'Gagal!')->autoclose(3500);
+            return redirect()->route('batch');
         }
+    }
+
+    function edit($id){
+        $listDokumenBatch = DB::table('dokumen')->where('batch', $id)->get();
+        return view('batch/listDokumen', compact('listDokumenBatch'))->with('id', $id);
     }
 }

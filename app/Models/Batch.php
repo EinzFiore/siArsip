@@ -9,8 +9,9 @@ class Batch extends Model
 {
     use HasFactory;
     protected $table = "batch";
+    protected $primaryKey = "batch";
     // public $timestamps = false;
     protected $fillable = [
-        'nomor','tahun_batch','batchDoc'
+        'batches','tahun_batch',
     ];
 }

@@ -20,26 +20,6 @@ class PerusahaanController extends Controller
         return view('Perusahaan.index', compact('perusahaan'));
     }
 
-    // function fetch(Request $request)
-    // {
-    //  if($request->get('query'))
-    //  {
-    //   $query = $request->get('query');
-    //   $data = DB::table('perusahaan')
-    //     ->where('nama_perusahaan', 'LIKE', "%{$query}%")
-    //     ->get();
-    //   $output = '<ul class="dropdown-menu" style="display:block; position:relative">';
-    //   foreach($data as $row)
-    //   {
-    //    $output .= '
-    //    <li><a>'.$row->nama_perusahaan.'</a></li>
-    //    ';
-    //   }
-    //   $output .= '</ul>';
-    //   echo $output;
-    //  }
-    // }
-
     function getPerusahaan(Request $request){
         $search = $request->search;
 
