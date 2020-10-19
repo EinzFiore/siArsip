@@ -37,6 +37,10 @@ Route::resource('batch', BatchController::class);
 Route::get('/batch', 'BatchController@index')->name('batch');
 Route::post('batch.create', 'BatchController@tambahBatch')->name('tambahBatch');
 
+// Route JenisDokumen
+Route::resource('jenisDokumen', JDController::class);
+
+// Jetstream
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');

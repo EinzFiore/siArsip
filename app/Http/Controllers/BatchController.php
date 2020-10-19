@@ -10,7 +10,8 @@ use Illuminate\Http\Request;
 class BatchController extends Controller
 {
     function index(){
-        $batch = batch::latest()->paginate(10);
+        $batch = batch::latest()->get();
+        $batches = DB::table('Batch')->select('batches')->get();
         return view('batch/list_batch', compact('batch'));
     }
 

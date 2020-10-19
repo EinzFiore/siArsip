@@ -21,7 +21,7 @@
       </li>
       @endif
       <li class="menu-header">Jenis Dokumen</li>
-          <li><a class="nav-link" href="/jenis_dokumen"><i class="far fa-file-code"></i><span>Jenis Dokumen</span></a></li>
+          <li><a class="nav-link" href="/jenisDokumen"><i class="far fa-file-code"></i><span>Jenis Dokumen</span></a></li>
       </li>
       <li class="menu-header">Perusahaan</li>
           <li><a class="nav-link" href="/perusahaan"><i class="fas fa-folder-open"></i><span>List Perusahaan</span></a></li>
