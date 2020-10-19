@@ -6,10 +6,11 @@
       <h4>Data Batch</h4>
     </div>
     <div class="card-body">
-      <table class="table data table-borderless">
+      <table class="table data table-borderless" id="row">
         <thead>
           <tr>
             <th scope="col">#</th>
+            <th scope="col">Batch</th>
             <th scope="col">Nama Perusahaan</th>
             <th scope="col">Nomor Dokumen</th>
             <th scope="col">Tanggal Dokumen</th>
@@ -23,11 +24,12 @@
           @forelse ($serahTerima as $sr)
           <tr>
             <th scope="row"><?= $no++ ?></th>
-          <td>{{$sr->nama_perusahaan}}</td>
-          <td>{{$sr->no_dok}}</td>
-          <td>{{$sr->tanggal_dokumen}}</td>
-          <td>{{$sr->jenis_dokumen}}</td>
-          <td><span class="badge badge-success">{{$sr->status}}</span></td>
+            <td>{{$sr->batch}}</td>
+            <td>{{$sr->nama_perusahaan}}</td>
+            <td>{{$sr->no_dok}}</td>
+            <td>{{$sr->tanggal_dokumen}}</td>
+            <td>{{$sr->jenis_dokumen}}</td>
+            <td><span class="badge badge-success">{{$sr->status}}</span></td>
             <td>
               <button class="btn btn-warning">Edit</button>
               <button class="btn btn-danger">Hapus</button>

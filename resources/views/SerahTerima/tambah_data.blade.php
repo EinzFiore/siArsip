@@ -15,17 +15,20 @@
               <div class="batch d-flex">
                 <div class="form-group mr-2">
                   <label>Batch</label>
-                  <input type="text" id="batch" name="batch[]">
+                  <select class="select2" id="batch" name="batch">
+                    <option>-- Pilih Batch --</option>
+                    @foreach ($batch as $b)
+                        <option value="<?= $b ?>"><?= $b ?></option>
+                    @endforeach
+                  </select>
                 </div>
                 <div class="form-group mr-2">
                   <label>Tahun</label>
-                  <input type="text" id="tahun" name="tahun_batch[]">
+                  <input type="text" id="tahun" class="form-control" name="tahun_batch[]">
                 </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" onchange="batchFunction()" name="cek" id="cek">
-                  <label class="form-check-label" for="defaultCheck1">
-                    Gunakan Batch
-                  </label>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" onchange="batchFunction()" id="cek">
+                  <label class="form-check-label" for="inlineCheckbox1">Gunakan Batch</label>
                 </div>
               </div>
               <table class="table table-striped table-md">

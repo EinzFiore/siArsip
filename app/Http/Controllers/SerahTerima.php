@@ -6,6 +6,7 @@ use Alert;
 use DB;
 use App\Models\Dokumen;
 use App\Models\Perusahaan;
+use App\Models\Batch;
 // use App\Models\tmpDataBatch;
 use App\Models\JenisDokumen;
 use App\Models\serah_terima;
@@ -21,7 +22,8 @@ class SerahTerima extends Controller
     function create(){
         $perusahaan = Perusahaan::pluck('nama_perusahaan')->toArray();
         $jenisDokumen = JenisDokumen::pluck('jenis_dokumen')->toArray();
-        return view('SerahTerima/tambah_data', compact('perusahaan','jenisDokumen'));
+        $batch = Batch::pluck('batches')->toArray();
+        return view('SerahTerima/tambah_data', compact('perusahaan','jenisDokumen','batch'));
     }
 
     function createProses(Request $request){
