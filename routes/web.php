@@ -40,6 +40,9 @@ Route::post('batch.create', 'BatchController@tambahBatch')->name('tambahBatch');
 // Route JenisDokumen
 Route::resource('jenisDokumen', JDController::class);
 
+// Route Rak
+Route::resource('rak', RakController::class);
+
 // Jetstream
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');

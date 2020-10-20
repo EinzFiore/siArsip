@@ -97,7 +97,7 @@
   @endforeach
 
   @foreach ($jenisDokumen as $jd)
-  <!-- Modal Edit PT -->
+  <!-- Modal Hapus-->
   <div class="modal fade" id="deleteJD{{$jd->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">

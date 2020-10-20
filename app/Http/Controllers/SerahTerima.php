@@ -7,7 +7,6 @@ use DB;
 use App\Models\Dokumen;
 use App\Models\Perusahaan;
 use App\Models\Batch;
-// use App\Models\tmpDataBatch;
 use App\Models\JenisDokumen;
 use App\Models\serah_terima;
 use Illuminate\Http\Request;
