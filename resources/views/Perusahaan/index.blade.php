@@ -10,7 +10,7 @@
         <button class="btn btn-success" data-toggle="modal" data-target="#addPT">Import Excel</button>
         <button class="btn btn-primary" data-toggle="modal" data-target="#tambahData">Tambah Data</button>
       </div>
-      <table class="table table-borderless data">
+      <table class="table table-striped data">
         <thead>
           <tr>
             <th scope="col">#</th>

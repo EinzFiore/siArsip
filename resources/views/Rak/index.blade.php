@@ -7,7 +7,7 @@
     </div>
     <div class="card-body">
         <button class="btn btn-primary mb-2" data-toggle="modal" data-target="#tambahRak">Tambah Rak</button>
-      <table class="table data table-borderless" id="row">
+      <table class="table data table-striped" id="row">
         <thead>
           <tr>
             <th scope="col">#</th>
