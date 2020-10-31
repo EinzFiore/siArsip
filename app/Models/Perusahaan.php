@@ -9,7 +9,8 @@ class Perusahaan extends Model
 {
     use HasFactory;
     protected $table = "Perusahaan";
+    protected $primaryKey = 'id_perusahaan';
     protected $fillable = [
-        'no_pen','nama_perusahaan'
+        'no_pen', 'nama_perusahaan'
     ];
 }

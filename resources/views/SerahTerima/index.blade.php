@@ -1,9 +1,9 @@
 @extends('layouts/app2')
-@section('title','Data Serah Terima BC25')
+@section('title','Data Serah Terima')
 @section('content')
 <div class="card">
     <div class="card-header">
-      <h4>Data Batch</h4>
+      <h4>Data Serah Terima</h4>
     </div>
     <div class="card-body">
       <table class="table data table-borderless" id="row">
@@ -29,7 +29,14 @@
             <td>{{$sr->no_dok}}</td>
             <td>{{$sr->tanggal_dokumen}}</td>
             <td>{{$sr->jenis_dokumen}}</td>
-            <td><span class="badge badge-success">{{$sr->status}}</span></td>
+            <td>
+              @php
+                  if($sr->status == 0){
+                    echo "<span class='badge badge-danger'>Belum dikonfirmasi</span>";
+                  } else echo "<span class='badge badge-success'>Terkonfirmasi</span>";
+              @endphp
+            </td>
+            
             <td>
               <button class="btn btn-warning">Edit</button>
               <button class="btn btn-danger">Hapus</button>

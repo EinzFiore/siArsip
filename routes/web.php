@@ -20,11 +20,9 @@ Route::get('/', function () {
 
 // Route perusahaan
 Route::resource('perusahaan', PerusahaanController::class);
-Route::post('/perusahaan.import', 'PerusahaanController@importExcel');
+Route::post('/perusahaan.import', 'PerusahaanController@importExcel')->name('importPT');
 // Route::post('/perusahaan/fetch', 'PerusahaanController@fetch')->name('Perusahaan.fetch');
-Route::post('/perusahaan/getPerusahaan/','PerusahaanController@getPerusahaan')->name('perusahaan.getPerusahaan');
-Route::get('/api/perusahaan', function () {
-});
+Route::post('/perusahaan/getPerusahaan/', 'PerusahaanController@getPerusahaan')->name('perusahaan.getPerusahaan');
 
 // Route SerahTerima
 Route::resource('serahTerima', SerahTerima::class);
@@ -42,6 +40,10 @@ Route::resource('jenisDokumen', JDController::class);
 
 // Route Rak
 Route::resource('rak', RakController::class);
+
+// Routr DataArsip
+Route::resource('dataArsip', DataArsipController::class);
+Route::post('/dataArsip/getDokumen', 'DataArsipController@getDataSerahTerimaByID')->name('getDokumen');
 
 // Jetstream
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {

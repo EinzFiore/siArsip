@@ -23,10 +23,10 @@
       @if (auth()->user()->role == 0)
       <li class="menu-header">Arsip</li>
         <li class="nav-item dropdown">
-          <a href="#" class="nav-link has-dropdown"><i class="fas fa-file-import"></i><span>Data  Arsip</span></a>
+          <a href="#" class="nav-link has-dropdown"><i class="fas fa-file-import"></i><span>Data Arsip</span></a>
           <ul class="dropdown-menu">
-            <li><a class="nav-link" href="/serahTerima">List Data</a></li>
-            <li><a class="nav-link" href="/serahTerima/create">Tambah Data Arsip</a></li>
+            <li><a class="nav-link" href="/dataArsip">List Data</a></li>
+            <li><a class="nav-link" href="/dataArsip/create">Tambah Data Arsip</a></li>
           </ul>
         </li>
       </li>

@@ -2,21 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use Alert;
 use Illuminate\Http\Request;
 use App\Models\Rak;
+use App\Models\Dokumen;
+use DB;
 
-class RakController extends Controller
+class DataArsipController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        $rak =  Rak::get()->all();
-        return view('Rak/index', compact('rak'));
+        return view('Arsip/index');
     }
 
     /**
@@ -26,7 +21,9 @@ class RakController extends Controller
      */
     public function create()
     {
-        //
+        $dataRak = Rak::get();
+        $dokumen = Dokumen::get()->all();
+        return view('Arsip/create', compact('dataRak', 'dokumen'));
     }
 
     /**
@@ -37,15 +34,10 @@ class RakController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'noRak' => 'required',
-        ]);
-
-        Rak::create([
-            'noRak' => $request->noRak,
-        ]);
-        alert()->success('Success!', 'Data Berhasil Ditambahkan!')->autoclose(3500);
-        return redirect('rak');
+        $data = [
+            'namaPT' => $request->selected,
+        ];
+        dd($request);
     }
 
     /**
@@ -79,20 +71,7 @@ class RakController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            'noRak' => 'required',
-        ]);
-        $rak = Rak::findOrFail($id);
-        $rak->update([
-            'noRak' => $request->noRak,
-        ]);
-        if ($rak) {
-            alert()->success('Success!', 'Data Berhasil Diubah!')->autoclose(3500);
-            return redirect('rak');
-        } else {
-            alert()->failed('Gagal!', 'Data Gagal Diubah!')->autoclose(3500);
-            return redirect('rak');
-        }
+        //
     }
 
     /**
@@ -103,11 +82,28 @@ class RakController extends Controller
      */
     public function destroy($id)
     {
-        $rak = Rak::findOrFail($id);
-        $rak->delete();
-        if ($rak) {
-            alert()->success('Success!', 'Data Berhasil Dihapus!')->autoclose(3500);
-            return redirect('rak');
+        //
+    }
+
+    function getDataSerahTerimaByID(Request $request)
+    {
+        $search = $request->cari;
+        $dataSerahTerima = DB::table('dokumen')->select('no_dok', 'nama_perusahaan', 'jenis_dokumen', 'tanggal_dokumen');
+        dd($dataSerahTerima);
+        $search = !empty($request->cari) ? ($request->cari) : ('');
+        if ($search) {
+            $dataSerahTerima->where('no_dok', 'like', '%' . $search . '%');
         }
+        $data = $dataSerahTerima->get();
+        $response = array();
+        foreach ($data as $serahTerima) {
+            $response[] = array(
+                "noDok" => $serahTerima->no_dok,
+                "namaPT" => $serahTerima->nama_perusahaan,
+                "jenisDok" => $serahTerima->jenis_dokumen,
+                "tanggalDok" => $serahTerima->tanggal_dokumen,
+            );
+        }
+        return response()->json($response);
     }
 }

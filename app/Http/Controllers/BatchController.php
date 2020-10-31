@@ -9,13 +9,15 @@ use Illuminate\Http\Request;
 
 class BatchController extends Controller
 {
-    function index(){
+    function index()
+    {
         $batch = batch::latest()->get();
         $batches = DB::table('Batch')->select('batches')->get();
         return view('batch/list_batch', compact('batch'));
     }
 
-    function tambahBatch(Request $request){
+    function tambahBatch(Request $request)
+    {
         $this->validate($request, [
             'batch'    => 'required',
             'tahun_batch' => 'required'
@@ -26,7 +28,7 @@ class BatchController extends Controller
             'tahun_batch' => $request->tahun_batch
         ]);
 
-        if($batch){
+        if ($batch) {
             alert()->success('Batch telah berhasil ditambahkan !', 'Success!')->autoclose(3500);
             return redirect()->route('batch');
         } else {
@@ -35,7 +37,8 @@ class BatchController extends Controller
         }
     }
 
-    function edit($id){
+    function edit($id)
+    {
         $listDokumenBatch = DB::table('dokumen')->where('batch', $id)->get();
         return view('batch/listDokumen', compact('listDokumenBatch'))->with('id', $id);
     }

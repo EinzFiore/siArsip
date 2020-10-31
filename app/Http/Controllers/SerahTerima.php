@@ -3,29 +3,30 @@
 namespace App\Http\Controllers;
 
 use Alert;
-use DB;
 use App\Models\Dokumen;
 use App\Models\Perusahaan;
 use App\Models\Batch;
 use App\Models\JenisDokumen;
-use App\Models\serah_terima;
 use Illuminate\Http\Request;
 
 class SerahTerima extends Controller
 {
-    function index(){
+    function index()
+    {
         $serahTerima = Dokumen::latest()->paginate(10);
         return view('SerahTerima/index', compact('serahTerima'));
     }
 
-    function create(){
+    function create()
+    {
         $perusahaan = Perusahaan::pluck('nama_perusahaan')->toArray();
         $jenisDokumen = JenisDokumen::pluck('jenis_dokumen')->toArray();
         $batch = Batch::pluck('batches')->toArray();
-        return view('SerahTerima/tambah_data', compact('perusahaan','jenisDokumen','batch'));
+        return view('SerahTerima/tambah_data', compact('perusahaan', 'jenisDokumen', 'batch'));
     }
 
-    function createProses(Request $request){
+    function createProses(Request $request)
+    {
         $this->validate($request, [
             'batch' => 'required',
             'tahun_batch' => 'required',
@@ -34,7 +35,7 @@ class SerahTerima extends Controller
             'jenis_dokumen' => 'required',
             'tanggal' => 'required'
         ]);
-        foreach ($request->nama_pt as $key =>$nama_pt) {
+        foreach ($request->nama_pt as $key => $nama_pt) {
             $data = new Dokumen();
             $data->nama_perusahaan = $nama_pt;
             $data->no_dok = $request->no_dokumen[$key];
