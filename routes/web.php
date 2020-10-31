@@ -26,9 +26,6 @@ Route::post('/perusahaan/getPerusahaan/', 'PerusahaanController@getPerusahaan')-
 
 // Route SerahTerima
 Route::resource('serahTerima', SerahTerima::class);
-Route::get('/serahTerima', 'SerahTerima@index');
-Route::post('/serahTerima.createProses', 'SerahTerima@createProses')->name('serahTerimaProses');
-Route::post('/serahTerima/tmpData', 'SerahTerima@tmpData')->name('tmpData');
 
 // Route Batch
 Route::resource('batch', BatchController::class);

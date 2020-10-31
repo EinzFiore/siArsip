@@ -25,7 +25,7 @@ class SerahTerima extends Controller
         return view('SerahTerima/tambah_data', compact('perusahaan', 'jenisDokumen', 'batch'));
     }
 
-    function createProses(Request $request)
+    function store(Request $request)
     {
         $this->validate($request, [
             'batch' => 'required',

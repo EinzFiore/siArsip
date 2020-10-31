@@ -10,7 +10,7 @@
         </div>
         <div class="card-body p-0">
           <div class="table-responsive field-wrapper">
-            <form action="{{ route('serahTerimaProses') }}" method="post">
+            <form action="{{ route('serahTerima.store') }}" method="post">
               @csrf
               <div class="batch d-flex">
                 <div class="form-group mr-2">
