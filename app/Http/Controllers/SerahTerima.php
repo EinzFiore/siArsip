@@ -14,7 +14,7 @@ class SerahTerima extends Controller
     function index()
     {
         $serahTerima = Dokumen::latest()->paginate(10);
-        return view('SerahTerima/index', compact('serahTerima'));
+        return view('SerahTerima/index', ['serahTerima' => $serahTerima]);
     }
 
     function create()
@@ -48,4 +48,28 @@ class SerahTerima extends Controller
         alert()->success('Success!', 'Data Berhasil Ditambahkan!')->autoclose(3500);
         return redirect('serahTerima');
     }
+
+    // function update(Request $request, $id)
+    // {
+    //     $this->validate($request, [
+    //         'batch' => 'required',
+    //         'namaPT' => 'required',
+    //         'noDok' => 'required',
+    //         'tanggalDok' => 'required',
+    //         'jenisDok' => 'required',
+    //     ]);
+
+    //     $serahTerima = Dokumen::findOrFail($id);
+    //     $serahTerima->update([
+    //         'batch' => $request->batch,
+    //         'nama_perusahaan' => $request->namaPT,
+    //         'nomor_dok' => $request->noDok,
+    //         'tanggal_dokumen' => $request->tanggalDok,
+    //         'jenis_dokumen' => $request->jenisDok,
+    //     ]);
+    //     if ($serahTerima) {
+    //         alert()->success('Success!', 'Data Berhasil Diubah!')->autoclose(3500);
+    //         return redirect('serahTerima');
+    //     }
+    // }
 }

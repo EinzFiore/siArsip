@@ -53,7 +53,7 @@
                         @endforeach
                       </select>
                     </td>
-                    <td><input type="number" class="form-control" placeholder="Nomor Dokumen" name="no_dokumen[]"></td>
+                    <td><input type="text" class="form-control" placeholder="Nomor Dokumen" name="no_dokumen[]"></td>
                     <td>
                       <select class="form-control" name="jenis_dokumen[]">
                         <option>Jenis Dokumen</option>
