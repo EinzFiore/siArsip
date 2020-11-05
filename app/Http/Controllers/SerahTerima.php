@@ -49,27 +49,37 @@ class SerahTerima extends Controller
         return redirect('serahTerima');
     }
 
-    // function update(Request $request, $id)
-    // {
-    //     $this->validate($request, [
-    //         'batch' => 'required',
-    //         'namaPT' => 'required',
-    //         'noDok' => 'required',
-    //         'tanggalDok' => 'required',
-    //         'jenisDok' => 'required',
-    //     ]);
+    function update(Request $request, $id)
+    {
+        $this->validate($request, [
+            'batch' => 'required',
+            'namaPT' => 'required',
+            'noDok' => 'required',
+            'tanggalDok' => 'required',
+            'jenisDok' => 'required',
+        ]);
 
-    //     $serahTerima = Dokumen::findOrFail($id);
-    //     $serahTerima->update([
-    //         'batch' => $request->batch,
-    //         'nama_perusahaan' => $request->namaPT,
-    //         'nomor_dok' => $request->noDok,
-    //         'tanggal_dokumen' => $request->tanggalDok,
-    //         'jenis_dokumen' => $request->jenisDok,
-    //     ]);
-    //     if ($serahTerima) {
-    //         alert()->success('Success!', 'Data Berhasil Diubah!')->autoclose(3500);
-    //         return redirect('serahTerima');
-    //     }
-    // }
+        $serahTerima = Dokumen::findOrFail($id);
+        $serahTerima->update([
+            'batch' => $request->batch,
+            'nama_perusahaan' => $request->namaPT,
+            'nomor_dok' => $request->noDok,
+            'tanggal_dokumen' => $request->tanggalDok,
+            'jenis_dokumen' => $request->jenisDok,
+        ]);
+        if ($serahTerima) {
+            alert()->success('Success!', 'Data Berhasil Diubah!')->autoclose(3500);
+            return redirect('serahTerima');
+        }
+    }
+
+    function destroy($id)
+    {
+        $serahTerima = Dokumen::findOrFail($id);
+        $serahTerima->delete();
+        if ($serahTerima) {
+            alert()->success('Success!', 'Data Berhasil Dihapus!')->autoclose(3500);
+            return redirect('serahTerima');
+        }
+    }
 }

@@ -31,6 +31,8 @@ Route::resource('serahTerima', SerahTerima::class);
 Route::resource('batch', BatchController::class);
 Route::get('/batch', 'BatchController@index')->name('batch');
 Route::post('batch.create', 'BatchController@tambahBatch')->name('tambahBatch');
+Route::get('batch/{batch}/export', 'BatchController@exportBatch')->name('batchExport');
+Route::get('/batch/export_excel', 'BatchController@export_excel');
 
 // Route JenisDokumen
 Route::resource('jenisDokumen', JDController::class);
@@ -46,3 +48,7 @@ Route::post('/dataArsip/getDokumen', 'DataArsipController@getDataSerahTerimaByID
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
+
+Route::get('/tes', function () {
+    return view('Batch/export/batch');
+});

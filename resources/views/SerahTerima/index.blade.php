@@ -22,9 +22,6 @@
         <tbody>
           <?php $no = 1; ?>
           @forelse ($serahTerima as $sr)
-          @php
-              dd($sr['no_dok'])
-          @endphp
           <tr>
             <th scope="row"><?= $no++ ?></th>
             <td>{{$sr->batch}}</td>
@@ -41,7 +38,7 @@
             </td>
             <td>
               <button class="btn btn-warning" data-toggle="modal" data-target="#editSR{{$sr->no_dok}}">Edit</button>
-              <button class="btn btn-danger">Hapus</button>
+              <button class="btn btn-danger" data-toggle="modal" data-target="#hapusSR{{$sr->no_dok}}">Hapus</button>
             </td>
           </tr>
           @empty
@@ -95,6 +92,35 @@
               <button type="submit" class="btn btn-primary">Edit Data</button>
             </div>
         </form>
+    </div>
+  </div>
+</div>
+@endforeach
+
+@foreach ($serahTerima as $sr)
+<div class="modal fade" id="hapusSR{{$sr->no_dok}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Hapus Dokumen {{$sr->no_dok}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="{{route('serahTerima.destroy', $sr->no_dok)}}" method="POST" enctype="multipart/form-data">
+          @csrf
+          @method('DELETE')
+        <div class="modal-body">
+            <div class="form-group" align="center">
+              <h2>Yakin ingin menghapus dokumen ini ?</h2>
+              <img src="{{url('/img/delete.png')}}" width="50%">
+            </div>
+          </div>
+          <div class="modal-footer" align="center">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+            <button type="submit" class="btn btn-danger">Hapus Data</button>
+          </div>
+      </form>
     </div>
   </div>
 </div>

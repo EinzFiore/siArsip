@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use DB;
 use App\Models\Batch;
 use App\Models\Dokumen;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\BatchExport;
 use Illuminate\Http\Request;
 
 class BatchController extends Controller
@@ -41,5 +43,21 @@ class BatchController extends Controller
     {
         $listDokumenBatch = DB::table('dokumen')->where('batch', $id)->get();
         return view('batch/listDokumen', compact('listDokumenBatch'))->with('id', $id);
+    }
+
+    function exportBatch(Request $request, $id)
+    {
+        $data = [
+            'namaSeksiPKC' => $request->seksiPKC,
+            'nip' => $request->nip,
+            'tahunPeriode' => $request->tahunPeriode,
+        ];
+        $listDokumenBatch = DB::table('dokumen')->where('batch', $id)->get();
+        return view('batch/export/batch', compact('listDokumenBatch', 'data'))->with('id', $id);
+    }
+
+    public function export_excel()
+    {
+        return Excel::download(new BatchExport, 'batch.xlsx');
     }
 }

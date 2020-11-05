@@ -13,7 +13,7 @@
           <th scope="col">#</th>
           <th scope="col">Batch</th>
           <th scope="col">Tahun</th>
-          <th scope="col">Total Dokumen</th>
+          {{-- <th scope="col">Total Dokumen</th> --}}
           <th scope="col">Action</th>
         </tr>
       </thead>
@@ -24,7 +24,7 @@
           <th scope="row"><?= $no++ ?></th>
         <td>{{$b->batches}}</td>
         <td>{{$b->tahun_batch}}</td>
-        <td>{{$b->tahun_batch}}</td>
+        {{-- <td>{{$b->tahun_batch}}</td> --}}
           <td>
             <a class="btn btn-primary" href="{{ route('batch.edit', $b->batches) }}"><i class="fas fa-eye mr-2" width="30"></i>Lihat Dokumen</a>
           </td>
