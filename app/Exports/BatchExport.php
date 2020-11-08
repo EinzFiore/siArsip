@@ -2,16 +2,17 @@
 
 namespace App\Exports;
 
-use App\Models\Dokumen;
-use Maatwebsite\Excel\Concerns\FromCollection;
+use App\Invoice;
+use Illuminate\Contracts\View\View;
+use Maatwebsite\Excel\Concerns\FromView;
+use App\Models\Batch;
 
-class BatchExport implements FromCollection
+class BatchExport implements FromView
 {
-    /**
-     * @return \Illuminate\Support\Collection
-     */
-    public function collection()
+    public function view(): View
     {
-        return Dokumen::all();
+        return view('batch.export.batch', [
+            'batch' => Batch::all()
+        ]);
     }
 }

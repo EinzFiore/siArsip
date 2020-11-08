@@ -54,10 +54,12 @@ class BatchController extends Controller
         ];
         $listDokumenBatch = DB::table('dokumen')->where('batch', $id)->get();
         return view('batch/export/batch', compact('listDokumenBatch', 'data'))->with('id', $id);
+        return redirect('BatchController.export_excel');
     }
 
     public function export_excel()
     {
-        return Excel::download(new BatchExport, 'batch.xlsx');
+        $namaFile = 'batch_' . date('Y-m-d_H-i-s') . '.xlsx';
+        return Excel::download(new BatchExport, $namaFile);
     }
 }

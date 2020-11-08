@@ -53,6 +53,7 @@
       </div>
       <div class="modal-body">
         <form action="{{ route('batchExport', $id) }}" method="GET">
+          @csrf
           <div class="form-group">
             <label for="exampleInputEmail1">Nama Seksi PKC</label>
             <input type="text" class="form-control" name="seksiPKC">

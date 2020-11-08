@@ -42,7 +42,7 @@ Route::resource('rak', RakController::class);
 
 // Routr DataArsip
 Route::resource('dataArsip', DataArsipController::class);
-Route::post('/dataArsip/getDokumen', 'DataArsipController@getDataSerahTerimaByID')->name('getDokumen');
+Route::post('/dataArsip/getDokumen', 'DataArsipController@getDataSerahTerima')->name('arsip');
 
 // Jetstream
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {

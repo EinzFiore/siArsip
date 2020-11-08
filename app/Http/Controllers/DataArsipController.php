@@ -85,23 +85,29 @@ class DataArsipController extends Controller
         //
     }
 
-    function getDataSerahTerimaByID(Request $request)
+    public function getDataSerahTerima(Request $request)
     {
         $search = $request->cari;
-        $dataSerahTerima = DB::table('dokumen')->select('no_dok', 'nama_perusahaan', 'jenis_dokumen', 'tanggal_dokumen');
-        dd($dataSerahTerima);
+
+        $dataSerahTerima = DB::table('dokumen')
+            ->select('no_dok', 'nama_perusahaan', 'jenis_dokumen', 'tanggal_dokumen')
+            ->limit(5);
+
         $search = !empty($request->cari) ? ($request->cari) : ('');
+
         if ($search) {
             $dataSerahTerima->where('no_dok', 'like', '%' . $search . '%');
         }
-        $data = $dataSerahTerima->get();
+
+        $data = $dataSerahTerima->limit(5)->get();
+
         $response = array();
-        foreach ($data as $serahTerima) {
+        foreach ($data as $arsip) {
             $response[] = array(
-                "noDok" => $serahTerima->no_dok,
-                "namaPT" => $serahTerima->nama_perusahaan,
-                "jenisDok" => $serahTerima->jenis_dokumen,
-                "tanggalDok" => $serahTerima->tanggal_dokumen,
+                "value" => $arsip->no_dok,
+                "perusahaan" => $arsip->nama_perusahaan,
+                "jenisDok" => $arsip->jenis_dokumen,
+                "tanggalDok" => $arsip->tanggal_dokumen
             );
         }
         return response()->json($response);

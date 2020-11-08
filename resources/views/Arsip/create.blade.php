@@ -34,29 +34,27 @@
               <table class="table table-striped table-md" id="data">
                 <thead>
                     <tr>
-                      <th></th>
-                      <th>Batch</th>
+                      <th>No.</th>
                       <th>Nomor Dokumen</th>
                       <th>Nama Perusahaan</th>
                       <th>Jenis Dokumen</th>
                       <th>Tanggal Dokumen</th>
-                      {{-- <th>Rak</th>
-                      <th>Box</th> --}}
+                      <th>Action</th>
                     </tr>
                 </thead>
-                <tbody>
-                    @foreach ($dokumen as $dok)
-                    <tr id="rowForm">
-                        <td></td>
-                        <td><?= $dok->batch ?></td>
-                        <td><input type="number" name="noDok[]" value="<?= $dok->no_dok ?>" class="form-control" readonly></td>
-                        <td><input type="text" name="namaPT[]" value="<?= $dok->nama_perusahaan ?>" class="form-control" readonly></td>
-                        <td><input type="text" name="jenisDok[]" value="<?= $dok->jenis_dokumen ?>" class="form-control" readonly></td>
-                        <td><input type="date" name="tanggalDok[]" value="<?= $dok->tanggal_dokumen ?>" class="form-control" readonly></td>
-                        {{-- <td><input type="text" name="rak[]" id="" class="form-control"></td>
-                        <td><input type="text" name="box[]" id="" class="form-control"></td> --}}
-                    </tr>
-                    @endforeach
+                <tbody id="kotak">
+                  <tr id="rowForm">
+                      <td>1</td>
+                      <td><input type="number" name="noDok[]" class="form-control noDok" value="" id="noDok"></td>
+                      <td><input type="text" name="namaPT[]"  class="form-control namaPT" readonly></td>
+                      <td><input type="text" name="jenisDok[]" class="form-control jenisDok" readonly></td>
+                      <td><input type="date" name="tanggalDok[]" class="form-control tanggalDok" readonly></td>
+                      <td>
+                        <button class="btn btn-primary" id="add">Tambah</button>
+                      </td>
+                      <input type="hidden" name="rak[]" id="" class="form-control">
+                      <input type="hidden" name="box[]" id="" class="form-control">
+                  </tr>
                 </tbody>
               </table>
               <div class="card-footer">
@@ -69,20 +67,112 @@
     </div>  
   </div>
 </div>
+@endsection
+@section('form-input')
 <script>
-    $(document).ready(function(){
-      $('#data').DataTable({
-        columnDefs: [ {
-            orderable: false,
-            className: 'select-checkbox',
-            targets:   0
-        } ],
-        select: {
-            style:    'os',
-            selector: 'td:first-child'
-        },
-        order: [[ 1, 'asc' ]]
-      });
+  // i = 1;
+  // function numberAdd(){
+  //   i++;       
+  //   document.querySelectorAll('#number').innerHTML=i;
+  // };
+
+  // const baris = 
+  //   `
+  //   <tr id="newRow">
+  //     <td></td>
+  //     <td><input type="number" name="noDok[]" class="form-control noDok" value="" id="noDok"></td>
+  //     <td><input type="text" name="namaPT[]"  class="form-control namaPT" id="namaPT" readonly></td>
+  //     <td><input type="text" name="jenisDok[]" class="form-control jenisDok" id="jenisDok" readonly></td>
+  //     <td><input type="date" name="tanggalDok[]" class="form-control tanggalDok" id="tanggalDok" readonly></td>
+  //     <td>
+  //       <button class="btn btn-danger" id="remove">Hapus</button>
+  //     </td>
+  //     <input type="hidden" name="rak[]" id="" class="form-control">
+  //     <input type="hidden" name="box[]" id="" class="form-control">
+  //   </tr>
+  //   `;
+  $(document).ready(function(){
+    var count = 1;
+    $('button#add').click(function(event){
+      count++
+      var tambahkotak = $('#kotak');
+      event.preventDefault();
+      field = `
+    <tr id="newRow">
+      <td>${count}</td>
+      <td><input type="number" name="noDok[]" class="form-control noDok" value="" id="noDok"></td>
+      <td><input type="text" name="namaPT[]"  class="form-control namaPT" id="namaPT" readonly></td>
+      <td><input type="text" name="jenisDok[]" class="form-control jenisDok" id="jenisDok" readonly></td>
+      <td><input type="date" name="tanggalDok[]" class="form-control tanggalDok" id="tanggalDok" readonly></td>
+      <td>
+        <button class="btn btn-danger" id="remove">Hapus</button>
+      </td>
+      <input type="hidden" name="rak[]" id="" class="form-control">
+      <input type="hidden" name="box[]" id="" class="form-control">
+    </tr>
+    `;
+      $(field).appendTo(tambahkotak);
+      $(".noDok").autocomplete({
+              source: function( request, response ) {
+                  console.log(request.term)
+              $.ajax({
+                  url:"{{route('arsip')}}",
+                  type: 'post',
+                  dataType: "json",
+                  data: {
+                      _token: CSRF_TOKEN,
+                      cari: request.term
+                  },
+                  success: function( data ) {
+                  response( data );
+                  }
+              });
+              },
+              select: function (event, ui) {
+              $(this).filter('.noDok').val(ui.item.value);
+              $(this).filter('.namaPT').val(ui.item.perusahaan);
+              $(this).filter('.jenisDok').val(ui.item.jenisDok);
+              $(this).filter('.tanggalDok').val(ui.item.tanggalDok);
+              console.log(data);
+              return false;
+              }
+          });
     });
+
+    $('body').on('click','#remove',function(){
+      count--
+		$(this).parents('tr#newRow').remove();	
+	});		  
+  });
+
+</script>
+<script type="text/javascript">
+      var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+      $(document).ready(function(){
+          $( "#noDok" ).autocomplete({
+              source: function( request, response ) {
+                  console.log(request.term)
+              $.ajax({
+                  url:"{{route('arsip')}}",
+                  type: 'post',
+                  dataType: "json",
+                  data: {
+                      _token: CSRF_TOKEN,
+                      cari: request.term
+                  },
+                  success: function( data ) {
+                  response( data );
+                  }
+              });
+              },
+              select: function (event, ui) {
+              $(this).filter('.noDok').val(ui.item.value);
+              $('.namaPT').val(ui.item.perusahaan);
+              $('.jenisDok').val(ui.item.jenisDok);
+              $('.tanggalDok').val(ui.item.tanggalDok);
+              return false;
+              }
+          });
+      });
 </script>
 @endsection
