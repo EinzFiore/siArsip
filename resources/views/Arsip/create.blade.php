@@ -70,27 +70,6 @@
 @endsection
 @section('form-input')
 <script>
-  // i = 1;
-  // function numberAdd(){
-  //   i++;       
-  //   document.querySelectorAll('#number').innerHTML=i;
-  // };
-
-  // const baris = 
-  //   `
-  //   <tr id="newRow">
-  //     <td></td>
-  //     <td><input type="number" name="noDok[]" class="form-control noDok" value="" id="noDok"></td>
-  //     <td><input type="text" name="namaPT[]"  class="form-control namaPT" id="namaPT" readonly></td>
-  //     <td><input type="text" name="jenisDok[]" class="form-control jenisDok" id="jenisDok" readonly></td>
-  //     <td><input type="date" name="tanggalDok[]" class="form-control tanggalDok" id="tanggalDok" readonly></td>
-  //     <td>
-  //       <button class="btn btn-danger" id="remove">Hapus</button>
-  //     </td>
-  //     <input type="hidden" name="rak[]" id="" class="form-control">
-  //     <input type="hidden" name="box[]" id="" class="form-control">
-  //   </tr>
-  //   `;
   $(document).ready(function(){
     var count = 1;
     $('button#add').click(function(event){
@@ -111,8 +90,8 @@
       <input type="hidden" name="box[]" id="" class="form-control">
     </tr>
     `;
-      $(field).appendTo(tambahkotak);
-      $(".noDok").autocomplete({
+      $(field).appendTo(tambahkotak)
+      $('.noDok').autocomplete({
               source: function( request, response ) {
                   console.log(request.term)
               $.ajax({
@@ -129,10 +108,10 @@
               });
               },
               select: function (event, ui) {
-              $(this).filter('.noDok').val(ui.item.value);
-              $(this).filter('.namaPT').val(ui.item.perusahaan);
-              $(this).filter('.jenisDok').val(ui.item.jenisDok);
-              $(this).filter('.tanggalDok').val(ui.item.tanggalDok);
+              $(this).parents("tr").find('.noDok').val(ui.item.value);
+              $(this).parents("tr").find('.namaPT').val(ui.item.perusahaan);
+              $(this).parents("tr").find('.jenisDok').val(ui.item.jenisDok);
+              $(this).parents("tr").find('.tanggalDok').val(ui.item.tanggalDok);
               console.log(data);
               return false;
               }
