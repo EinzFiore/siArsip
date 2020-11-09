@@ -45,14 +45,8 @@
     </div>
   </div>
 
-  <!-- General JS Scripts -->
-  <script type="text/javascript">
-    $(document).ready(function(){
-    $( ".select2" ).select2();
-    });
-  </script>
-
   @yield('form-input')
+
   <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js" integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E=" crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/jquery-migrate-3.0.0.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
@@ -66,12 +60,6 @@
   <script src="{{url('/js/jquery.rowspanizer.min.js')}}"></script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   @include('sweet::alert')
-  <script>
-    $(document).ready(function(){
-      $('.data').DataTable();
-      // $('table#row').rowspanizer();
-    });
-  </script>
 
   <script src="{{ url('stisla/assets/js/stisla.js') }}"></script>
 
@@ -84,41 +72,18 @@
 
     <!-- Template JS File -->
   <script src="{{ url('stisla/assets/js/scripts.js') }}"></script>
-  <script src="{{ url('stisla/assets/js/custom.js') }}"></script>
+  <script src="{{ url('stisla/assets/js/scripts.js') }}"></script>
+  <script>
+    // global app configuration object
+    var config = {
+        routes: {
+            zone: "{{ route('arsip') }}"
+        }
+    };
+</script>
+  <script src="{{ url('js/app2.js') }}"></script>
 
     <!-- Page Specific JS File -->
   <script src="{{ url('stisla/assets/js/page/index.js') }}"></script>
-  <script>
-    //message with toastr
-    @if(session()-> has('success'))
-    
-        toastr.success('{{ session('success') }}', 'BERHASIL!'); 
-
-    @elseif(session()-> has('error'))
-
-        toastr.error('{{ session('error') }}', 'GAGAL!'); 
-        
-    @endif
-</script>
-
-{{-- Check box --}}
-<script> 
-  function batchFunction() 
-  { 
-    if (document.getElementById('cek').checked) 
-    { 
-      for(let i = 0; i<100; i++){
-        document.getElementsByClassName('newBatch')[i].value=document.getElementById('batch').value; 
-        document.getElementsByClassName('newYear')[i].value=document.getElementById('tahun').value;
-      }
-    } 
-    else
-    { 
-      document.getElementById('newBatch').value=""; 
-      document.getElementById('newYear').value=""; 
-    } 
-  } 
-  </script> 
-
 </body>
 </html>

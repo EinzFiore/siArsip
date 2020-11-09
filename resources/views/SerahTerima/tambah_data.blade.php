@@ -33,18 +33,16 @@
               </div>
               <table class="table table-striped table-md">
                 <tr>
-                  {{-- <th>#</th> --}}
+                  <th>#</th>
                   <th>Nama Perusahaan</th>
                   <th>Nomor Dokumen</th>
                   <th>Jenis Dokumen</th>
                   <th>Tanggal</th>
-                  <th>Batch</th>
-                  <th>Tahun</th>
                   <th>Baris</th>
                 </tr>
                 <tbody id="kotak">
                   <tr id="rowForm">
-                    {{-- <td>1</td> --}}
+                    <td>1</td>
                     <td>
                       <select class="form-control select2" name="nama_pt[]">
                         <option>-- Nama Perusahaan --</option>
@@ -53,7 +51,7 @@
                         @endforeach
                       </select>
                     </td>
-                    <td><input type="text" class="form-control" placeholder="Nomor Dokumen" name="no_dokumen[]"></td>
+                    <td><input type="number" class="form-control" placeholder="Nomor Dokumen" name="no_dokumen[]"></td>
                     <td>
                       <select class="form-control" name="jenis_dokumen[]">
                         <option>Jenis Dokumen</option>
@@ -63,10 +61,10 @@
                       </select>
                     </td>
                     <td><input type="date" class="form-control" placeholder="mm/dd/yyy" name="tanggal[]"></td>
-                    <td><input type="text" class="form-control newBatch" name="newBatch[]" required></td>
-                    <td><input type="text" class="form-control newYear" name="newYear[]" required></td>
+                    <input type="hidden" class="form-control newBatch" name="newBatch[]" required>
+                    <input type="hidden" class="form-control newYear" name="newYear[]" required>
                     <td>
-                      <button class="btn btn-primary" id="add">Tambah</button>
+                      <button class="btn btn-primary" id="tambah">Tambah</button>
                     </td>
                   </tr>
                 </tbody>
@@ -81,57 +79,4 @@
     </div>
   </div>
 </div>
-@endsection
-
-@section('form-input')
-<script>
-  // i = 1;
-  // function numberAdd(){
-  //   i++;       
-  //   document.querySelectorAll('#number').innerHTML=i;
-  // };
-
-  const baris = 
-    `
-      <tr id="rowForm">
-        <td>
-          <select class="form-control select2" name="nama_pt[]">
-            <option>-- Nama Perusahaan --</option>
-            @foreach ($perusahaan as $pt)
-              <option value="<?= $pt ?>"><?= $pt ?></option>
-            @endforeach
-          </select>
-        </td>
-        <td><input type="number" class="form-control" placeholder="Nomor Dokumen" name="no_dokumen[]"></td>
-        <td>
-          <select class="form-control" name="jenis_dokumen[]">
-            <option>Jenis Dokumen</option>
-            @foreach ($jenisDokumen as $jenisDok)
-              <option value="{{$jenisDok}}">{{$jenisDok}}</option>
-            @endforeach
-          </select>
-        </td>
-        <td><input type="date" class="form-control" placeholder="mm/dd/yyy" name="tanggal[]"></td>
-        <td><input type="text" id="newBatch" class="form-control newBatch" name="newBatch[]" required></td>
-            <td><input type="text" id="newYear" class="form-control newYear" name="newYear[]" required></td>
-        <td>
-          <button class="btn btn-danger" id="remove">Hapus</button>
-        </td>
-      </tr>
-    `;
-
-  $(document).ready(function(){
-    $('button#add').click(function(event){
-      var tambahkotak = $('#kotak');
-      event.preventDefault();
-      $(baris).appendTo(tambahkotak);
-      $(".select2").select2();
-    });
-
-    $('body').on('click','#remove',function(){
-		$(this).parents('tr#rowForm').remove();	
-	});		  
-  });
-
-</script>
 @endsection
