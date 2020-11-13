@@ -10,32 +10,36 @@
         <thead>
           <tr>
             <th scope="col">#</th>
-            <th scope="col">Batch</th>
+            <th scope="col">Nomor Pendaftaran</th>
             <th scope="col">Nama Perusahaan</th>
-            <th scope="col">Nomor Dokumen</th>
             <th scope="col">Tanggal Dokumen</th>
-            <th scope="col">Jenis Dokumen</th>
             <th scope="col">Status Dokumen</th>
+            <th scope="col">Rak</th>
+            <th scope="col">Box</th>
+            <th scope="col">Batch</th>
+            <th scope="col">Jenis Dokumen</th>
             <th scope="col">Action</th>
           </tr>
         </thead>
         <tbody>
           <?php $no = 1; ?>
-          @forelse ($serahTerima as $sr)
+          @forelse ($arsip as $a)
             <tr>
               <th scope="row"><?= $no++ ?></th>
-              <td>{{$sr->batch}}</td>
-              <td>{{$sr->nama_perusahaan}}</td>
-              <td>{{$sr->no_dok}}</td>
-              <td>{{$sr->tanggal_dokumen}}</td>
-              <td>{{$sr->jenis_dokumen}}</td>
+              <td>{{$a->no_pen}}</td>
+              <td>{{$a->nama_perusahaan}}</td>
+              <td>{{$a->tanggal_dokumen}}</td>
               <td>
                 @php
-                    if($sr->status == 0){
-                      echo "<span class='badge badge-danger'>Belum dikonfirmasi</span>";
-                    } else echo "<span class='badge badge-success'>Terkonfirmasi</span>";
+                    if($a->status == 0){
+                      echo "<span class='badge badge-danger'>nonAktif</span>";
+                    } else echo "<span class='badge badge-success'>inAktif</span>";
                 @endphp
               </td>
+              <td>{{$a->rak}}</td>
+              <td>{{$a->box}}</td>
+              <td>{{$a->batch}}</td>
+              <td>{{$a->jenis_dokumen}}</td>
               
               <td>
                 <button class="btn btn-warning">Edit</button>

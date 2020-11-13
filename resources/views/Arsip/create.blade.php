@@ -50,9 +50,9 @@
                   <tr id="rowForm">
                       <td>1</td>
                       <td><input type="number" name="noDok[]" class="form-control noDok" value="" id="noDok"></td>
-                      <td><input type="text" name="namaPT[]"  class="form-control namaPT" readonly></td>
-                      <td><input type="text" name="jenisDok[]" class="form-control jenisDok" readonly></td>
-                      <td><input type="date" name="tanggalDok[]" class="form-control tanggalDok" readonly></td>
+                      <td><input type="text" name="namaPT[]"  class="form-control namaPT"></td>
+                      <td><input type="text" name="jenisDok[]" class="form-control jenisDok"></td>
+                      <td><input type="date" name="tanggalDok[]" class="form-control tanggalDok"></td>
                       <td>
                         <button class="btn btn-primary" id="add">Tambah</button>
                       </td>

@@ -5,13 +5,18 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Rak;
 use App\Models\Dokumen;
+use App\Models\DataArsip;
 use DB;
 
 class DataArsipController extends Controller
 {
     public function index()
     {
-        return view('Arsip/index');
+        $arsip = DB::table('tb_arsip')
+            ->join('dokumen', 'tb_arsip.no_pen', '=', 'dokumen.no_pen')
+            ->select('tb_arsip.*', 'dokumen.nama_perusahaan', 'dokumen.tanggal_dokumen', 'dokumen.jenis_dokumen')
+            ->get();
+        return view('Arsip/index', compact('arsip'));
     }
 
     /**
@@ -34,10 +39,16 @@ class DataArsipController extends Controller
      */
     public function store(Request $request)
     {
-        $data = [
-            'namaPT' => $request->selected,
-        ];
-        dd($request);
+        foreach ($request->noDok as $key => $no_dok) {
+            $data = new DataArsip;
+            $data->no_pen = $no_dok;
+            $data->rak = $request->rak[$key];
+            $data->box = $request->box[$key];
+            $data->batch = $request->batch[$key];
+            $data->save();
+        }
+        alert()->success('Success!', 'Data Berhasil Ditambahkan!')->autoclose(3500);
+        return redirect('dataArsip');
     }
 
     /**
