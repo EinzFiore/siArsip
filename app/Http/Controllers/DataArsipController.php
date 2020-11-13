@@ -90,13 +90,13 @@ class DataArsipController extends Controller
         $search = $request->cari;
 
         $dataSerahTerima = DB::table('dokumen')
-            ->select('no_dok', 'nama_perusahaan', 'jenis_dokumen', 'tanggal_dokumen')
+            ->select('no_pen', 'nama_perusahaan', 'jenis_dokumen', 'tanggal_dokumen')
             ->limit(5);
 
         $search = !empty($request->cari) ? ($request->cari) : ('');
 
         if ($search) {
-            $dataSerahTerima->where('no_dok', 'like', '%' . $search . '%');
+            $dataSerahTerima->where('no_pen', 'like', '%' . $search . '%');
         }
 
         $data = $dataSerahTerima->limit(5)->get();
@@ -104,7 +104,7 @@ class DataArsipController extends Controller
         $response = array();
         foreach ($data as $arsip) {
             $response[] = array(
-                "value" => $arsip->no_dok,
+                "value" => $arsip->no_pen,
                 "perusahaan" => $arsip->nama_perusahaan,
                 "jenisDok" => $arsip->jenis_dokumen,
                 "tanggalDok" => $arsip->tanggal_dokumen

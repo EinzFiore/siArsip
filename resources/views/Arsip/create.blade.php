@@ -15,7 +15,7 @@
               <div class="batch d-flex">
                 <div class="form-group mr-2">
                   <label>Rak</label>
-                  <select class="select2" id="batch" name="batch">
+                  <select class="select2" id="rak" name="rak">
                     <option>-- Pilih Rak --</option>
                     @foreach ($dataRak as $r)
                         <option value="<?= $r->noRak ?>"><?= $r->noRak ?></option>
@@ -24,11 +24,15 @@
                 </div>
                 <div class="form-group mr-2">
                   <label>Box</label>
-                  <input type="text" id="tahun" class="form-control" name="tahun_batch[]">
+                  <input type="text" id="tahun" class="form-control" name="tahun_batch">
+                </div>
+                <div class="form-group mr-2">
+                  <label>Batch</label>
+                  <input type="text" id="batch" class="form-control" name="batch">
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="checkbox" onchange="batchFunction()" id="cek">
-                  <label class="form-check-label" for="inlineCheckbox1">Gunakan Batch</label>
+                  <input class="form-check-input" type="checkbox" onchange="rakFunction()" id="selected">
+                  <label class="form-check-label" for="inlineCheckbox1">Gunakan Rak</label>
                 </div>
               </div>
               <table class="table table-striped table-md" id="data">
@@ -52,8 +56,9 @@
                       <td>
                         <button class="btn btn-primary" id="add">Tambah</button>
                       </td>
-                      <input type="hidden" name="rak[]" id="" class="form-control">
-                      <input type="hidden" name="box[]" id="" class="form-control">
+                      <input type="hidden" name="rak[]" class="form-control newRak">
+                      <input type="hidden" name="box[]" class="form-control newBox">
+                      <input type="hidden" name="batch[]"  class="form-control newBatch">
                   </tr>
                 </tbody>
               </table>

@@ -15,7 +15,6 @@
             <th scope="col">Nomor Dokumen</th>
             <th scope="col">Tanggal Dokumen</th>
             <th scope="col">Jenis Dokumen</th>
-            <th scope="col">Status Dokumen</th>
             <th scope="col">Action</th>
           </tr>
         </thead>
@@ -26,19 +25,12 @@
             <th scope="row"><?= $no++ ?></th>
             <td>{{$sr->batch}}</td>
             <td>{{$sr->nama_perusahaan}}</td>
-            <td>{{$sr->no_dok}}</td>
+            <td>{{$sr->no_pen}}</td>
             <td>{{$sr->tanggal_dokumen}}</td>
             <td>{{$sr->jenis_dokumen}}</td>
             <td>
-              @php
-                  if($sr->status == 0){
-                    echo "<span class='badge badge-danger'>Belum dikonfirmasi</span>";
-                  } else echo "<span class='badge badge-success'>Terkonfirmasi</span>";
-              @endphp
-            </td>
-            <td>
-              <button class="btn btn-warning" data-toggle="modal" data-target="#editSR{{$sr->no_dok}}">Edit</button>
-              <button class="btn btn-danger" data-toggle="modal" data-target="#hapusSR{{$sr->no_dok}}">Hapus</button>
+              <button class="btn btn-warning" data-toggle="modal" data-target="#editSR{{$sr->no_pen}}">Edit</button>
+              <button class="btn btn-danger" data-toggle="modal" data-target="#hapusSR{{$sr->no_pen}}">Hapus</button>
             </td>
           </tr>
           @empty
@@ -53,17 +45,17 @@
 
 <!-- Modal Edit -->
 @foreach ($serahTerima as $sr)
-<div class="modal fade" id="editSR{{$sr->no_dok}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="editSR{{$sr->no_pen}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-scrollable" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Edit Data Nomor Dokumen : <span class="badge badge-primary"><?= $sr->no_dok ?></span></h5>
+        <h5 class="modal-title" id="exampleModalLabel">Edit Data Nomor Dokumen : <span class="badge badge-primary"><?= $sr->no_pen ?></span></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <form action="{{ route('serahTerima.update', $sr->no_dok) }}" method="post">
+        <form action="{{ route('serahTerima.update', $sr->no_pen) }}" method="post">
               @csrf
               @method('PUT')
               <div class="form-group">
@@ -76,7 +68,7 @@
               </div>
               <div class="form-group">
                 <label for="message-text" class="col-form-label">Nomor Dokumen:</label>
-                <input type="text" name="noDok" value="<?= $sr->no_dok ?>" class="form-control">
+                <input type="text" name="noDok" value="<?= $sr->no_pen ?>" class="form-control">
               </div>
               <div class="form-group">
                 <label for="message-text" class="col-form-label">Tanggal Dokumen:</label>
@@ -98,16 +90,16 @@
 @endforeach
 
 @foreach ($serahTerima as $sr)
-<div class="modal fade" id="hapusSR{{$sr->no_dok}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="hapusSR{{$sr->no_pen}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-      <h5 class="modal-title" id="exampleModalLabel">Hapus Dokumen {{$sr->no_dok}}</h5>
+      <h5 class="modal-title" id="exampleModalLabel">Hapus Dokumen {{$sr->no_pen}}</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form action="{{route('serahTerima.destroy', $sr->no_dok)}}" method="POST" enctype="multipart/form-data">
+      <form action="{{route('serahTerima.destroy', $sr->no_pen)}}" method="POST" enctype="multipart/form-data">
           @csrf
           @method('DELETE')
         <div class="modal-body">

@@ -9,6 +9,42 @@ $(document).ready(function(){
     // $('table#row').rowspanizer();
 });
 
+// fungsi untuk auto fill form batch
+function batchFunction() 
+  { 
+    if (document.getElementById('cek').checked) 
+    { 
+      for(let i = 0; i<100; i++){
+        document.getElementsByClassName('newBatch')[i].value=document.getElementById('batch').value; 
+        document.getElementsByClassName('newYear')[i].value=document.getElementById('tahun').value;
+      }
+    } 
+    else
+    { 
+      document.getElementById('newBatch').value=""; 
+      document.getElementById('newYear').value=""; 
+    } 
+  } 
+
+// fungsi untuk auto fill form rak
+function rakFunction() 
+  { 
+    if (document.getElementById('selected').checked) 
+    { 
+      for(let i = 0; i<100; i++){
+        document.getElementsByClassName('newRak')[i].value=document.getElementById('rak').value; 
+        document.getElementsByClassName('newBox')[i].value=document.getElementById('tahun').value;
+        document.getElementsByClassName('newBatch')[i].value=document.getElementById('batch').value;
+      }
+    } 
+    else
+    { 
+      document.getElementById('newRak').value=""; 
+      document.getElementById('newBox').value=""; 
+      document.getElementById('newBatch').value=""; 
+    } 
+  } 
+
 // Autocomplete in form dinamis for Arsip
 var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 $(document).ready(function(){
@@ -55,8 +91,9 @@ $(document).ready(function(){
       <td>
         <button class="btn btn-danger" id="remove">Hapus</button>
       </td>
-      <input type="hidden" name="rak[]" id="" class="form-control">
-      <input type="hidden" name="box[]" id="" class="form-control">
+      <input type="hidden" name="rak[]" class="form-control newRak">
+      <input type="hidden" name="box[]" class="form-control newBox">
+      <input type="hidden" name="batch[]" class="form-control newBatch">
     </tr>
     `;
       $(field).appendTo(tambahkotak)
@@ -93,23 +130,6 @@ $(document).ready(function(){
 	});		  
 });
 
-// fungsi untuk auto fill form batch
-function batchFunction() 
-  { 
-    if (document.getElementById('cek').checked) 
-    { 
-      for(let i = 0; i<100; i++){
-        document.getElementsByClassName('newBatch')[i].value=document.getElementById('batch').value; 
-        document.getElementsByClassName('newYear')[i].value=document.getElementById('tahun').value;
-      }
-    } 
-    else
-    { 
-      document.getElementById('newBatch').value=""; 
-      document.getElementById('newYear').value=""; 
-    } 
-  } 
-
 // form dinamis dengan select2 untuk form serah terima
 $(document).ready(function(){
     var count = 1;
@@ -123,18 +143,14 @@ $(document).ready(function(){
       <td>
         <select class="form-control select2" name="nama_pt[]">
           <option>-- Nama Perusahaan --</option>
-          @foreach ($perusahaan as $pt)
-            <option value="<?= $pt ?>"><?= $pt ?></option>
-          @endforeach
+            ${PT}
         </select>
       </td>
       <td><input type="number" class="form-control" placeholder="Nomor Dokumen" name="no_dokumen[]"></td>
       <td>
         <select class="form-control" name="jenis_dokumen[]">
           <option>Jenis Dokumen</option>
-          @foreach ($jenisDokumen as $jenisDok)
-            <option value="{{$jenisDok}}">{{$jenisDok}}</option>
-          @endforeach
+          ${jenisDok}
         </select>
       </td>
       <td><input type="date" class="form-control" placeholder="mm/dd/yyy" name="tanggal[]"></td>
@@ -152,4 +168,4 @@ $(document).ready(function(){
         count--
 		$(this).parents('tr#rowForm').remove();	
 	});		  
-  });
+});

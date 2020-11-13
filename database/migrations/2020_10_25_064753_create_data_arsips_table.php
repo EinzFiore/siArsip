@@ -13,8 +13,12 @@ class CreateDataArsipsTable extends Migration
      */
     public function up()
     {
-        Schema::create('data_arsips', function (Blueprint $table) {
-            $table->id();
+        Schema::create('tb_arsip', function (Blueprint $table) {
+            $table->id('id_dok');
+            $table->string('no_dok');
+            $table->integer('rak');
+            $table->integer('status');
+            $table->string('box');
             $table->timestamps();
         });
     }
@@ -26,6 +30,6 @@ class CreateDataArsipsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('data_arsips');
+        Schema::dropIfExists('tb_arsip');
     }
 }

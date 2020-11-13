@@ -33,7 +33,7 @@
         @foreach ($listDokumenBatch as $ldb)      
         <tr>
             <td><?= $no++ ?></td>
-            <td><?= $ldb->no_dok ?></td>
+            <td><?= $ldb->no_pen ?></td>
             <td><?= $ldb->tanggal_dokumen ?></td>
             <td><?= $ldb->nama_perusahaan ?></td>
             <td><?= $id ?>/<?= $data['tahunPeriode'] ?></td>

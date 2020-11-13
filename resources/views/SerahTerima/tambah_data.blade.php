@@ -37,7 +37,7 @@
                   <th>Nama Perusahaan</th>
                   <th>Nomor Dokumen</th>
                   <th>Jenis Dokumen</th>
-                  <th>Tanggal</th>
+                  <th>Tanggal Dokumen</th>
                   <th>Baris</th>
                 </tr>
                 <tbody id="kotak">
@@ -79,4 +79,13 @@
     </div>
   </div>
 </div>
+<script>
+      var jenisDok = `@foreach ($jenisDokumen as $jenisDok)
+            <option value='{{$jenisDok}}'>{{$jenisDok}}</option>
+            @endforeach`;
+            
+    var PT = `@foreach ($perusahaan as $pt)
+            <option value="<?= $pt ?>"><?= $pt ?></option>
+          @endforeach`;
+</script>
 @endsection

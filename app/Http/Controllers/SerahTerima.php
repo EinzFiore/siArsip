@@ -38,7 +38,7 @@ class SerahTerima extends Controller
         foreach ($request->nama_pt as $key => $nama_pt) {
             $data = new Dokumen();
             $data->nama_perusahaan = $nama_pt;
-            $data->no_dok = $request->no_dokumen[$key];
+            $data->no_pen = $request->no_dokumen[$key];
             $data->jenis_dokumen = $request->jenis_dokumen[$key];
             $data->tanggal_dokumen = $request->tanggal[$key];
             $data->batch = $request->newBatch[$key];

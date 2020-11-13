@@ -27,7 +27,7 @@
           @forelse ($listDokumenBatch as $ldb)
             <tr>
                 <th scope="row"><?= $no++ ?></th>
-                <td><span class="badge badge-primary">{{$ldb->no_dok}}</span></td>
+                <td><span class="badge badge-primary">{{$ldb->no_pen}}</span></td>
                 <td>{{$ldb->nama_perusahaan}}</td>
                 <td>{{$ldb->jenis_dokumen}}</td>
                 <td>{{$ldb->tanggal_dokumen}}</td>
