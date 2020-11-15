@@ -6,7 +6,13 @@ $(document).ready(function(){
 // DataTable untuk table yang memiliki class ".data"
 $(document).ready(function(){
     $('.data').DataTable();
-    // $('table#row').rowspanizer();
+    // // terapkan rowspanizer untuk setiap attribut yang memiliki class .rowspan
+    // $('.rowspan').rowspanizer(
+    //   {
+    //     vertical_align: 'middle',
+    //     columns: [0,1,2]
+    //   }
+    // );
 });
 
 // fungsi untuk auto fill form batch

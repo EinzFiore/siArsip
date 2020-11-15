@@ -12,9 +12,18 @@ class DataArsipController extends Controller
 {
     public function index()
     {
+        // $rak = 1;
+        // $box = 'A/1';
+        // $batch = 899;
+        // $tes = DB::table('tb_arsip')->where([
+        //     ['rak', '=', $rak],
+        //     ['box', '=', $box],
+        //     ['batch', '=', $batch],
+        // ])->get();
+        // dd($tes);
         $arsip = DB::table('tb_arsip')
             ->join('dokumen', 'tb_arsip.no_pen', '=', 'dokumen.no_pen')
-            ->select('tb_arsip.*', 'dokumen.nama_perusahaan', 'dokumen.tanggal_dokumen', 'dokumen.jenis_dokumen')
+            ->select('tb_arsip.*', 'dokumen.nama_perusahaan', 'dokumen.tanggal_dokumen', 'dokumen.jenis_dokumen', 'dokumen.status')
             ->get();
         return view('Arsip/index', compact('arsip'));
     }
@@ -82,7 +91,16 @@ class DataArsipController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $arsip = DataArsip::findOrFail($id);
+        $arsip->update([
+            'rak' => $request->rak,
+            'box' => $request->box,
+            'batch' => $request->batch,
+        ]);
+        if ($arsip) {
+            alert()->success('Success!', 'Data Berhasil Diubah!')->autoclose(3500);
+            return redirect('dataArsip');
+        }
     }
 
     /**
@@ -93,7 +111,12 @@ class DataArsipController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $arsip = DataArsip::findOrFail($id);
+        $arsip->delete();
+        if ($arsip) {
+            alert()->success('Success!', 'Data Berhasil Dihapus!')->autoclose(3500);
+            return redirect('dataArsip');
+        }
     }
 
     public function getDataSerahTerima(Request $request)
