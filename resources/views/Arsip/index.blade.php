@@ -6,7 +6,7 @@
       <h4>Data Serah Terima</h4>
     </div>
     <div class="card-body">
-      <table class="table data table-striped rowspan" id="row">
+      <table class="table display table-striped rowspan" id="arsip">
         <thead>
           <tr>
             <th scope="col">#</th>

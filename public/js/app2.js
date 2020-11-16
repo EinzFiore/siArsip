@@ -6,6 +6,18 @@ $(document).ready(function(){
 // DataTable untuk table yang memiliki class ".data"
 $(document).ready(function(){
     $('.data').DataTable();
+    $('#export').DataTable({
+      dom: 'Bfrtip',
+      buttons: [
+          'copy', 'csv', 'excel', 'pdf', 'print'
+      ]
+    });
+    $('#arsip').DataTable({
+      // dom: 'Bfrtip',
+      // buttons: [
+      //     'copy', 'csv', 'excel', 'pdf', 'print'
+      // ]
+    });
     // // terapkan rowspanizer untuk setiap attribut yang memiliki class .rowspan
     // $('.rowspan').rowspanizer(
     //   {
@@ -100,6 +112,91 @@ $(document).ready(function(){
       <input type="hidden" name="rak[]" class="form-control newRak">
       <input type="hidden" name="box[]" class="form-control newBox">
       <input type="hidden" name="batch[]" class="form-control newBatch">
+    </tr>
+    `;
+      $(field).appendTo(tambahkotak)
+      $('.noDok').autocomplete({
+              source: function( request, response ) {
+                  console.log(request.term)
+              $.ajax({
+                  url:config.routes.zone,
+                  type: 'post',
+                  dataType: "json",
+                  data: {
+                      _token: CSRF_TOKEN,
+                      cari: request.term
+                  },
+                  success: function( data ) {
+                  response( data );
+                  }
+              });
+              },
+              select: function (event, ui) {
+              $(this).parents("tr").find('.noDok').val(ui.item.value);
+              $(this).parents("tr").find('.namaPT').val(ui.item.perusahaan);
+              $(this).parents("tr").find('.jenisDok').val(ui.item.jenisDok);
+              $(this).parents("tr").find('.tanggalDok').val(ui.item.tanggalDok);
+              console.log(data);
+              return false;
+              }
+          });
+    });
+
+    $('body').on('click','#remove',function(){
+      count--
+		$(this).parents('tr#newRow').remove();	
+	});		  
+});
+
+// Autocomplete in form dinamis for Peminjaman
+var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+$(document).ready(function(){
+    $( "#noPen" ).autocomplete({
+        source: function( request, response ) {
+            console.log(request.term)
+        $.ajax({
+            // url from global config in app2.blade.php
+            url:config.routes.zone,
+            type: 'post',
+            dataType: "json",
+            data: {
+                _token: CSRF_TOKEN,
+                cari: request.term
+            },
+            success: function( data ) {
+            response( data );
+            }
+        });
+        },
+        select: function (event, ui) {
+        $(this).filter('.noDok').val(ui.item.value);
+        $('.namaPT').val(ui.item.perusahaan);
+        $('.jenisDok').val(ui.item.jenisDok);
+        $('.tanggalDok').val(ui.item.tanggalDok);
+        return false;
+        }
+    });
+});
+  
+  $(document).ready(function(){
+    var count = 1;
+    $('button#tambahPinjam').click(function(event){
+      count++
+      var tambahkotak = $('#kotak');
+      event.preventDefault();
+      field = `
+    <tr id="newRow">
+      <td>${count}</td>
+      <td><input type="number" id="noPen" name="noDok[]" class="form-control noDok"></td>
+      <td><input type="text" name="namaPT[]" class="form-control namaPT"></td>
+      <td><input type="text" name="jenisDok[]" class="form-control jenisDok"></td>
+      <td><input type="date" class="form-control tanggalDok" placeholder="mm/dd/yyy" name="tanggalDok[]"></td>
+      <input type="hidden" class="form-control newBatch" name="newNama[]" required>
+      <input type="hidden" class="form-control newYear" name="newSeksi[]" required>
+      <input type="hidden" class="form-control newYear" name="newTanggal[]" required>
+      <td>
+        <button class="btn btn-danger" id="remove">Hapus</button>
+      </td>
     </tr>
     `;
       $(field).appendTo(tambahkotak)

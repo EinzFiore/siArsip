@@ -21,24 +21,28 @@
             <td>Periode Pengirimian : Tahun <?= $data['tahunPeriode'] ?></td>
         </tr>
     </table>
-    <table border="1" cellspacing="0" cellpadding="10">
-        <tr>
-            <th>No</th>
-            <th>Nomor</th>
-            <th>Tanggal</th>
-            <th>Nama Perusahaan</th>
-            <th>Ket (Batch)</th>
-        </tr>  
-        <?php $no = 1; ?>
-        @foreach ($listDokumenBatch as $ldb)      
-        <tr>
-            <td><?= $no++ ?></td>
-            <td><?= $ldb->no_pen ?></td>
-            <td><?= $ldb->tanggal_dokumen ?></td>
-            <td><?= $ldb->nama_perusahaan ?></td>
-            <td><?= $id ?>/<?= $data['tahunPeriode'] ?></td>
-        </tr>
-        @endforeach
+    <table border="1" cellspacing="0">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Nomor</th>
+                <th>Tanggal</th>
+                <th>Nama Perusahaan</th>
+                <th>Ket (Batch)</th>
+            </tr>  
+        </thead>
+        <tbody>
+            <?php $no = 1; ?>
+            @foreach ($listDokumenBatch as $ldb)      
+            <tr>
+                <td><?= $no++ ?></td>
+                <td><?= $ldb->no_pen ?></td>
+                <td><?= $ldb->tanggal_dokumen ?></td>
+                <td><?= $ldb->nama_perusahaan ?></td>
+                <td><?= $id ?>/<?= $data['tahunPeriode'] ?></td>
+            </tr>
+            @endforeach
+        </tbody>
     </table>
     <table cellpadding="10">
         <tr>
@@ -69,5 +73,6 @@
             </td>
         </tr>
     </table>
+</table>
 </body>
 </html>

@@ -40,9 +40,12 @@ Route::resource('jenisDokumen', JDController::class);
 // Route Rak
 Route::resource('rak', RakController::class);
 
-// Routr DataArsip
+// Route DataArsip
 Route::resource('dataArsip', DataArsipController::class);
 Route::post('/dataArsip/getDokumen', 'DataArsipController@getDataSerahTerima')->name('arsip');
+
+// Route Peminjaman
+Route::resource('peminjaman', PeminjamanController::class);
 
 // Jetstream
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
