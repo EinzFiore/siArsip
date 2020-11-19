@@ -23,7 +23,7 @@ class DataArsipController extends Controller
         // dd($tes);
         $arsip = DB::table('tb_arsip')
             ->join('dokumen', 'tb_arsip.no_pen', '=', 'dokumen.no_pen')
-            ->select('tb_arsip.*', 'dokumen.nama_perusahaan', 'dokumen.tanggal_dokumen', 'dokumen.jenis_dokumen', 'dokumen.status')
+            ->select('tb_arsip.*', 'dokumen.nama_perusahaan', 'dokumen.tanggal_dokumen', 'dokumen.jenis_dokumen')
             ->get();
         return view('Arsip/index', compact('arsip'));
     }
@@ -139,6 +139,37 @@ class DataArsipController extends Controller
         foreach ($data as $arsip) {
             $response[] = array(
                 "value" => $arsip->no_pen,
+                "perusahaan" => $arsip->nama_perusahaan,
+                "jenisDok" => $arsip->jenis_dokumen,
+                "tanggalDok" => $arsip->tanggal_dokumen
+            );
+        }
+        return response()->json($response);
+    }
+
+    public function getDataArsip(Request $request)
+    {
+        $search = $request->cari;
+
+        $dataSerahTerima = DB::table('tb_arsip')
+            ->join('dokumen', 'tb_arsip.no_pen', '=', 'dokumen.no_pen')
+            ->select('tb_arsip.*', 'dokumen.nama_perusahaan', 'dokumen.tanggal_dokumen', 'dokumen.jenis_dokumen')
+            ->where('tb_arsip.status', '=', 1)
+            ->limit(5);
+
+        $search = !empty($request->cari) ? ($request->cari) : ('');
+
+        if ($search) {
+            $dataSerahTerima->where('no_pen', 'like', '%' . $search . '%');
+        }
+
+        $data = $dataSerahTerima->limit(5)->get();
+
+        $response = array();
+        foreach ($data as $arsip) {
+            $response[] = array(
+                "value" => $arsip->no_pen,
+                "id_dok" => $arsip->id_dok,
                 "perusahaan" => $arsip->nama_perusahaan,
                 "jenisDok" => $arsip->jenis_dokumen,
                 "tanggalDok" => $arsip->tanggal_dokumen

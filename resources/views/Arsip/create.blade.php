@@ -15,7 +15,7 @@
               <div class="batch d-flex">
                 <div class="form-group mr-2">
                   <label>Rak</label>
-                  <select class="select2" id="rak" name="rak">
+                  <select class="select2 tes" id="rak" name="rak">
                     <option>-- Pilih Rak --</option>
                     @foreach ($dataRak as $r)
                         <option value="<?= $r->noRak ?>"><?= $r->noRak ?></option>

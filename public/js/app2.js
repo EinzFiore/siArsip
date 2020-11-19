@@ -1,3 +1,4 @@
+
 // Select2 untuk form input yang memiliki class ".select2"
 $(document).ready(function(){
     $( ".select2" ).select2();
@@ -53,6 +54,27 @@ function rakFunction()
         document.getElementsByClassName('newRak')[i].value=document.getElementById('rak').value; 
         document.getElementsByClassName('newBox')[i].value=document.getElementById('tahun').value;
         document.getElementsByClassName('newBatch')[i].value=document.getElementById('batch').value;
+      }
+    } 
+    else
+    { 
+      document.getElementById('newRak').value=""; 
+      document.getElementById('newBox').value=""; 
+      document.getElementById('newBatch').value=""; 
+    } 
+  } 
+
+// fungsi untuk auto fill form peminjaman
+function pinjamFunction() 
+  { 
+    if (document.getElementById('selectData').checked) 
+    { 
+      for(let i = 0; i<100; i++){
+        document.getElementsByClassName('newNama')[i].value=document.getElementById('nama').value; 
+        document.getElementsByClassName('newSeksi')[i].value=document.getElementById('seksi').value;
+        document.getElementsByClassName('newTanggal')[i].value=document.getElementById('tanggal').value;
+        document.getElementsByClassName('newNoND')[i].value=document.getElementById('noND').value;
+        document.getElementsByClassName('newTanggalND')[i].value=document.getElementById('tanggalND').value;
       }
     } 
     else
@@ -149,14 +171,13 @@ $(document).ready(function(){
 });
 
 // Autocomplete in form dinamis for Peminjaman
-var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 $(document).ready(function(){
     $( "#noPen" ).autocomplete({
         source: function( request, response ) {
             console.log(request.term)
         $.ajax({
             // url from global config in app2.blade.php
-            url:config.routes.zone,
+            url:config.routes.arsip,
             type: 'post',
             dataType: "json",
             data: {
@@ -170,6 +191,7 @@ $(document).ready(function(){
         },
         select: function (event, ui) {
         $(this).filter('.noDok').val(ui.item.value);
+        $('.idDok').val(ui.item.id_dok);
         $('.namaPT').val(ui.item.perusahaan);
         $('.jenisDok').val(ui.item.jenisDok);
         $('.tanggalDok').val(ui.item.tanggalDok);
@@ -191,10 +213,13 @@ $(document).ready(function(){
       <td><input type="text" name="namaPT[]" class="form-control namaPT"></td>
       <td><input type="text" name="jenisDok[]" class="form-control jenisDok"></td>
       <td><input type="date" class="form-control tanggalDok" placeholder="mm/dd/yyy" name="tanggalDok[]"></td>
-      <input type="hidden" class="form-control newBatch" name="newNama[]" required>
-      <input type="hidden" class="form-control newYear" name="newSeksi[]" required>
-      <input type="hidden" class="form-control newYear" name="newTanggal[]" required>
       <td>
+        <input type="hidden" class="form-control idDok" name="newID[]" required>
+        <input type="hidden" class="form-control newNama" name="newNama[]" required>
+        <input type="hidden" class="form-control newSeksi" name="newSeksi[]" required>
+        <input type="hidden" class="form-control newTanggal" name="newTanggal[]" required>
+        <input type="hidden" class="form-control newNoND" name="newNoND[]" required>
+        <input type="hidden" class="form-control newTanggalND" name="newTanggalND[]" required>
         <button class="btn btn-danger" id="remove">Hapus</button>
       </td>
     </tr>
@@ -204,7 +229,7 @@ $(document).ready(function(){
               source: function( request, response ) {
                   console.log(request.term)
               $.ajax({
-                  url:config.routes.zone,
+                  url:config.routes.arsip,
                   type: 'post',
                   dataType: "json",
                   data: {
@@ -218,6 +243,7 @@ $(document).ready(function(){
               },
               select: function (event, ui) {
               $(this).parents("tr").find('.noDok').val(ui.item.value);
+              $(this).parents("tr").find('.idDok').val(ui.item.id_dok);
               $(this).parents("tr").find('.namaPT').val(ui.item.perusahaan);
               $(this).parents("tr").find('.jenisDok').val(ui.item.jenisDok);
               $(this).parents("tr").find('.tanggalDok').val(ui.item.tanggalDok);
@@ -272,3 +298,6 @@ $(document).ready(function(){
 		$(this).parents('tr#rowForm').remove();	
 	});		  
 });
+
+let today = new Date().toISOString().slice(0, 10);
+document.getElementById('tanggal').value=today;

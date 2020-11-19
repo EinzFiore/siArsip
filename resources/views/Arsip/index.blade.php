@@ -6,55 +6,57 @@
       <h4>Data Serah Terima</h4>
     </div>
     <div class="card-body">
-      <table class="table display table-striped rowspan" id="arsip">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Rak</th>
-            <th scope="col">Box</th>
-            <th scope="col">Batch</th>
-            <th scope="col">Jenis Dokumen</th>
-            <th scope="col">Nomor Pendaftaran</th>
-            <th scope="col">Nama Perusahaan</th>
-            <th scope="col">Tanggal Dokumen</th>
-            <th scope="col">Status Dokumen</th>
-            <th scope="col">Aksi</th>
-          </tr>
-        </thead>
-        <tbody>
-          @php
-              $no = 1;
-          @endphp
-          @forelse ($arsip as $a)
+      <div class="table-responsive">
+        <table class="table display table-striped rowspan" id="arsip">
+          <thead>
             <tr>
-              <td><?= $no++ ?></td>
-              <td>{{$a->rak}}</td>
-              <td><span class="badge badge-warning">{{$a->box}}</span></td>
-              <td><span class="badge badge-secondary">{{$a->batch}}</span></td>
-              <td>{{$a->jenis_dokumen}}</td>
-              <td><span class="badge badge-primary">{{$a->no_pen}}</span></td>
-              <td>{{$a->nama_perusahaan}}</td>
-              <td>{{$a->tanggal_dokumen}}</td>
-              <td>
-                @php
-                    if($a->status == 0){
-                      echo "<span class='badge badge-danger'>NonAktif</span>";
-                    } elseif($a->status == 1) echo "<span class='badge badge-success'>Aktif</span>";
-                    else echo "<span class='badge badge-warning'>Dipinjamkan</span>";
-                @endphp
-              </td>
-              <td>
-                <button class="btn btn-primary mb-2" data-toggle="modal" data-target="#editArsip<?= $a->id_dok ?>">Edit</button>
-                <button class="btn btn-danger" data-toggle="modal" data-target="#hapusArsip<?= $a->id_dok ?>">Hapus</button>
-              </td>
+              <th scope="col">#</th>
+              <th scope="col">Rak</th>
+              <th scope="col">Box</th>
+              <th scope="col">Batch</th>
+              <th scope="col">Jenis Dokumen</th>
+              <th scope="col">Nomor Pendaftaran</th>
+              <th scope="col">Nama Perusahaan</th>
+              <th scope="col">Tanggal Dokumen</th>
+              <th scope="col">Status Dokumen</th>
+              <th scope="col">Aksi</th>
             </tr>
-            @empty
-            <div class="alert alert-danger">
-              Data Batch belum Tersedia.
-            </div>
-          @endforelse
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            @php
+                $no = 1;
+            @endphp
+            @forelse ($arsip as $a)
+              <tr>
+                <td><?= $no++ ?></td>
+                <td>{{$a->rak}}</td>
+                <td><span class="badge badge-warning">{{$a->box}}</span></td>
+                <td><span class="badge badge-secondary">{{$a->batch}}</span></td>
+                <td>{{$a->jenis_dokumen}}</td>
+                <td><span class="badge badge-primary">{{$a->no_pen}}</span></td>
+                <td>{{$a->nama_perusahaan}}</td>
+                <td>{{$a->tanggal_dokumen}}</td>
+                <td>
+                  @php
+                      if($a->status == 0){
+                        echo "<span class='badge badge-danger'>NonAktif</span>";
+                      } elseif($a->status == 1) echo "<span class='badge badge-success'>Aktif</span>";
+                      else echo "<span class='badge badge-success mb-2'>Aktif</span><span class='badge badge-warning'>Dipinjamkan</span>";
+                  @endphp
+                </td>
+                <td>
+                  <button class="btn btn-primary mb-2" data-toggle="modal" data-target="#editArsip<?= $a->id_dok ?>">Edit</button>
+                  <button class="btn btn-danger" data-toggle="modal" data-target="#hapusArsip<?= $a->id_dok ?>">Hapus</button>
+                </td>
+              </tr>
+              @empty
+              <div class="alert alert-danger">
+                Data Batch belum Tersedia.
+              </div>
+            @endforelse
+          </tbody>
+        </table>
+      </div>
   </div>
 @endsection
 

@@ -81,7 +81,8 @@
     // global app configuration object
     var config = {
         routes: {
-            zone: "{{ route('arsip') }}"
+            zone: "{{ route('arsip') }}",
+            arsip: "{{ route('getArsip') }}"
         }
     };
 </script>
