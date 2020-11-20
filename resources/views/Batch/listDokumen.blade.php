@@ -1,5 +1,6 @@
 @extends('layouts/app2')
 @section('title', 'List Data Dokumen Batch')
+@section('judul', 'List Data Dokumen Batch')
 @section('content')
 <div class="card">
     <div class="card-header">

@@ -1,5 +1,6 @@
 @extends('layouts/app2')
 @section('title', 'Jenis Dokumen | SIARSIP')
+@section('judul', 'List Jenis Dokumen')
 @section('content')
 <div class="card">
     <div class="card-header">

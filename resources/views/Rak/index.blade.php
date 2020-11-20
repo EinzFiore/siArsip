@@ -1,5 +1,6 @@
 @extends('layouts/app2')
 @section('title', 'List Rak | SIARSIP')
+@section('judul', 'List Rak')
 @section('content')
 <div class="card">
     <div class="card-header">

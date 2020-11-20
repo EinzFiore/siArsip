@@ -1,12 +1,14 @@
 @extends('layouts/app2')
-@section('title','Data Serah Terima')
+@section('title','Data Arsip BC.25')
+@section('judul','Arsip BC.25')
 @section('content')
 <div class="card">
     <div class="card-header">
-      <h4>Data Serah Terima</h4>
+      <h4>Data Arsip</h4>
     </div>
     <div class="card-body">
       <div class="table-responsive">
+        <a href="{{url('/arsip/export')}}" class="btn btn-success mb-2">Export Excel</a>
         <table class="table display table-striped rowspan" id="arsip">
           <thead>
             <tr>
@@ -38,7 +40,8 @@
                 <td>{{$a->tanggal_dokumen}}</td>
                 <td>
                   @php
-                      if($a->status == 0){
+                    $limit = $a->tahun_batch + 10;
+                      if($a->tahun_batch > $limit){
                         echo "<span class='badge badge-danger'>NonAktif</span>";
                       } elseif($a->status == 1) echo "<span class='badge badge-success'>Aktif</span>";
                       else echo "<span class='badge badge-success mb-2'>Aktif</span><span class='badge badge-warning'>Dipinjamkan</span>";

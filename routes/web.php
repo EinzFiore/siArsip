@@ -44,6 +44,7 @@ Route::resource('rak', RakController::class);
 Route::resource('dataArsip', DataArsipController::class);
 Route::post('/dataArsip/getDokumen', 'DataArsipController@getDataSerahTerima')->name('arsip');
 Route::post('/dataArsip/getArsip', 'DataArsipController@getDataArsip')->name('getArsip');
+Route::get('/arsip/export', 'DataArsipController@exportDataArsip');
 
 // Route Peminjaman
 Route::resource('peminjaman', PeminjamanController::class);

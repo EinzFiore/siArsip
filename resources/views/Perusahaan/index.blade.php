@@ -1,5 +1,6 @@
 @extends('layouts/app2')
 @section('title','Data Perusahaan')
+@section('judul','List Perusahaan')
 @section('content')
 <div class="card">
     <div class="card-header">

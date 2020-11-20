@@ -1,12 +1,13 @@
 @extends('layouts/app2')
 @section('title', 'Tambah Data Arsip')
+@section('judul', 'Tambah Data Arsip')
 @section('content')
 <div class="row">
   <div class="col-12 col-md-12 col-lg-12">
     <div class="card">
       <div class="container">
         <div class="card-header">
-          <h4>Tambah Data Arsip</h4>
+          <h4>Tambah Data Arsip BC.25</h4>
         </div>
         <div class="card-body p-0">
           <div class="table-responsive field-wrapper">

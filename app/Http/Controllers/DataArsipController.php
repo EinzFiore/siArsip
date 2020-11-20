@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ArsipExport;
 use Illuminate\Http\Request;
 use App\Models\Rak;
 use App\Models\Dokumen;
 use App\Models\DataArsip;
 use DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DataArsipController extends Controller
 {
@@ -23,7 +25,7 @@ class DataArsipController extends Controller
         // dd($tes);
         $arsip = DB::table('tb_arsip')
             ->join('dokumen', 'tb_arsip.no_pen', '=', 'dokumen.no_pen')
-            ->select('tb_arsip.*', 'dokumen.nama_perusahaan', 'dokumen.tanggal_dokumen', 'dokumen.jenis_dokumen')
+            ->select('tb_arsip.*', 'dokumen.nama_perusahaan', 'dokumen.tanggal_dokumen', 'dokumen.jenis_dokumen', 'dokumen.tahun_batch')
             ->get();
         return view('Arsip/index', compact('arsip'));
     }
@@ -176,5 +178,10 @@ class DataArsipController extends Controller
             );
         }
         return response()->json($response);
+    }
+
+    function exportDataArsip(Request $request)
+    {
+        return Excel::download(new ArsipExport, 'arsip.xlsx');
     }
 }
