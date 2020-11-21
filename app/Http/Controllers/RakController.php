@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Alert;
 use Illuminate\Http\Request;
 use App\Models\Rak;
+use DB;
 
 class RakController extends Controller
 {
@@ -109,5 +110,16 @@ class RakController extends Controller
             alert()->success('Success!', 'Data Berhasil Dihapus!')->autoclose(3500);
             return redirect('rak');
         }
+    }
+
+    function listDokumen($id)
+    {
+        $listDokumenInRak = DB::table('tb_arsip')
+            ->join('dokumen', 'tb_arsip.no_pen', '=', 'dokumen.no_pen')
+            ->join('rak', 'tb_arsip.rak', '=', 'rak.noRak')
+            ->where('tb_arsip.rak', '=', $id)
+            ->select('tb_arsip.*', 'dokumen.nama_perusahaan', 'dokumen.tanggal_dokumen', 'dokumen.jenis_dokumen', 'dokumen.tahun_batch')
+            ->get();
+        return view('rak.listDokumen', compact('listDokumenInRak'))->with('id', $id);
     }
 }

@@ -9,5 +9,6 @@ class Rak extends Model
 {
     use HasFactory;
     protected $table = 'rak';
+    protected $primaryKey = 'noRak';
     protected $fillable = ['noRak'];
 }

@@ -23,8 +23,9 @@
                 <th scope="row"><?= $no++ ?></th>
                 <td>{{$r->noRak}}</td>
                 <td>
-                <button class="btn btn-warning" data-toggle="modal" data-target="#editRak<?= $r->id ?>">Edit</button>
-                <button class="btn btn-danger" data-toggle="modal" data-target="#hapusRak<?= $r->id ?>">Hapus</button>
+                  <button class="btn btn-warning" data-toggle="modal" data-target="#editRak<?= $r->noRak ?>">Edit</button>
+                  <button class="btn btn-danger" data-toggle="modal" data-target="#hapusRak<?= $r->noRak ?>">Hapus</button>
+                  <a href="<?= route('listDokumen', $r->noRak) ?>" class="btn btn-primary">Lihat Dokumen</a>
                 </td>
             </tr>
           @empty
@@ -68,7 +69,7 @@
 
 @foreach ($rak as $r)
   <!-- Modal Edit -->
-  <div class="modal fade" id="editRak{{$r->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="editRak{{$r->noRak}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -77,7 +78,7 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form action="{{route('rak.update', $r->id)}}" method="POST" enctype="multipart/form-data">
+        <form action="{{route('rak.update', $r->noRak)}}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
           <div class="modal-body">
@@ -97,7 +98,7 @@
 
   @foreach ($rak as $r)
   <!-- Modal Hapus-->
-  <div class="modal fade" id="hapusRak{{$r->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="hapusRak{{$r->noRak}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -106,7 +107,7 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form action="{{route('rak.destroy', $r->id)}}" method="POST" enctype="multipart/form-data">
+        <form action="{{route('rak.destroy', $r->noRak)}}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('DELETE')
           <div class="modal-body">

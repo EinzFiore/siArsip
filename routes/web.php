@@ -39,6 +39,7 @@ Route::resource('jenisDokumen', JDController::class);
 
 // Route Rak
 Route::resource('rak', RakController::class);
+Route::get('rak/{id}/listDokumen', 'RakController@listDokumen')->name('listDokumen');
 
 // Route DataArsip
 Route::resource('dataArsip', DataArsipController::class);
