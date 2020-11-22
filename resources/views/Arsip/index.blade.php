@@ -8,7 +8,7 @@
     </div>
     <div class="card-body">
       <div class="table-responsive">
-        <a href="{{url('/arsip/export')}}" class="btn btn-success mb-2">Export Excel</a>
+        <button class="btn btn-success mb-2" data-toggle="modal" data-target="#exportData">Export Excel</button>
         <table class="table display table-striped rowspan" id="arsip">
           <thead>
             <tr>
@@ -134,3 +134,43 @@
     </div>
   </div>
   @endforeach
+
+  <div class="modal fade" id="exportData" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Export</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="<?= url('arsip/export') ?>" method="post">
+            @csrf
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">Rak</th>
+                  <th scope="col">Box</th>
+                  <th scope="col">Batch</th>
+                  <th scope="col">Tahun</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><input type="number" class="form-control" name="rak"></td>
+                  <td><input type="text" class="form-control" name="box"></td>
+                  <td><input type="number" class="form-control" name="batch"></td>
+                  <td><input type="number" class="form-control" name="tahun"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Export</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>

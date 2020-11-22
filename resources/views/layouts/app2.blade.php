@@ -24,8 +24,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
   <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
   <style>
-    .ui-autocomplete {
-    z-index:2147483647;
+  ul.ui-autocomplete {
+      z-index:9999;
   }
   </style>
 </head>

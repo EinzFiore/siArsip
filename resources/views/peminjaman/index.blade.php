@@ -112,9 +112,9 @@
                     <tr id="rowForm">
                       <td>1</td>
                       <td><input type="number" id="noPen" name="noDok[]" class="form-control noDok"></td>
-                      <td><input type="date" class="form-control tanggalDok" placeholder="mm/dd/yyy" name="tanggalDok[]"></td>
-                      <td><input type="text" name="namaPT[]" class="form-control namaPT"></td>
-                      <td><input type="text" name="jenisDok[]" class="form-control jenisDok"></td>
+                      <td><input type="date" class="form-control tanggalDok" placeholder="mm/dd/yyy" name="tanggalDok[]" readonly></td>
+                      <td><input type="text" name="namaPT[]" class="form-control namaPT" readonly></td>
+                      <td><input type="text" name="jenisDok[]" class="form-control jenisDok" readonly></td>
                       <input type="hidden" class="form-control idDok" name="newID[]" required>
                       <input type="hidden" class="form-control newNama" name="newNama[]" required>
                       <input type="hidden" class="form-control newSeksi" name="newSeksi[]" required>

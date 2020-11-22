@@ -14,15 +14,6 @@ class DataArsipController extends Controller
 {
     public function index()
     {
-        // $rak = 1;
-        // $box = 'A/1';
-        // $batch = 899;
-        // $tes = DB::table('tb_arsip')->where([
-        //     ['rak', '=', $rak],
-        //     ['box', '=', $box],
-        //     ['batch', '=', $batch],
-        // ])->get();
-        // dd($tes);
         $arsip = DB::table('tb_arsip')
             ->join('dokumen', 'tb_arsip.no_pen', '=', 'dokumen.no_pen')
             ->select('tb_arsip.*', 'dokumen.nama_perusahaan', 'dokumen.tanggal_dokumen', 'dokumen.jenis_dokumen', 'dokumen.tahun_batch')
@@ -162,7 +153,7 @@ class DataArsipController extends Controller
         $search = !empty($request->cari) ? ($request->cari) : ('');
 
         if ($search) {
-            $dataSerahTerima->where('no_pen', 'like', '%' . $search . '%');
+            $dataSerahTerima->where('tb_arsip.no_pen', 'like', '%' . $search . '%');
         }
 
         $data = $dataSerahTerima->limit(5)->get();
@@ -182,6 +173,6 @@ class DataArsipController extends Controller
 
     function exportDataArsip(Request $request)
     {
-        return Excel::download(new ArsipExport, 'arsip.xlsx');
+        return (new ArsipExport)->kondisi($request->rak, $request->box, $request->batch, $request->tahun)->download('arsip-' . $request->rak . $request->batch . $request->tahun . '.xlsx');
     }
 }
