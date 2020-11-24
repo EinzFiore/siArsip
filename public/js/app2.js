@@ -299,5 +299,16 @@ $(document).ready(function(){
 	});		  
 });
 
+$(".filter").on('change', function(){
+  let rak = $("#filterRak").val();
+  let box = $("#filterBox").val();
+  let batch = $("#filterBatch").val();
+  let tahun = $("#filterTahun").val();
+  let status = $("#filterStatus").val();
+
+  console.log([rak,box,batch,tahun,status]);
+})
+
 let today = new Date().toISOString().slice(0, 10);
 document.getElementById('tanggal').value=today;
+

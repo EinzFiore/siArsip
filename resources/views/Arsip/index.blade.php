@@ -2,11 +2,87 @@
 @section('title','Data Arsip BC.25')
 @section('judul','Arsip BC.25')
 @section('content')
+@php
+    $newBox = array_unique($box);
+    $newBatch = array_unique($batch);
+    $newTahun = array_unique($tahun);
+    $newStatus = array_unique($status);
+@endphp
 <div class="card">
     <div class="card-header">
       <h4>Data Arsip</h4>
     </div>
     <div class="card-body">
+      {{-- <label><strong>Filter Data Arsip</strong></label>
+      <hr>
+      <div class="row mb-2">
+        <div class="col-sm-2">
+          <div class="rak">
+            <label>Rak</label>
+            <div class="form-group">
+              <select name="rak" class="form-control select2 filter" id="filterRak">
+                <option>Pilih Rak</option>
+                @foreach ($rak as $r)
+                <option value="<?= $r->noRak ?>"><?= $r->noRak ?></option>
+                @endforeach
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="box">
+            <label>Box</label>
+            <div class="form-group">
+              <select name="box" class="form-control select2 filter" id="filterBox">
+                <option>Pilih Box</option>
+                @foreach ($newBox as $b)
+                <option value="<?= $b ?>"><?= $b ?></option>
+                @endforeach
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="Batch">
+            <label>Batch</label>
+            <div class="form-group">
+              <select name="batch" class="form-control select2 filter" id="filterBatch">
+                <option>Pilih Batch</option>
+                @foreach ($newBatch as $b)
+                <option value="<?= $b ?>"><?= $b ?></option>
+                @endforeach
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="Batch">
+            <label>Tahun</label>
+            <div class="form-group">
+              <select name="Tahun" class="form-control select2 filter" id="filterTahun">
+                <option>Pilih Tahun</option>
+                @foreach ($newTahun as $t)
+                <option value="<?= $t ?>"><?= $t ?></option>
+                @endforeach
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="Batch">
+            <label>Status</label>
+            <div class="form-group">
+              <select name="status" class="form-control select2 filter" id="filterStatus">
+                <option>Pilih Status</option>
+                @foreach ($newStatus as $s)
+                <option value="<?= $s ?>"><?= $s ?></option>
+                @endforeach
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr> --}}
       <div class="table-responsive">
         <button class="btn btn-success mb-2" data-toggle="modal" data-target="#exportData">Export Excel</button>
         <table class="table display table-striped rowspan" id="arsip">
@@ -145,6 +221,7 @@
           </button>
         </div>
         <div class="modal-body">
+          <p>Export Data Arsip BC.25</p>
           <form action="<?= url('arsip/export') ?>" method="post">
             @csrf
             <table class="table table-striped">

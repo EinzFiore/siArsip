@@ -8,6 +8,7 @@ use App\Models\Perusahaan;
 use App\Models\Batch;
 use App\Models\JenisDokumen;
 use Illuminate\Http\Request;
+use App\Exports\SerahTerimaExport;
 
 class SerahTerima extends Controller
 {
@@ -81,5 +82,11 @@ class SerahTerima extends Controller
             alert()->success('Success!', 'Data Berhasil Dihapus!')->autoclose(3500);
             return redirect('serahTerima');
         }
+    }
+
+    function export(Request $request)
+    {
+        return (new SerahTerimaExport)->kondisi($request->batch, $request->nama, $request->nip, $request->tahun)
+            ->download('serahterima-' . $request->batch . $request->tahun . '.xlsx');
     }
 }

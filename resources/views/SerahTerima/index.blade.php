@@ -7,6 +7,7 @@
       <h4>Data Serah Terima</h4>
     </div>
     <div class="card-body">
+      <button class="btn btn-success mb-2" data-toggle="modal" data-target="#exampleModal"><i class="far fa-file-excel mr-2"></i>Export Excel</button>
       <table class="table table-striped data" id="row">
         <thead>
           <tr>
@@ -118,3 +119,41 @@
   </div>
 </div>
 @endforeach
+<!-- Modal Export -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Export Data</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="<?= route('exportST') ?>" method="post">
+          @csrf
+          <div class="form-group">
+            <label for="exampleInputEmail1">Nama Seksi PKC</label>
+            <input type="text" class="form-control" name="nama">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">NIP</label>
+            <input type="number" class="form-control" name="nip">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Batch</label>
+            <input type="number" class="form-control" name="batch">
+          </div>
+          <div class="form-group">
+            <label class="form-check-label" for="exampleCheck1">Periode Tahun Batch</label>
+            <input type="text" class="form-control" name="tahun">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Export</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

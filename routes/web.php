@@ -26,6 +26,7 @@ Route::post('/perusahaan/getPerusahaan/', 'PerusahaanController@getPerusahaan')-
 
 // Route SerahTerima
 Route::resource('serahTerima', SerahTerima::class);
+Route::post('serahTerima/exportST', 'SerahTerima@export')->name('exportST');
 
 // Route Batch
 Route::resource('batch', BatchController::class);

@@ -1,14 +1,29 @@
-<table border="1" cellspacing="0">
+<table>
     <thead>
         <tr>
-            <th>No.</th>
-            <th>Nomor Pendaftaran</th>
-            <th>Tanggal Dokumen</th>
-            <th>Nama Perusahaan</th>
-            <th>Jenis Dokumen</th>
-            <th>Rak</th>
-            <th>Box</th>
-            <th>Batch</th>
+            <td style="font-size: 17px; text-align: center" colspan="8"><strong>Arsip BC.25</strong></td>
+        </tr>
+        <tr>
+            <td colspan="2">Rak : <?= $arsipData['rak'] ?></td>
+        </tr>
+        <tr>
+            <td colspan="2">Batch : <?= $arsipData['batch'] ?></td>
+        </tr>
+        <tr>
+            <td colspan="2">Tahun : <?= $arsipData['tahun'] ?></td>
+        </tr>
+        <tr>
+            <td></td>
+        </tr>
+        <tr>
+            <th style="text-align: center">No.</th>
+            <th style="text-align: center">No. Pen</th>
+            <th style="text-align: center">Tanggal Dok</th>
+            <th style="text-align: center">Nama PT</th>
+            <th style="text-align: center">Jenis Dok</th>
+            <th style="text-align: center">Rak</th>
+            <th style="text-align: center">Box</th>
+            <th style="text-align: center">Batch</th>
         </tr>
     </thead>
     <tbody>
@@ -16,15 +31,15 @@
             $no = 1;
         @endphp
         @foreach ($dataArsip as $data)
-        <tr>
-            <td><?= $no++ ?></td>
-            <td><?= $data->no_pen ?></td>
-            <td><?= $data->tanggal_dokumen ?></td>
-            <td><?= $data->nama_perusahaan ?></td>
-            <td><?= $data->jenis_dokumen ?></td>
-            <td><?= $data->rak ?></td>
-            <td><?= $data->box ?></td>
-            <td><?= $data->batch ?></td>
+        <tr style="text-align: center">
+            <td style="text-align: center"><?= $no++ ?></td>
+            <td style="text-align: center"><?= $data->no_pen ?></td>
+            <td style="text-align: center"><?= $data->tanggal_dokumen ?></td>
+            <td style="text-align: left"><?= $data->nama_perusahaan ?></td>
+            <td style="text-align: center"><?= $data->jenis_dokumen ?></td>
+            <td style="text-align: center"><?= $data->rak ?></td>
+            <td style="text-align: center"><?= $data->box ?></td>
+            <td style="text-align: center"><?= $data->batch ?></td>
         </tr>
         @endforeach
         <tr>
@@ -32,8 +47,7 @@
             <td></td>
         </tr>
         <tr>
-            <td>Purwakarta,</td>
-            <td>November 2020</td>
+            <td colspan="3">Purwakarta, November 2020</td>
         </tr>
     </tbody>
 </table>

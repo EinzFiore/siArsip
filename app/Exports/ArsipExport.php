@@ -5,7 +5,7 @@ namespace App\Exports;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\Exportable;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class ArsipExport implements FromView
 {
@@ -21,6 +21,12 @@ class ArsipExport implements FromView
 
     public function view(): View
     {
+        $arsipData = [
+            'rak' => $this->rak,
+            'box' => $this->box,
+            'batch' => $this->batch,
+            'tahun' => $this->tahun
+        ];
         $data['dataArsip'] = $arsip = DB::table('tb_arsip')
             ->join('dokumen', 'tb_arsip.no_pen', '=', 'dokumen.no_pen')
             ->select('tb_arsip.*', 'dokumen.nama_perusahaan', 'dokumen.tanggal_dokumen', 'dokumen.jenis_dokumen', 'dokumen.tahun_batch')
@@ -30,6 +36,7 @@ class ArsipExport implements FromView
                 ['tb_arsip.batch', '=', $this->batch],
                 ['dokumen.tahun_batch', '=', $this->tahun],
             ])->get();
-        return view('Arsip.exports.arsip', $data);
+
+        return view('Arsip.exports.arsip', $data)->with('arsipData', $arsipData);
     }
 }

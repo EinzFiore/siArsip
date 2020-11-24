@@ -18,7 +18,12 @@ class DataArsipController extends Controller
             ->join('dokumen', 'tb_arsip.no_pen', '=', 'dokumen.no_pen')
             ->select('tb_arsip.*', 'dokumen.nama_perusahaan', 'dokumen.tanggal_dokumen', 'dokumen.jenis_dokumen', 'dokumen.tahun_batch')
             ->get();
-        return view('Arsip/index', compact('arsip'));
+        $box = DataArsip::pluck('box')->toArray();
+        $batch = DataArsip::pluck('batch')->toArray();
+        $status = DataArsip::pluck('status')->toArray();
+        $tahun = Dokumen::pluck('tahun_batch')->toArray();
+        $rak = Rak::get();
+        return view('Arsip/index', compact('arsip', 'rak', 'box', 'batch', 'status', 'tahun'));
     }
 
     /**
@@ -173,6 +178,7 @@ class DataArsipController extends Controller
 
     function exportDataArsip(Request $request)
     {
-        return (new ArsipExport)->kondisi($request->rak, $request->box, $request->batch, $request->tahun)->download('arsip-' . $request->rak . $request->batch . $request->tahun . '.xlsx');
+        return (new ArsipExport)->kondisi($request->rak, $request->box, $request->batch, $request->tahun)
+        ->download('arsip-' . $request->rak . $request->batch . $request->tahun . '.xlsx');
     }
 }
