@@ -29,13 +29,47 @@ class DataArsipController extends Controller
         return view('Arsip/index', compact('arsip', 'rak', 'box', 'batch', 'status', 'tahun'));
     }
 
-    function getData()
+    function getData(Request $request)
     {
-        $arsip = DB::table('tb_arsip')
-            ->join('dokumen', 'tb_arsip.no_pen', '=', 'dokumen.no_pen')
-            ->select('tb_arsip.*', 'dokumen.nama_perusahaan', 'dokumen.tanggal_dokumen', 'dokumen.jenis_dokumen', 'dokumen.tahun_batch')
-            ->get();
-        return DataTables::of($arsip)->make(true);
+        $data = DataArsip::select([
+            'tb_arsip.*',
+            'dokumen.nama_perusahaan', 'dokumen.tanggal_dokumen', 'dokumen.jenis_dokumen', 'dokumen.tahun_batch'
+        ])->join('dokumen', 'tb_arsip.no_pen', '=', 'dokumen.no_pen');
+
+        if ($request->input('rak') != null) {
+            $data = $data->where('rak', $request->rak);
+        }
+
+        if ($request->input('box') != null) {
+            $data = $data->where('box', $request->box);
+        }
+
+        if ($request->input('batch') != null) {
+            $data = $data->where('tb_arsip.batch', $request->batch);
+        }
+
+        if ($request->input('tahun') != null) {
+            $data = $data->where('dokumen.tahun_batch', $request->tahun);
+        }
+
+        if ($request->input('bulan') != null) {
+            $data = $data->whereMonth('tb_arsip.created_at', $request->bulan);
+        }
+
+        if ($request->input('status') != null) {
+            if ($request->input('status') == 1)
+                $data = $data->where('status', $request->status);
+            elseif ($request->input('status') == 2)
+                $data = $data->where('status', $request->status);
+            else $data = $data->where('status', $request->status);
+        }
+
+        // $arsip = DB::table('tb_arsip')
+        //     ->join('dokumen', 'tb_arsip.no_pen', '=', 'dokumen.no_pen')
+        //     ->select('tb_arsip.*', 'dokumen.nama_perusahaan', 'dokumen.tanggal_dokumen', 'dokumen.jenis_dokumen', 'dokumen.tahun_batch')
+        //     ->where('')
+        //     ->get();
+        return DataTables::of($data)->make(true);
     }
 
     /**

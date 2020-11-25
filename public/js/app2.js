@@ -1,7 +1,70 @@
+// variabel
+  let rak = $("#filterRak").val();
+  let box = $("#filterBox").val();
+  let batch = $("#filterBatch").val();
+  let bulan = $("#filterBulan").val();
+  let tahun = $("#filterTahun").val();
+  let status = $("#filterStatus").val();
 
 // Select2 untuk form input yang memiliki class ".select2"
 $(document).ready(function(){
     $( ".select2" ).select2();
+});
+
+const tableArsip = $('#arsip').DataTable({
+  rowsGroup : [0,1,2,3,4,5,6,7],
+  processing : true,
+  serverside : true,
+  ajax : {
+    url: config.routes.getData,
+    type: "post",
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    data: function(d){
+      d.rak = rak;
+      d.box = box;
+      d.batch = batch;
+      d.tahun = tahun;
+      d.bulan = bulan;
+      d.status = status;
+      return d
+    }
+  },
+  columns: [
+    {data: 'rak', name:'rak',
+      render: function(data){
+        return `<span class="badge badge-info">${data}</span>`
+      }
+    },
+    {data: 'box', name:'box'},
+    {data: 'batch', name:'batch'},
+    {data: 'jenis_dokumen', name:'jenis_dokumen'},
+    {data: 'no_pen', name:'no_pen',
+      render: function(data){
+        return `<span class="badge badge-light">${data}</span>`
+      }
+    },
+    {data: 'nama_perusahaan', name:'nama_perusahaan'},
+    {data: 'tanggal_dokumen', name:'tanggal_dok'},
+    {data: 'status', name:'status',
+      render: function ( data, type, row ) {
+        if(data == 1){
+          return `<span class="badge badge-success">Aktif</span>`;
+        } else if(data == 2){
+          return `<span class="badge badge-success mb-2">Aktif</span>
+                  <span class="badge badge-warning">Dipinjam</span>`;
+        } else return `<span class="badge badge-danger">NonAktif</span>`
+      }
+    },
+    {data: 'id_dok',
+      render: function ( data, type, row ) {
+      return `<button class="btn btn-primary mb-2" data-toggle="modal" data-target="#editArsip${data}">Edit</button>
+              <button class="btn btn-danger" data-toggle="modal" data-target="#hapusArsip${data}">Hapus</button>
+      `;
+    }
+  },
+  ]
 });
 
 // DataTable untuk table yang memiliki class ".data"
@@ -13,46 +76,8 @@ $(document).ready(function(){
           'copy', 'csv', 'excel', 'pdf', 'print'
       ]
     });
-    $('#arsip').DataTable({
-      rowsGroup : [0,1,2,3,4,5,6,7],
-      processing : true,
-      serverside : true,
-      ajax : config.routes.getData,
-      columns: [
-        {data: 'rak', name:'rak',
-          render: function(data){
-            return `<span class="badge badge-info">${data}</span>`
-          }
-        },
-        {data: 'box', name:'box'},
-        {data: 'batch', name:'batch'},
-        {data: 'jenis_dokumen', name:'jenis_dokumen'},
-        {data: 'no_pen', name:'no_pen',
-          render: function(data){
-            return `<span class="badge badge-light">${data}</span>`
-          }
-        },
-        {data: 'nama_perusahaan', name:'nama_perusahaan'},
-        {data: 'tanggal_dokumen', name:'tanggal_dok'},
-        {data: 'status', name:'status',
-          render: function ( data, type, row ) {
-            if(data == 1){
-              return `<span class="badge badge-success">Aktif</span>`;
-            } else if(data == 2){
-              return `<span class="badge badge-warning">Aktif</span>
-                      <span class="badge badge-warning">Dipinjam</span>`;
-            } else return `span class="badge badge-danger">NonAktif</span>`
-          }
-        },
-        {data: 'id_dok',
-          render: function ( data, type, row ) {
-          return `<button class="btn btn-primary mb-2" data-toggle="modal" data-target="#editArsip${data}">Edit</button>
-                  <button class="btn btn-danger" data-toggle="modal" data-target="#hapusArsip${data}">Hapus</button>
-          `;
-        }
-      },
-      ]
-    });
+
+    
     // terapkan rowspanizer untuk setiap attribut yang memiliki class .rowspan
     // $('#arsip').rowspanizer(
     //   {
@@ -333,14 +358,16 @@ $(document).ready(function(){
 	});		  
 });
 
+// Fungsi Filter Arsip
 $(".filter").on('change', function(){
-  let rak = $("#filterRak").val();
-  let box = $("#filterBox").val();
-  let batch = $("#filterBatch").val();
-  let tahun = $("#filterTahun").val();
-  let status = $("#filterStatus").val();
+  rak = $("#filterRak").val();
+  box = $("#filterBox").val();
+  batch = $("#filterBatch").val();
+  bulan = $("#filterBulan").val();
+  tahun = $("#filterTahun").val();
+  status = $("#filterStatus").val();
 
-  console.log([rak,box,batch,tahun,status]);
+  tableArsip.ajax.reload(null,false)
 })
 
 let today = new Date().toISOString().slice(0, 10);

@@ -13,7 +13,7 @@
       <h4>Data Arsip</h4>
     </div>
     <div class="card-body">
-      {{-- <label><strong>Filter Data Arsip</strong></label>
+      <label><strong>Filter Data Arsip</strong></label>
       <hr>
       <div class="row mb-2">
         <div class="col-sm-2">
@@ -21,7 +21,7 @@
             <label>Rak</label>
             <div class="form-group">
               <select name="rak" class="form-control select2 filter" id="filterRak">
-                <option>Pilih Rak</option>
+                <option value="">Pilih Rak</option>
                 @foreach ($rak as $r)
                 <option value="<?= $r->noRak ?>"><?= $r->noRak ?></option>
                 @endforeach
@@ -34,7 +34,7 @@
             <label>Box</label>
             <div class="form-group">
               <select name="box" class="form-control select2 filter" id="filterBox">
-                <option>Pilih Box</option>
+                <option value="">Pilih Box</option>
                 @foreach ($newBox as $b)
                 <option value="<?= $b ?>"><?= $b ?></option>
                 @endforeach
@@ -46,8 +46,8 @@
           <div class="Batch">
             <label>Batch</label>
             <div class="form-group">
-              <select name="batch" class="form-control select2 filter" id="filterBatch">
-                <option>Pilih Batch</option>
+              <select name="newBatch" class="form-control select2 filter" id="filterBatch">
+                <option value="">Pilih Batch</option>
                 @foreach ($newBatch as $b)
                 <option value="<?= $b ?>"><?= $b ?></option>
                 @endforeach
@@ -57,10 +57,32 @@
         </div>
         <div class="col-sm-2">
           <div class="Batch">
+            <label>Bulan Input</label>
+            <div class="form-group">
+              <select name="bulan" class="form-control select2 filter" id="filterBulan">
+                <option value="">Pilih Bulan</option>
+                <option value="01">Januari</option>
+                <option value="02">Februari</option>
+                <option value="03">Maret</option>
+                <option value="04">April</option>
+                <option value="05">Mei</option>
+                <option value="06">Juni</option>
+                <option value="07">Juli</option>
+                <option value="08">Agustus</option>
+                <option value="09">September</option>
+                <option value="10">Oktober</option>
+                <option value="11">November</option>
+                <option value="12">Desember</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="Batch">
             <label>Tahun</label>
             <div class="form-group">
               <select name="Tahun" class="form-control select2 filter" id="filterTahun">
-                <option>Pilih Tahun</option>
+                <option value="">Pilih Tahun</option>
                 @foreach ($newTahun as $t)
                 <option value="<?= $t ?>"><?= $t ?></option>
                 @endforeach
@@ -73,16 +95,16 @@
             <label>Status</label>
             <div class="form-group">
               <select name="status" class="form-control select2 filter" id="filterStatus">
-                <option>Pilih Status</option>
-                @foreach ($newStatus as $s)
-                <option value="<?= $s ?>"><?= $s ?></option>
-                @endforeach
+                <option value="">Pilih Status</option>
+                <option value="1">Aktif</option>
+                <option value="2">Dipinjamkan</option>
+                <option value="0">NonAktif</option>
               </select>
             </div>
           </div>
         </div>
       </div>
-      <hr> --}}
+      <hr>
       <div class="table-responsive">
         <button class="btn btn-success mb-2" data-toggle="modal" data-target="#exportData">Export Excel</button>
         <table class="table display table-bordered" id="arsip">
