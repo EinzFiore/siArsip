@@ -85,6 +85,7 @@
             zone: "{{ route('arsip') }}",
             arsip: "{{ route('getArsip') }}",
             getData: "{{ route('getData') }}",
+            getDokumen: "{{ route('getDokumen') }}",
         }
     };
 </script>

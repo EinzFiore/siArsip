@@ -79,7 +79,7 @@
         </div>
         <div class="col-sm-2">
           <div class="Batch">
-            <label>Tahun</label>
+            <label>Tahun Dokumen</label>
             <div class="form-group">
               <select name="Tahun" class="form-control select2 filter" id="filterTahun">
                 <option value="">Pilih Tahun</option>

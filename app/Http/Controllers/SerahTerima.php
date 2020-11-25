@@ -9,13 +9,37 @@ use App\Models\Batch;
 use App\Models\JenisDokumen;
 use Illuminate\Http\Request;
 use App\Exports\SerahTerimaExport;
+use Yajra\DataTables\Facades\DataTables;
 
 class SerahTerima extends Controller
 {
     function index()
     {
         $serahTerima = Dokumen::latest()->paginate(10);
-        return view('SerahTerima/index', ['serahTerima' => $serahTerima]);
+        $tahun = Dokumen::pluck('tahun_batch')->toArray();
+        $batch = Dokumen::pluck('batch')->toArray();
+        return view('SerahTerima/index', ['serahTerima' => $serahTerima], compact('batch', 'tahun'));
+    }
+
+    function getDataDokumen(Request $request)
+    {
+        $data = Dokumen::select('*');
+        if ($request->input('batch') != null) {
+            $data = $data->where('batch', $request->batch);
+        }
+        if ($request->input('tahunBatch') != null) {
+            $data = $data->where('tahun_batch', $request->tahun_batch);
+        }
+
+        if ($request->input('bulan') != null) {
+            $data = $data->whereMonth('created_at', $request->bulan);
+        }
+
+        if ($request->input('tahunInput') != null) {
+            $data = $data->whereYear('created_at', $request->tahunInput);
+        }
+
+        return DataTables::of($data)->make(true);
     }
 
     function create()

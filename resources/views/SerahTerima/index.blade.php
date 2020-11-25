@@ -2,44 +2,94 @@
 @section('title','Data Serah Terima')
 @section('judul', 'List Serah Terima')
 @section('content')
+@php
+    $newBatch = array_unique($batch);
+    $newTahun = array_unique($tahun);
+@endphp
 <div class="card">
     <div class="card-header">
       <h4>Data Serah Terima</h4>
     </div>
     <div class="card-body">
+      <label><strong>Filter Data Serah Terima</strong></label>
+      <hr>
+      <div class="row mb-2">
+        <div class="col-sm-2">
+          <div class="batch">
+            <label>Batch</label>
+            <div class="form-group">
+              <select name="batch" class="form-control select2 filterDokumen" id="filterBatch">
+                <option value="">Pilih Batch</option>
+                @foreach ($newBatch as $b)
+                <option value="<?= $b ?>"><?= $b ?></option>
+                @endforeach
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="box">
+            <label>Tahun Batch</label>
+            <div class="form-group">
+              <select name="tahunBatch" class="form-control select2 filterDokumen" id="filterTahun">
+                <option value="">Pilih Tahun</option>
+                @foreach ($newTahun as $n)
+                <option value="<?= $n ?>"><?= $n ?></option>
+                @endforeach
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="Batch">
+            <label>Bulan Input</label>
+            <div class="form-group">
+              <select name="bulan" class="form-control select2 filterDokumen" id="filterBulan">
+                <option value="">Pilih Bulan</option>
+                <option value="01">Januari</option>
+                <option value="02">Februari</option>
+                <option value="03">Maret</option>
+                <option value="04">April</option>
+                <option value="05">Mei</option>
+                <option value="06">Juni</option>
+                <option value="07">Juli</option>
+                <option value="08">Agustus</option>
+                <option value="09">September</option>
+                <option value="10">Oktober</option>
+                <option value="11">November</option>
+                <option value="12">Desember</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="Batch">
+            <label>Tahun Input</label>
+            <div class="form-group">
+              <select name="tahunInput" class="form-control select2 filterDokumen" id="filterTahunInput">
+                <option value="">Pilih Tahun</option>
+                @foreach ($newTahun as $n)
+                <option value="<?= $n ?>"><?= $n ?></option>
+                @endforeach
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr>
       <button class="btn btn-success mb-2" data-toggle="modal" data-target="#exampleModal"><i class="far fa-file-excel mr-2"></i>Export Excel</button>
-      <table class="table table-striped data" id="row">
+      <table class="table table-bordered" id="dokumen">
         <thead>
           <tr>
-            <th scope="col">#</th>
             <th scope="col">Batch</th>
-            <th scope="col">Nama Perusahaan</th>
-            <th scope="col">Nomor Dokumen</th>
-            <th scope="col">Tanggal Dokumen</th>
             <th scope="col">Jenis Dokumen</th>
+            <th scope="col">Tanggal Dokumen</th>
+            <th scope="col">Nomor Dokumen</th>
+            <th scope="col">Nama Perusahaan</th>
             <th scope="col">Action</th>
           </tr>
         </thead>
         <tbody>
-          <?php $no = 1; ?>
-          @forelse ($serahTerima as $sr)
-          <tr>
-            <th scope="row"><?= $no++ ?></th>
-            <td>{{$sr->batch}}</td>
-            <td>{{$sr->nama_perusahaan}}</td>
-            <td>{{$sr->no_pen}}</td>
-            <td>{{$sr->tanggal_dokumen}}</td>
-            <td>{{$sr->jenis_dokumen}}</td>
-            <td>
-              <button class="btn btn-warning" data-toggle="modal" data-target="#editSR{{$sr->no_pen}}">Edit</button>
-              <button class="btn btn-danger" data-toggle="modal" data-target="#hapusSR{{$sr->no_pen}}">Hapus</button>
-            </td>
-          </tr>
-          @empty
-          <div class="alert alert-danger">
-            Data Batch belum Tersedia.
-        </div>
-          @endforelse
         </tbody>
       </table>
   </div>
@@ -57,7 +107,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form action="{{ route('serahTerima.update', $sr->no_pen) }}" method="post">
+        <form action="{{ route('serahTerima.update', $sr->id) }}" method="post">
               @csrf
               @method('PUT')
               <div class="form-group">
@@ -101,7 +151,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form action="{{route('serahTerima.destroy', $sr->no_pen)}}" method="POST" enctype="multipart/form-data">
+      <form action="{{route('serahTerima.destroy', $sr->id)}}" method="POST" enctype="multipart/form-data">
           @csrf
           @method('DELETE')
         <div class="modal-body">

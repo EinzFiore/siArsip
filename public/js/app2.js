@@ -1,9 +1,10 @@
-// variabel
+// variabel global Arsip
   let rak = $("#filterRak").val();
   let box = $("#filterBox").val();
   let batch = $("#filterBatch").val();
   let bulan = $("#filterBulan").val();
   let tahun = $("#filterTahun").val();
+  let tahunInput = $("#filterTahunInput").val();
   let status = $("#filterStatus").val();
 
 // Select2 untuk form input yang memiliki class ".select2"
@@ -11,6 +12,7 @@ $(document).ready(function(){
     $( ".select2" ).select2();
 });
 
+// Tabel Arsip BC.25
 const tableArsip = $('#arsip').DataTable({
   rowsGroup : [0,1,2,3,4,5,6,7],
   processing : true,
@@ -48,7 +50,7 @@ const tableArsip = $('#arsip').DataTable({
     {data: 'nama_perusahaan', name:'nama_perusahaan'},
     {data: 'tanggal_dokumen', name:'tanggal_dok'},
     {data: 'status', name:'status',
-      render: function ( data, type, row ) {
+      render: function (data) {
         if(data == 1){
           return `<span class="badge badge-success">Aktif</span>`;
         } else if(data == 2){
@@ -58,9 +60,52 @@ const tableArsip = $('#arsip').DataTable({
       }
     },
     {data: 'id_dok',
-      render: function ( data, type, row ) {
+      render: function (data) {
       return `<button class="btn btn-primary mb-2" data-toggle="modal" data-target="#editArsip${data}">Edit</button>
               <button class="btn btn-danger" data-toggle="modal" data-target="#hapusArsip${data}">Hapus</button>
+      `;
+    }
+  },
+  ]
+});
+
+// Tabel Serah Terima BC.25
+const tableDokumen = $('#dokumen').DataTable({
+  rowsGroup : [0,1],
+  processing : true,
+  serverside : true,
+  ajax : {
+    url: config.routes.getDokumen,
+    type: "post",
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    data: function(d){
+      d.batch = batch;
+      d.tahun = tahun;
+      d.bulan = bulan;
+      d.tahunInput = tahunInput;
+      return d
+    }
+  },
+  columns: [
+    {data: 'batch', name:'batch',
+      render: function(data){
+        return `<span class="badge badge-info">${data}</span>`
+      }
+    },
+    {data: 'jenis_dokumen', name:'jenis_dokumen'},
+    {data: 'tanggal_dokumen', name:'tanggal_dok'},
+    {data: 'no_pen', name:'no_pen',
+      render: function(data){
+        return `<span class="badge badge-light">${data}</span>`
+      }
+    },
+    {data: 'nama_perusahaan', name:'nama_perusahaan'},
+    {data: 'no_pen',
+      render: function (data) {
+      return `<button class="btn btn-primary mb-2" data-toggle="modal" data-target="#editSR${data}">Edit</button>
+              <button class="btn btn-danger" data-toggle="modal" data-target="#hapusSR${data}">Hapus</button>
       `;
     }
   },
@@ -76,15 +121,6 @@ $(document).ready(function(){
           'copy', 'csv', 'excel', 'pdf', 'print'
       ]
     });
-
-    
-    // terapkan rowspanizer untuk setiap attribut yang memiliki class .rowspan
-    // $('#arsip').rowspanizer(
-    //   {
-    //     vertical_align: 'middle',
-    //     columns: [0,1,2]
-    //   }
-    // );
 });
 
 // fungsi untuk auto fill form batch
@@ -368,6 +404,18 @@ $(".filter").on('change', function(){
   status = $("#filterStatus").val();
 
   tableArsip.ajax.reload(null,false)
+})
+
+// Fungsi Filter PKC
+$(".filterDokumen").on('change', function(){
+  batch = $("#filterBatch").val();
+  bulan = $("#filterBulan").val();
+  tahun = $("#filterTahun").val();
+  tahunInput = $("#filterTahunInput").val();
+
+  console.log(bulan);
+
+  tableDokumen.ajax.reload(null,false)
 })
 
 let today = new Date().toISOString().slice(0, 10);
