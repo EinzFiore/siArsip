@@ -14,18 +14,36 @@ $(document).ready(function(){
       ]
     });
     $('#arsip').DataTable({
+      rowsGroup : [0,1,2,3,4,5,6,7],
       processing : true,
       serverside : true,
       ajax : config.routes.getData,
       columns: [
-        {data: 'rak', name:'rak'},
+        {data: 'rak', name:'rak',
+          render: function(data){
+            return `<span class="badge badge-info">${data}</span>`
+          }
+        },
         {data: 'box', name:'box'},
         {data: 'batch', name:'batch'},
         {data: 'jenis_dokumen', name:'jenis_dokumen'},
-        {data: 'no_pen', name:'no_pen'},
+        {data: 'no_pen', name:'no_pen',
+          render: function(data){
+            return `<span class="badge badge-light">${data}</span>`
+          }
+        },
         {data: 'nama_perusahaan', name:'nama_perusahaan'},
         {data: 'tanggal_dokumen', name:'tanggal_dok'},
-        {data: 'status', name:'status'},
+        {data: 'status', name:'status',
+          render: function ( data, type, row ) {
+            if(data == 1){
+              return `<span class="badge badge-success">Aktif</span>`;
+            } else if(data == 2){
+              return `<span class="badge badge-warning">Aktif</span>
+                      <span class="badge badge-warning">Dipinjam</span>`;
+            } else return `span class="badge badge-danger">NonAktif</span>`
+          }
+        },
         {data: 'id_dok',
           render: function ( data, type, row ) {
           return `<button class="btn btn-primary mb-2" data-toggle="modal" data-target="#editArsip${data}">Edit</button>
@@ -35,8 +53,8 @@ $(document).ready(function(){
       },
       ]
     });
-    // // terapkan rowspanizer untuk setiap attribut yang memiliki class .rowspan
-    // $('.rowspan').rowspanizer(
+    // terapkan rowspanizer untuk setiap attribut yang memiliki class .rowspan
+    // $('#arsip').rowspanizer(
     //   {
     //     vertical_align: 'middle',
     //     columns: [0,1,2]

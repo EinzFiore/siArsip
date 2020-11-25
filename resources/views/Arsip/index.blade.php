@@ -85,7 +85,7 @@
       <hr> --}}
       <div class="table-responsive">
         <button class="btn btn-success mb-2" data-toggle="modal" data-target="#exportData">Export Excel</button>
-        <table class="table display table-striped rowspan" id="arsip">
+        <table class="table display table-bordered" id="arsip">
           <thead>
             <tr>
               {{-- <th scope="col">#</th> --}}
@@ -101,38 +101,6 @@
             </tr>
           </thead>
           <tbody>
-            {{-- @php
-                $no = 1;
-            @endphp
-            @forelse ($arsip as $a)
-              <tr>
-                <td><?= $no++ ?></td>
-                <td>{{$a->rak}}</td>
-                <td><span class="badge badge-warning">{{$a->box}}</span></td>
-                <td><span class="badge badge-secondary">{{$a->batch}}</span></td>
-                <td>{{$a->jenis_dokumen}}</td>
-                <td><span class="badge badge-primary">{{$a->no_pen}}</span></td>
-                <td>{{$a->nama_perusahaan}}</td>
-                <td>{{$a->tanggal_dokumen}}</td>
-                <td>
-                  @php
-                    $limit = $a->tahun_batch + 10;
-                      if($a->tahun_batch > $limit){
-                        echo "<span class='badge badge-danger'>NonAktif</span>";
-                      } elseif($a->status == 1) echo "<span class='badge badge-success'>Aktif</span>";
-                      else echo "<span class='badge badge-success mb-2'>Aktif</span><span class='badge badge-warning'>Dipinjamkan</span>";
-                  @endphp
-                </td>
-                <td>
-                  <button class="btn btn-primary mb-2" data-toggle="modal" data-target="#editArsip<?= $a->id_dok ?>">Edit</button>
-                  <button class="btn btn-danger" data-toggle="modal" data-target="#hapusArsip<?= $a->id_dok ?>">Hapus</button>
-                </td>
-              </tr>
-              @empty
-              <div class="alert alert-danger">
-                Data Batch belum Tersedia.
-              </div>
-            @endforelse --}}
           </tbody>
         </table>
       </div>
