@@ -47,6 +47,7 @@ Route::resource('dataArsip', DataArsipController::class);
 Route::post('/dataArsip/getDokumen', 'DataArsipController@getDataSerahTerima')->name('arsip');
 Route::post('/dataArsip/getArsip', 'DataArsipController@getDataArsip')->name('getArsip');
 Route::post('/arsip/export', 'DataArsipController@exportDataArsip');
+Route::get('/getData', 'DataArsipController@getData')->name('getData');
 
 // Route Peminjaman
 Route::resource('peminjaman', PeminjamanController::class);

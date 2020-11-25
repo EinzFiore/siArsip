@@ -82,7 +82,8 @@
     var config = {
         routes: {
             zone: "{{ route('arsip') }}",
-            arsip: "{{ route('getArsip') }}"
+            arsip: "{{ route('getArsip') }}",
+            getData: "{{ route('getData') }}",
         }
     };
 </script>

@@ -7,8 +7,10 @@ use Illuminate\Http\Request;
 use App\Models\Rak;
 use App\Models\Dokumen;
 use App\Models\DataArsip;
-use DB;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
+// use Yajra\DataTables\DataTables;
+use Yajra\DataTables\Facades\DataTables;
 
 class DataArsipController extends Controller
 {
@@ -18,12 +20,22 @@ class DataArsipController extends Controller
             ->join('dokumen', 'tb_arsip.no_pen', '=', 'dokumen.no_pen')
             ->select('tb_arsip.*', 'dokumen.nama_perusahaan', 'dokumen.tanggal_dokumen', 'dokumen.jenis_dokumen', 'dokumen.tahun_batch')
             ->get();
+
         $box = DataArsip::pluck('box')->toArray();
         $batch = DataArsip::pluck('batch')->toArray();
         $status = DataArsip::pluck('status')->toArray();
         $tahun = Dokumen::pluck('tahun_batch')->toArray();
         $rak = Rak::get();
         return view('Arsip/index', compact('arsip', 'rak', 'box', 'batch', 'status', 'tahun'));
+    }
+
+    function getData()
+    {
+        $arsip = DB::table('tb_arsip')
+            ->join('dokumen', 'tb_arsip.no_pen', '=', 'dokumen.no_pen')
+            ->select('tb_arsip.*', 'dokumen.nama_perusahaan', 'dokumen.tanggal_dokumen', 'dokumen.jenis_dokumen', 'dokumen.tahun_batch')
+            ->get();
+        return DataTables::of($arsip)->make(true);
     }
 
     /**
@@ -41,7 +53,7 @@ class DataArsipController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -61,7 +73,7 @@ class DataArsipController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -72,7 +84,7 @@ class DataArsipController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -83,8 +95,8 @@ class DataArsipController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -104,7 +116,7 @@ class DataArsipController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -179,6 +191,6 @@ class DataArsipController extends Controller
     function exportDataArsip(Request $request)
     {
         return (new ArsipExport)->kondisi($request->rak, $request->box, $request->batch, $request->tahun)
-        ->download('arsip-' . $request->rak . $request->batch . $request->tahun . '.xlsx');
+            ->download('arsip-' . $request->rak . $request->batch . $request->tahun . '.xlsx');
     }
 }

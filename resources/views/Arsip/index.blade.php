@@ -88,7 +88,7 @@
         <table class="table display table-striped rowspan" id="arsip">
           <thead>
             <tr>
-              <th scope="col">#</th>
+              {{-- <th scope="col">#</th> --}}
               <th scope="col">Rak</th>
               <th scope="col">Box</th>
               <th scope="col">Batch</th>
@@ -101,7 +101,7 @@
             </tr>
           </thead>
           <tbody>
-            @php
+            {{-- @php
                 $no = 1;
             @endphp
             @forelse ($arsip as $a)
@@ -132,7 +132,7 @@
               <div class="alert alert-danger">
                 Data Batch belum Tersedia.
               </div>
-            @endforelse
+            @endforelse --}}
           </tbody>
         </table>
       </div>

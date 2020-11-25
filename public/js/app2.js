@@ -14,10 +14,26 @@ $(document).ready(function(){
       ]
     });
     $('#arsip').DataTable({
-      // dom: 'Bfrtip',
-      // buttons: [
-      //     'copy', 'csv', 'excel', 'pdf', 'print'
-      // ]
+      processing : true,
+      serverside : true,
+      ajax : config.routes.getData,
+      columns: [
+        {data: 'rak', name:'rak'},
+        {data: 'box', name:'box'},
+        {data: 'batch', name:'batch'},
+        {data: 'jenis_dokumen', name:'jenis_dokumen'},
+        {data: 'no_pen', name:'no_pen'},
+        {data: 'nama_perusahaan', name:'nama_perusahaan'},
+        {data: 'tanggal_dokumen', name:'tanggal_dok'},
+        {data: 'status', name:'status'},
+        {data: 'id_dok',
+          render: function ( data, type, row ) {
+          return `<button class="btn btn-primary mb-2" data-toggle="modal" data-target="#editArsip${data}">Edit</button>
+                  <button class="btn btn-danger" data-toggle="modal" data-target="#hapusArsip${data}">Hapus</button>
+          `;
+        }
+      },
+      ]
     });
     // // terapkan rowspanizer untuk setiap attribut yang memiliki class .rowspan
     // $('.rowspan').rowspanizer(
