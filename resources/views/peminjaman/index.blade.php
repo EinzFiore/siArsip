@@ -15,13 +15,12 @@
         <thead>
           <tr>
             <th scope="col">#</th>
+            <th scope="col">Nama Peminjam</th>
             <th scope="col">Nomor ND</th>
             <th scope="col">Tanggal ND</th>
             <th scope="col">Nomor Dokumen</th>
-            <th scope="col">Tanggal Dokumen</th>
-            <th scope="col">Nama Perusahaan</th>
             <th scope="col">Tanggal Pinjam</th>
-            <th scope="col">Nama Peminjam</th>
+            <th scope="col">Tanggal Kembali</th>
             <th scope="col">Seksi</th>
             <th scope="col">Status</th>
             <th scope="col">Action</th>
@@ -34,13 +33,19 @@
           @foreach ($pinjam as $p)
             <tr>
               <th scope="row"><?= $no++ ?></th>
+              <td><?= $p->nama_peminjam ?></td>
               <td><?= $p->no_nd ?></td>
               <td><?= $p->tanggal_nd ?></td>
-              <td><?= $p->no_pen ?></td>
-              <td><?= $p->tanggal_dokumen ?></td>
-              <td><?= $p->nama_perusahaan ?></td>
-              <td><?= $p->tanggal_pinjam ?></td>
-              <td><?= $p->nama_peminjam ?></td>
+              <td><button class="btn btn-primary" data-toggle="modal" data-target="#detailDokumen<?= $p->no_pen ?>"><?= $p->no_pen ?></button></td>
+              <td><?= date('d-m-Y', strtotime($p->tanggal_pinjam)) ?></td>
+              <td>
+                @if ($p->status == 2)
+                  <span class="badge badge-warning">belum kembali</span>
+                  @else
+                  <?= date('d-m-Y', strtotime($p->updated_at)) ?>
+                @endif
+                
+              </td>
               <td><?= $p->seksi ?></td>
               <td>
                 @if ($p->status == 2)
@@ -53,6 +58,8 @@
               <td>
                 <button class="btn btn-info mb-2" data-toggle="modal" data-target="#konfirmasi<?= $p->no_pen ?>">Konfirmasi</button>
               </td>
+              @else
+                <td>-</td>
               @endif
             </tr>
           @endforeach
@@ -151,7 +158,7 @@
         </button>
       </div>
       <div class="modal-body">
-        Konfirmasi dokumen <?= $p->no_pen ?> dengan nomor ND <?= $p->no_nd ?>?
+        Konfirmasi dokumen <span class="badge badge-light"><?= $p->no_pen ?></span> dengan nomor ND <span class="badge badge-light"><?= $p->no_nd ?></span>?
       </div>
       <form action="<?= route('peminjaman.update', $p->id_dok) ?>" method="POST">
         @csrf
@@ -161,6 +168,42 @@
           <button type="submit" class="btn btn-primary">Ya</button>
         </div>
       </form>
+    </div>
+  </div>
+</div>
+@endforeach
+
+@foreach ($pinjam as $p)
+{{-- Modal Detail Dokumen --}}
+<div class="modal fade" id="detailDokumen<?= $p->no_pen ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Detail Dokumen : <?= $p->no_pen ?></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th scope="col">Nama Perusahaan</th>
+              <th scope="col">Tanggal Dokumen</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><?= $p->nama_perusahaan ?></td>
+              <td><?= $p->tanggal_dokumen ?></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
     </div>
   </div>
 </div>
