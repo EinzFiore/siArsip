@@ -29,6 +29,7 @@ const tableArsip = $('#arsip').DataTable({
       d.batch = batch;
       d.tahun = tahun;
       d.bulan = bulan;
+      d.tahunInput = tahunInput;
       d.status = status;
       return d
     }
@@ -401,6 +402,7 @@ $(".filter").on('change', function(){
   batch = $("#filterBatch").val();
   bulan = $("#filterBulan").val();
   tahun = $("#filterTahun").val();
+  tahunInput = $("#filterTahunInput").val();
   status = $("#filterStatus").val();
 
   tableArsip.ajax.reload(null,false)

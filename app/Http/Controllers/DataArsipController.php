@@ -56,6 +56,10 @@ class DataArsipController extends Controller
             $data = $data->whereMonth('tb_arsip.created_at', $request->bulan);
         }
 
+        if ($request->input('tahunInput') != null) {
+            $data = $data->whereYear('tb_arsip.created_at', $request->tahunInput);
+        }
+
         if ($request->input('status') != null) {
             if ($request->input('status') == 1)
                 $data = $data->where('status', $request->status);

@@ -57,28 +57,6 @@
         </div>
         <div class="col-sm-2">
           <div class="Batch">
-            <label>Bulan Input</label>
-            <div class="form-group">
-              <select name="bulan" class="form-control select2 filter" id="filterBulan">
-                <option value="">Pilih Bulan</option>
-                <option value="01">Januari</option>
-                <option value="02">Februari</option>
-                <option value="03">Maret</option>
-                <option value="04">April</option>
-                <option value="05">Mei</option>
-                <option value="06">Juni</option>
-                <option value="07">Juli</option>
-                <option value="08">Agustus</option>
-                <option value="09">September</option>
-                <option value="10">Oktober</option>
-                <option value="11">November</option>
-                <option value="12">Desember</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-2">
-          <div class="Batch">
             <label>Tahun Dokumen</label>
             <div class="form-group">
               <select name="Tahun" class="form-control select2 filter" id="filterTahun">
@@ -104,7 +82,45 @@
           </div>
         </div>
       </div>
+      <label><strong>Filter Data Arsip Berdasarkan Waktu Penginputan</strong></label>
       <hr>
+      <div class="row mb-2">
+        <div class="col-sm-2">
+          <div class="Batch">
+            <label>Bulan Input</label>
+            <div class="form-group">
+              <select name="bulan" class="form-control select2 filter" id="filterBulan">
+                <option value="">Pilih Bulan</option>
+                <option value="01">Januari</option>
+                <option value="02">Februari</option>
+                <option value="03">Maret</option>
+                <option value="04">April</option>
+                <option value="05">Mei</option>
+                <option value="06">Juni</option>
+                <option value="07">Juli</option>
+                <option value="08">Agustus</option>
+                <option value="09">September</option>
+                <option value="10">Oktober</option>
+                <option value="11">November</option>
+                <option value="12">Desember</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="Batch">
+            <label>Tahun Input</label>
+            <div class="form-group">
+              <select name="tahunInput" class="form-control select2 filter" id="filterTahunInput">
+                <option value="">Pilih Tahun</option>
+                @foreach ($newTahun as $t)
+                <option value="<?= $t ?>"><?= $t ?></option>
+                @endforeach
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="table-responsive">
         <button class="btn btn-success mb-2" data-toggle="modal" data-target="#exportData">Export Excel</button>
         <table class="table display table-bordered" id="arsip">
