@@ -40,8 +40,16 @@ const tableArsip = $('#arsip').DataTable({
         return `<span class="badge badge-info">${data}</span>`
       }
     },
-    {data: 'box', name:'box'},
-    {data: 'batch', name:'batch'},
+    {data: 'box', name:'box',
+      render: function(data){
+        return `<span class="badge badge-dark">${data}</span>`
+      }
+    },
+    {data: 'batch', name:'batch',
+      render: function(data){
+        return `<span class="badge badge-light">${data}</span>`
+      }
+    },
     {data: 'jenis_dokumen', name:'jenis_dokumen'},
     {data: 'no_pen', name:'no_pen',
       render: function(data){

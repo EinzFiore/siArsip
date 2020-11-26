@@ -49,9 +49,11 @@
                   <span class="badge badge-success">Dikembalikan</span>
                 @endif
               </td>
+              @if ($p->status == 2)
               <td>
                 <button class="btn btn-info mb-2" data-toggle="modal" data-target="#konfirmasi<?= $p->no_pen ?>">Konfirmasi</button>
               </td>
+              @endif
             </tr>
           @endforeach
         </tbody>
