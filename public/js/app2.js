@@ -70,6 +70,45 @@ const tableArsip = $('#arsip').DataTable({
   ]
 });
 
+// Tabel Import Arsip
+const tableImportArsip = $('#importArsip').DataTable({
+  rowsGroup : [0,1,2,3],
+  processing : true,
+  serverside : true,
+  ajax : {
+    url: config.routes.getArsipImport,
+    type: "post",
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    data: function(d){
+      d.rak = rak;
+      d.box = box;
+      d.batch = batch;
+      d.tahun = tahun;
+      d.bulan = bulan;
+      return d
+    }
+  },
+  columns: [
+    {data: 'rak', name:'rak',
+      render: function(data){
+        return `<span class="badge badge-info">${data}</span>`
+      }
+    },
+    {data: 'box', name:'box'},
+    {data: 'batch', name:'batch'},
+    {data: 'jenis_dok', name:'jenis_dokumen'},
+    {data: 'no_pen', name:'no_pen',
+      render: function(data){
+        return `<span class="badge badge-light">${data}</span>`
+      }
+    },
+    {data: 'nama_perusahaan', name:'nama_perusahaan'},
+    {data: 'tanggal_dok', name:'tanggal_dok'},
+  ]
+});
+
 // Tabel Serah Terima BC.25
 const tableDokumen = $('#dokumen').DataTable({
   rowsGroup : [0,1],
@@ -406,6 +445,16 @@ $(".filter").on('change', function(){
   status = $("#filterStatus").val();
 
   tableArsip.ajax.reload(null,false)
+})
+
+// Fungsi Filter ImportArsip
+$(".filter").on('change', function(){
+  rak = $("#filterRak").val();
+  box = $("#filterBox").val();
+  batch = $("#filterBatch").val();
+  bulan = $("#filterBulan").val();
+  tahun = $("#filterTahun").val();
+  tableImportArsip.ajax.reload(null,false)
 })
 
 // Fungsi Filter PKC

@@ -86,6 +86,7 @@
             arsip: "{{ route('getArsip') }}",
             getData: "{{ route('getData') }}",
             getDokumen: "{{ route('getDokumen') }}",
+            getArsipImport: "{{ route('getArsipImport') }}",
         }
     };
 </script>

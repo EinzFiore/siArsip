@@ -26,6 +26,7 @@
           <a href="#" class="nav-link has-dropdown"><i class="fas fa-file-import"></i><span>Data Arsip</span></a>
           <ul class="dropdown-menu">
             <li><a class="nav-link" href="/dataArsip">List Data</a></li>
+            <li><a class="nav-link" href="/dataArsipImport">List Data Import</a></li>
             <li><a class="nav-link" href="/dataArsip/create">Tambah Data Arsip</a></li>
           </ul>
         </li>

@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Exports\ArsipExport;
+use App\Imports\ArsipImport;
 use Illuminate\Http\Request;
 use App\Models\Rak;
 use App\Models\Dokumen;
 use App\Models\DataArsip;
+use App\Models\ImportArsip;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 // use Yajra\DataTables\DataTables;
@@ -67,12 +69,6 @@ class DataArsipController extends Controller
                 $data = $data->where('status', $request->status);
             else $data = $data->where('status', $request->status);
         }
-
-        // $arsip = DB::table('tb_arsip')
-        //     ->join('dokumen', 'tb_arsip.no_pen', '=', 'dokumen.no_pen')
-        //     ->select('tb_arsip.*', 'dokumen.nama_perusahaan', 'dokumen.tanggal_dokumen', 'dokumen.jenis_dokumen', 'dokumen.tahun_batch')
-        //     ->where('')
-        //     ->get();
         return DataTables::of($data)->make(true);
     }
 
@@ -226,9 +222,65 @@ class DataArsipController extends Controller
         return response()->json($response);
     }
 
+    public function getArsipImport(Request $request)
+    {
+        $data = ImportArsip::select('*');
+
+        if ($request->input('rak') != null) {
+            $data = $data->where('rak', $request->rak);
+        }
+
+        if ($request->input('box') != null) {
+            $data = $data->where('box', $request->box);
+        }
+
+        if ($request->input('batch') != null) {
+            $data = $data->where('batch', $request->batch);
+        }
+
+        if ($request->input('tahun') != null) {
+            $data = $data->whereYear('tanggal_dok', $request->tahun);
+        }
+
+        if ($request->input('bulan') != null) {
+            $data = $data->whereMonth('tanggal_dok', $request->bulan);
+        }
+        return DataTables::of($data)->make(true);
+    }
+
+
     function exportDataArsip(Request $request)
     {
         return (new ArsipExport)->kondisi($request->rak, $request->box, $request->batch, $request->tahun)
             ->download('arsip-' . $request->rak . $request->batch . $request->tahun . '.xlsx');
+    }
+
+
+    function listDataImport()
+    {
+        $box = ImportArsip::pluck('box')->toArray();
+        $batch = ImportArsip::pluck('batch')->toArray();
+        $rak = ImportArsip::pluck('rak')->toArray();
+        return view('arsip/import/listData', compact('box', 'batch', 'rak'));
+    }
+
+    function importData(Request $request)
+    {
+        // validasi file
+        $this->validate($request, [
+            'file' => 'required|mimes:csv,xls,xlsx'
+        ]);
+
+        // Ambil file excel
+        $file = $request->file('file');
+        // rename file
+        $nama_file = rand() . $file->getClientOriginalName();
+        // upload ke file_pt
+        $file->move('file_arsip', $nama_file);
+        // Import data
+        $data =  Excel::import(new ArsipImport, public_path('/file_arsip/' . $nama_file));
+        // notif session
+        // redirect
+        return redirect('/dataArsipImport');
     }
 }
