@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ArsipBulanan;
 use App\Exports\ArsipExport;
 use App\Imports\ArsipImport;
 use Illuminate\Http\Request;
@@ -253,6 +254,12 @@ class DataArsipController extends Controller
     {
         return (new ArsipExport)->kondisi($request->rak, $request->box, $request->batch, $request->tahun)
             ->download('arsip-' . $request->rak . $request->batch . $request->tahun . '.xlsx');
+    }
+
+    function exportDataArsipBulanan(Request $request)
+    {
+        return (new ArsipBulanan)->kondisi($request->bulan, $request->tahun)
+            ->download('arsipBulan-' . $request->bulan . $request->tahun . '.xlsx');
     }
 
 

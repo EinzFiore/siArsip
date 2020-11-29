@@ -122,7 +122,8 @@
         </div>
       </div>
       <div class="table-responsive">
-        <button class="btn btn-success mb-2" data-toggle="modal" data-target="#exportData">Export Excel</button>
+        <button class="btn btn-success mb-2" data-toggle="modal" data-target="#exportData">Export Arsip</button>
+        <button class="btn btn-success mb-2" data-toggle="modal" data-target="#exportDataBulan">Export Rekap Bulanan</button>
         <table class="table display table-bordered" id="arsip">
           <thead>
             <tr>
@@ -217,6 +218,7 @@
   </div>
   @endforeach
 
+  {{-- Export Arsip --}}
   <div class="modal fade" id="exportData" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
@@ -248,6 +250,38 @@
                 </tr>
               </tbody>
             </table>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Export</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  {{-- Export Rekap Bulanan --}}
+  <div class="modal fade" id="exportDataBulan" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Export</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Export Data Arsip Per-bulan</p>
+          <form action="<?= url('arsip/exportPerBulan') ?>" method="post">
+            @csrf
+            <div class="form-group">
+              <label id="klikBulan" class="badge badge-light" data-toggle="popover" title="INFO :" data-content="Bulan harus berbentuk angka, contoh : Januari = 01">Bulan Input</label>
+              <input type="number" name="bulan" class="form-control">
+            </div>
+            <div class="form-group">
+              <label>Tahun Input</label>
+              <input type="number" name="tahun" class="form-control">
+            </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

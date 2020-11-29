@@ -27,6 +27,10 @@
   ul.ui-autocomplete {
       z-index:9999;
   }
+
+  label#klikBulan{
+    cursor: pointer;
+  }
   </style>
 </head>
 
