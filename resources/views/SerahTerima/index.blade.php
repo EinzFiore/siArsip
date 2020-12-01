@@ -83,9 +83,9 @@
           <tr>
             <th scope="col">Batch</th>
             <th scope="col">Jenis Dokumen</th>
+            <th scope="col">Nama Perusahaan</th>
             <th scope="col">Tanggal Dokumen</th>
             <th scope="col">Nomor Dokumen</th>
-            <th scope="col">Nama Perusahaan</th>
             <th scope="col">Action</th>
           </tr>
         </thead>

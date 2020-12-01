@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exports\ArsipBulanan;
 use App\Exports\ArsipExport;
+use App\Exports\ArsipStatus;
 use App\Imports\ArsipImport;
 use Illuminate\Http\Request;
 use App\Models\Rak;
@@ -263,8 +264,21 @@ class DataArsipController extends Controller
 
     function exportDataArsip(Request $request)
     {
-        return (new ArsipExport)->kondisi($request->rak, $request->box, $request->batch, $request->tahun)
-            ->download('arsip-' . $request->rak . $request->batch . $request->tahun . '.xlsx');
+        $rak = $request->rak;
+        $box = $request->box;
+        $batch = $request->batch;
+        $tahun = $request->tahun;
+        return (new ArsipExport)->kondisi($rak, $box, $batch, $tahun, $request->status)
+            ->download('arsip-' . $rak . $batch . $tahun . '.xlsx');
+    }
+
+    function exportDataArsipStatus(Request $request)
+    {
+        if ($request->status == 1) $ket = 'Akitf';
+        if ($request->status == 2) $ket = 'Dipinjam';
+        if ($request->status == 0) $ket = 'NonAktif';
+        return (new ArsipStatus)->kondisi($request->tahun, $request->status)
+            ->download('arsipStatus-' . $ket . $request->tahun . '.xlsx');
     }
 
     function exportDataArsipBulanan(Request $request)
@@ -272,7 +286,6 @@ class DataArsipController extends Controller
         return (new ArsipBulanan)->kondisi($request->bulan, $request->tahun)
             ->download('arsipBulan-' . $request->bulan . $request->tahun . '.xlsx');
     }
-
 
     function listDataImport()
     {

@@ -53,10 +53,10 @@ const tableArsip = $('#arsip').DataTable({
     },
     {data: 'jenis_dokumen', name:'jenis_dokumen'},
     {data: 'no_pen', name:'no_pen',
-      render: function(data){
-        return `<span class="badge badge-light">${data}</span>`
-      }
-    },
+    render: function(data){
+      return `<span class="badge badge-light">${data}</span>`
+    }
+  },
     {data: 'nama_perusahaan', name:'nama_perusahaan'},
     {data: 'tanggal_dokumen', name:'tanggal_dok'},
     {data: 'status', name:'status',
@@ -120,7 +120,7 @@ const tableImportArsip = $('#importArsip').DataTable({
 
 // Tabel Serah Terima BC.25
 const tableDokumen = $('#dokumen').DataTable({
-  rowsGroup : [0,1],
+  rowsGroup : [0,1,2,3],
   processing : true,
   serverside : true,
   ajax : {
@@ -144,13 +144,13 @@ const tableDokumen = $('#dokumen').DataTable({
       }
     },
     {data: 'jenis_dokumen', name:'jenis_dokumen'},
+    {data: 'nama_perusahaan', name:'nama_perusahaan'},
     {data: 'tanggal_dokumen', name:'tanggal_dok'},
     {data: 'no_pen', name:'no_pen',
       render: function(data){
         return `<span class="badge badge-light">${data}</span>`
       }
     },
-    {data: 'nama_perusahaan', name:'nama_perusahaan'},
     {data: 'no_pen',
       render: function (data) {
       return `<button class="btn btn-primary" data-toggle="modal" data-target="#editSR${data}">Edit</button>

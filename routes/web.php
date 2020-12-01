@@ -48,6 +48,7 @@ Route::resource('dataArsip', DataArsipController::class);
 Route::post('/dataArsip/getDokumen', 'DataArsipController@getDataSerahTerima')->name('arsip');
 Route::post('/dataArsip/getArsip', 'DataArsipController@getDataArsip')->name('getArsip');
 Route::post('/arsip/export', 'DataArsipController@exportDataArsip');
+Route::post('/arsipStatus/export', 'DataArsipController@exportDataArsipStatus');
 Route::post('/arsip/exportPerBulan', 'DataArsipController@exportDataArsipBulanan');
 Route::get('/dataArsipImport', 'DataArsipController@listDataImport');
 Route::post('/importDataArsip', 'DataArsipController@importData')->name('importData');

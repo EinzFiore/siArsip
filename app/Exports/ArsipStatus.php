@@ -7,37 +7,31 @@ use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Illuminate\Support\Facades\DB;
 
-class ArsipExport implements FromView
+class ArsipStatus implements FromView
 {
     use Exportable;
-    public function kondisi(string $rak, string $box, string $batch, string $tahun)
+    public function kondisi(int $tahun, int $status)
     {
-        $this->rak = $rak;
-        $this->box = $box;
-        $this->batch = $batch;
         $this->tahun = $tahun;
+        $this->status = $status;
         return $this;
     }
 
     public function view(): View
     {
         $arsipData = [
-            'rak' => $this->rak,
-            'box' => $this->box,
-            'batch' => $this->batch,
             'tahun' => $this->tahun,
+            'status' => $this->status
         ];
 
         $data['dataArsip'] = $arsip = DB::table('tb_arsip')
             ->join('dokumen', 'tb_arsip.no_pen', '=', 'dokumen.no_pen')
             ->select('tb_arsip.*', 'dokumen.nama_perusahaan', 'dokumen.tanggal_dokumen', 'dokumen.jenis_dokumen', 'dokumen.tahun_batch')
             ->where([
-                ['rak', '=', $this->rak],
-                ['box', '=', $this->box],
-                ['tb_arsip.batch', '=', $this->batch],
+                ['tb_arsip.status', '=', $this->status],
                 ['dokumen.tahun_batch', '=', $this->tahun],
             ])->get();
 
-        return view('Arsip.exports.arsip', $data)->with('arsipData', $arsipData);
+        return view('Arsip.exports.arsip2', $data)->with('arsipData', $arsipData);
     }
 }

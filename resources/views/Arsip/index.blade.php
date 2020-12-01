@@ -230,8 +230,38 @@
         </div>
         <div class="modal-body">
           <p>Export Data Arsip BC.25</p>
+          <div class="row">
+            <div class="col-sm-5">
+            <form action="<?= url('arsipStatus/export') ?>" method="post">
+              @csrf
+              <div class="form-group">
+                <label for="Status">Export Berdasarkan Status Dokumen</label>
+                <select name="status" class="form-control">
+                  <option value="">Pilih Status</option> 
+                  <option value="0">NonAktif</option> 
+                  <option value="1">Aktif</option> 
+                  <option value="2">Dipinjamkan</option> 
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Tahun</label>
+                <input type="number" name="tahun" class="form-control" placeholder="contoh : <?= date('Y') ?>">
+              </div>
+              <button  type="submit" class="btn btn-primary mt-2">Export</button>
+            </form>
+            </div>
+            <div class="col-sm-6">
+              <div class="alert alert-info" role="alert">
+                <h4 class="alert-heading">INFO :</h4>
+                <p>Kosongkan tabel dibawah jika hanya ingin meng-export data berdasarkan status saja</p>
+                <hr>
+                <p class="mb-0">Untuk export berdasarkan Rak dan Box tidak perlu mengisi status</p>
+              </div>
+            </div>
+          </div>
           <form action="<?= url('arsip/export') ?>" method="post">
             @csrf
+            <h5 class="modal-title" id="exampleModalLabel">Export Data Arsip Berdasarkan Rak dan Box</h5>
             <table class="table table-striped">
               <thead>
                 <tr>
@@ -243,10 +273,10 @@
               </thead>
               <tbody>
                 <tr>
-                  <td><input type="number" class="form-control" name="rak"></td>
-                  <td><input type="text" class="form-control" name="box"></td>
-                  <td><input type="number" class="form-control" name="batch"></td>
-                  <td><input type="number" class="form-control" name="tahun"></td>
+                  <td><input type="number" value="" class="form-control" name="rak"></td>
+                  <td><input type="text" value="" class="form-control" name="box"></td>
+                  <td><input type="number" value="" class="form-control" name="batch"></td>
+                  <td><input type="number" value="" class="form-control" name="tahun"></td>
                 </tr>
               </tbody>
             </table>
