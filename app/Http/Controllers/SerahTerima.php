@@ -10,6 +10,7 @@ use App\Models\JenisDokumen;
 use Illuminate\Http\Request;
 use App\Exports\SerahTerimaExport;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\DB;
 
 class SerahTerima extends Controller
 {
@@ -60,17 +61,28 @@ class SerahTerima extends Controller
             'jenis_dokumen' => 'required',
             'tanggal' => 'required'
         ]);
-        foreach ($request->nama_pt as $key => $nama_pt) {
-            $data = new Dokumen();
-            $data->nama_perusahaan = $nama_pt;
-            $data->no_pen = $request->no_dokumen[$key];
-            $data->jenis_dokumen = $request->jenis_dokumen[$key];
-            $data->tanggal_dokumen = $request->tanggal[$key];
-            $data->batch = $request->newBatch[$key];
-            $data->tahun_batch = $request->newYear[$key];
-            $data->save();
+        foreach ($request->no_dokumen as $key => $no_dokumen) {
+            $cekData[] = DB::table('dokumen')->where([
+                [
+                    'no_pen', $no_dokumen
+                ],
+                ['tahun_batch', $request->newYear[$key]]
+            ])->first();
+            if ($cekData[$key] != null) {
+                alert()->error('Failed!', 'Data Gagal Ditambahkan!')->autoclose(2500);
+            } else {
+                $data = new Dokumen();
+                $data->nama_perusahaan = $request->nama_pt[$key];
+                $data->no_pen = $no_dokumen;
+                $data->jenis_dokumen = $request->jenis_dokumen[$key];
+                $data->tanggal_dokumen = $request->tanggal[$key];
+                $data->batch = $request->newBatch[$key];
+                $data->tahun_batch = $request->newYear[$key];
+                $data->tahun_resensi = $request->newYear[$key] + 10;
+                $data->save();
+                alert()->success('Success!', 'Data Berhasil Ditambahkan!')->autoclose(2500);
+            }
         }
-        alert()->success('Success!', 'Data Berhasil Ditambahkan!')->autoclose(3500);
         return redirect('serahTerima');
     }
 

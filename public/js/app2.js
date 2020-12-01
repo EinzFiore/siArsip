@@ -152,7 +152,7 @@ const tableDokumen = $('#dokumen').DataTable({
     {data: 'nama_perusahaan', name:'nama_perusahaan'},
     {data: 'no_pen',
       render: function (data) {
-      return `<button class="btn btn-primary mb-2" data-toggle="modal" data-target="#editSR${data}">Edit</button>
+      return `<button class="btn btn-primary" data-toggle="modal" data-target="#editSR${data}">Edit</button>
               <button class="btn btn-danger" data-toggle="modal" data-target="#hapusSR${data}">Hapus</button>
       `;
     }
