@@ -206,13 +206,15 @@ class DataArsipController extends Controller
 
     public function getDataArsip(Request $request)
     {
+        $currentTahun = date('Y');
         $search = $request->cari;
 
         $dataSerahTerima = DB::table('tb_arsip')
             ->join('dokumen', 'tb_arsip.no_pen', '=', 'dokumen.no_pen')
             ->select('tb_arsip.*', 'dokumen.nama_perusahaan', 'dokumen.tanggal_dokumen', 'dokumen.jenis_dokumen')
-            ->where('tb_arsip.status', '=', 1)
-            ->limit(5);
+            ->where([
+                ['tb_arsip.status', '=', 1],
+            ])->limit(5);
 
         $search = !empty($request->cari) ? ($request->cari) : ('');
 
