@@ -6,6 +6,7 @@
   let tahun = $("#filterTahun").val();
   let tahunInput = $("#filterTahunInput").val();
   let status = $("#filterStatus").val();
+  let year = new Date().getFullYear();
 
 // Select2 untuk form input yang memiliki class ".select2"
 $(document).ready(function(){

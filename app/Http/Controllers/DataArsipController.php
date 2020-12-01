@@ -17,6 +17,17 @@ use Yajra\DataTables\Facades\DataTables;
 
 class DataArsipController extends Controller
 {
+
+    function __construct()
+    {
+        $year = date('Y');
+        DB::table('tb_arsip')
+            ->join('dokumen', 'tb_arsip.no_pen', '=', 'dokumen.no_pen')
+            ->select('tb_arsip.*', 'dokumen.tahun_resensi')
+            ->where('dokumen.tahun_resensi', $year)
+            ->update(['tb_arsip.status' => 0]);
+    }
+
     public function index()
     {
         $arsip = DB::table('tb_arsip')
@@ -36,7 +47,7 @@ class DataArsipController extends Controller
     {
         $data = DataArsip::select([
             'tb_arsip.*',
-            'dokumen.nama_perusahaan', 'dokumen.tanggal_dokumen', 'dokumen.jenis_dokumen', 'dokumen.tahun_batch'
+            'dokumen.nama_perusahaan', 'dokumen.tanggal_dokumen', 'dokumen.jenis_dokumen', 'dokumen.tahun_batch', 'dokumen.tahun_resensi'
         ])->join('dokumen', 'tb_arsip.no_pen', '=', 'dokumen.no_pen');
 
         if ($request->input('rak') != null) {
