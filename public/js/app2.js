@@ -234,6 +234,7 @@ var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 $(document).ready(function(){
     $( "#noDok" ).autocomplete({
         source: function( request, response ) {
+            let tahunArsip = value=document.getElementById('tahunArsip').value; 
             console.log(request.term)
         $.ajax({
             // url from global config in app2.blade.php
@@ -242,7 +243,8 @@ $(document).ready(function(){
             dataType: "json",
             data: {
                 _token: CSRF_TOKEN,
-                cari: request.term
+                cari: request.term,
+                tahun: tahunArsip,
             },
             success: function( data ) {
             response( data );
@@ -283,6 +285,7 @@ $(document).ready(function(){
       $(field).appendTo(tambahkotak)
       $('.noDok').autocomplete({
               source: function( request, response ) {
+              let tahunArsip = value=document.getElementById('tahunArsip').value; 
                   console.log(request.term)
               $.ajax({
                   url:config.routes.zone,
@@ -290,7 +293,8 @@ $(document).ready(function(){
                   dataType: "json",
                   data: {
                       _token: CSRF_TOKEN,
-                      cari: request.term
+                      cari: request.term,
+                      tahun: tahunArsip,
                   },
                   success: function( data ) {
                   response( data );
@@ -318,6 +322,7 @@ $(document).ready(function(){
 $(document).ready(function(){
     $( "#noPen" ).autocomplete({
         source: function( request, response ) {
+          let tahunArsip = value=document.getElementById('tahunArsip').value; 
             console.log(request.term)
         $.ajax({
             // url from global config in app2.blade.php
@@ -326,7 +331,8 @@ $(document).ready(function(){
             dataType: "json",
             data: {
                 _token: CSRF_TOKEN,
-                cari: request.term
+                tahun: tahunArsip,
+                cari: request.term,
             },
             success: function( data ) {
             response( data );
@@ -371,6 +377,7 @@ $(document).ready(function(){
       $(field).appendTo(tambahkotak)
       $('.noDok').autocomplete({
               source: function( request, response ) {
+              let tahunArsip = value=document.getElementById('tahunArsip').value; 
                   console.log(request.term)
               $.ajax({
                   url:config.routes.arsip,
@@ -378,6 +385,7 @@ $(document).ready(function(){
                   dataType: "json",
                   data: {
                       _token: CSRF_TOKEN,
+                      tahun: tahunArsip,
                       cari: request.term
                   },
                   success: function( data ) {

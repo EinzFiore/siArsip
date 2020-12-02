@@ -49,7 +49,7 @@ class DataArsipController extends Controller
         $data = DataArsip::select([
             'tb_arsip.*',
             'dokumen.nama_perusahaan', 'dokumen.tanggal_dokumen', 'dokumen.jenis_dokumen', 'dokumen.tahun_batch', 'dokumen.tahun_resensi'
-        ])->join('dokumen', 'tb_arsip.no_pen', '=', 'dokumen.no_pen');
+        ])->leftJoin('dokumen', 'tb_arsip.no_pen', '=', 'dokumen.no_pen');
 
         if ($request->input('rak') != null) {
             $data = $data->where('rak', $request->rak);
@@ -180,14 +180,20 @@ class DataArsipController extends Controller
     {
         $search = $request->cari;
 
+        $tahun = $request->tahun;
+
         $dataSerahTerima = DB::table('dokumen')
             ->select('no_pen', 'nama_perusahaan', 'jenis_dokumen', 'tanggal_dokumen')
             ->limit(5);
 
+
         $search = !empty($request->cari) ? ($request->cari) : ('');
 
         if ($search) {
-            $dataSerahTerima->where('no_pen', 'like', '%' . $search . '%');
+            $dataSerahTerima->where([
+                ['tahun_batch', '=', $tahun],
+                ['no_pen', 'like', '%' . $search . '%'],
+            ]);
         }
 
         $data = $dataSerahTerima->limit(5)->get();
@@ -206,12 +212,12 @@ class DataArsipController extends Controller
 
     public function getDataArsip(Request $request)
     {
-        $currentTahun = date('Y');
+        $tahun = $request->tahun;
         $search = $request->cari;
 
         $dataSerahTerima = DB::table('tb_arsip')
             ->join('dokumen', 'tb_arsip.no_pen', '=', 'dokumen.no_pen')
-            ->select('tb_arsip.*', 'dokumen.nama_perusahaan', 'dokumen.tanggal_dokumen', 'dokumen.jenis_dokumen')
+            ->select('tb_arsip.*', 'dokumen.nama_perusahaan', 'dokumen.tanggal_dokumen', 'dokumen.jenis_dokumen', 'dokumen.tahun_batch')
             ->where([
                 ['tb_arsip.status', '=', 1],
             ])->limit(5);
@@ -219,7 +225,10 @@ class DataArsipController extends Controller
         $search = !empty($request->cari) ? ($request->cari) : ('');
 
         if ($search) {
-            $dataSerahTerima->where('tb_arsip.no_pen', 'like', '%' . $search . '%');
+            $dataSerahTerima->where([
+                ['tb_arsip.no_pen', 'like', '%' . $search . '%'],
+                ['dokumen.tahun_batch', '=', $tahun],
+            ]);
         }
 
         $data = $dataSerahTerima->limit(5)->get();

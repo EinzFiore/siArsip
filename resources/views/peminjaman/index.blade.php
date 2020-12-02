@@ -108,6 +108,14 @@
                     <label class="form-check-label" for="inlineCheckbox1">Gunakan</label>
                   </div>
                 </div>
+                <div class="row">
+                  <div class="col-sm-2">
+                    <div class="form-group mr-2">
+                      <label>Tahun Dokumen</label>
+                      <input type="number" value="" id="tahunArsip" class="form-control" name="tahunArsip">
+                    </div>
+                  </div>
+                </div>
                 <table class="table table-striped table-md">
                   <tr>
                     <th>#</th>

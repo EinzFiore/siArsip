@@ -31,6 +31,10 @@
                   <label>Batch</label>
                   <input type="text" id="batch" class="form-control" name="batch">
                 </div>
+                <div class="form-group mr-2">
+                  <label id="klikBulan" class="badge badge-light" data-toggle="popover" title="INFO :" data-content="Nomor Dokumen hanya akan memunculkan data dokumen berdasarkan tahun dokumen yang dipilih. Ex: Jika mengisi <?= date('Y') ?>, hanya akan menampilkan nomor dokumen pada tahun <?= date('Y') ?> saja">Tahun Dokumen Yang Dipilih</label>
+                  <input type="number" value="" id="tahunArsip" class="form-control" name="tahunArsip">
+                </div>
                 <div class="form-check form-check-inline">
                   <input class="form-check-input" type="checkbox" onchange="rakFunction()" id="selected">
                   <label class="form-check-label" for="inlineCheckbox1">Gunakan Rak</label>
