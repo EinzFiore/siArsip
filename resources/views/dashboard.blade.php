@@ -3,25 +3,69 @@
 @section('judul', 'Dashboard')
 @section('content')
 <section class="section">
-      <div class="col-lg-12">
-        <div class="card">
-          <div class="card-header">
-            <h4>Dashboard</h4>
-          </div>
-          <div class="card-body">
-              <div class="row">
-                  <div class="col-md-6">
-                    <img src="{{url('img/hello.svg')}}" width="100%">
-                  </div>
-                  <div class="col-md-6">
-                      <h3>SiArsip</h3>
-                      <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Suscipit, laborum saepe! Eaque quis eius soluta quae adipisci non tempora consectetur.</p>
-                      <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptate numquam modi aspernatur, amet pariatur vero.</p>
-                  </div>
-              </div>
-          </div>
+<div class="row">
+    <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+        <div class="card card-statistic-1">
+        <div class="card-icon bg-primary">
+            <i class="far fa-user"></i>
         </div>
-      </div>
+        <div class="card-wrap">
+            <div class="card-header">
+            <h4>Total Users</h4>
+            </div>
+            <div class="card-body">
+            {{$totalUsers}}
+            </div>
+        </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+        <div class="card card-statistic-1">
+        <div class="card-icon bg-danger">
+            <i class="far fa-newspaper"></i>
+        </div>
+        <div class="card-wrap">
+            <div class="card-header">
+            <h4>Total Dokumen Arsip</h4>
+            </div>
+            <div class="card-body">
+            {{$totalArsip}}
+            </div>
+        </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+        <div class="card card-statistic-1">
+        <div class="card-icon bg-warning">
+            <i class="far fa-file"></i>
+        </div>
+        <div class="card-wrap">
+            <div class="card-header">
+            <h4>Dokumen Input BC25 PKC</h4>
+            </div>
+            <div class="card-body">
+            {{$totalDokumen}}
+            </div>
+        </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+        <div class="card card-statistic-1">
+        <div class="card-icon bg-success">
+            <i class="fas fa-circle"></i>
+        </div>
+        <div class="card-wrap">
+            <div class="card-header">
+            <h4>Total Dokumen Dipinjam</h4>
+            </div>
+            <div class="card-body">
+            {{$totalPinjam}}
+            </div>
+        </div>
+        </div>
+    </div>
+</section>
+              
 @endsection
 
 {{-- <x-app-layout>

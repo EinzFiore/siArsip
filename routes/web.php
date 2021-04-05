@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Models\Perusahaan;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,7 +11,7 @@ use App\Models\Perusahaan;
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-*/
+ */
 
 Route::get('/', function () {
     return view('auth/login');
@@ -58,10 +57,10 @@ Route::post('/getData', 'DataArsipController@getData')->name('getData');
 // Route Peminjaman
 Route::resource('peminjaman', PeminjamanController::class);
 
+Route::get('/users/list', 'DashboardController@userList');
+
 // Jetstream
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
+Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', 'DashboardController@index')->name('dashboard');
 
 Route::get('/tes', function () {
     return view('Batch/export/batch');

@@ -47,6 +47,11 @@
             <li><a class="nav-link" href="/peminjaman"><i class="far fa-file-code"></i><span>Data Peminjaman</span></a></li>
         </li>
       @endif
+      @if (auth()->user()->role == 0)
+        <li class="menu-header">Data Users</li>
+            <li><a class="nav-link" href="/users/list"><i class="far fa-file-code"></i><span>Data Users</span></a></li>
+        </li>
+      @endif
       @if (auth()->user()->role == 1)
         <li class="menu-header">Rak</li>
             <li><a class="nav-link" href="/rak"><i class="far fa-file-code"></i><span>Data Rak</span></a></li>
