@@ -59,7 +59,7 @@
 
                         <!-- Team Management -->
                             @if (Laravel\Jetstream\Jetstream::hasTeamFeatures())
-                                @if (auth()->user()->role == true)
+                                @if (auth()->user()->role == 0)
                                     <div class="block px-4 py-2 text-xs text-gray-400">
                                         {{ __('Manage Team') }}
                                     </div>
@@ -85,11 +85,11 @@
                                     <x-jet-switchable-team :team="$team" />
                                 @endforeach
 
-                                @if (auth()->user()->role == true)
+                                {{-- @if (auth()->user()->role == true) --}}
                                     @foreach (Auth::user()->ownedTeams as $team)
                                         <x-jet-switchable-team :team="$team" />
                                     @endforeach
-                                @endif
+                                {{-- @endif --}}
 
                                 <div class="border-t border-gray-100"></div>
                             @endif

@@ -6,11 +6,11 @@ use App\Exports\ArsipBulanan;
 use App\Exports\ArsipExport;
 use App\Exports\ArsipStatus;
 use App\Imports\ArsipImport;
-use Illuminate\Http\Request;
-use App\Models\Rak;
-use App\Models\Dokumen;
 use App\Models\DataArsip;
+use App\Models\Dokumen;
 use App\Models\ImportArsip;
+use App\Models\Rak;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 // use Yajra\DataTables\DataTables;
@@ -19,7 +19,7 @@ use Yajra\DataTables\Facades\DataTables;
 class DataArsipController extends Controller
 {
 
-    function __construct()
+    public function __construct()
     {
         $year = date('Y');
         DB::table('tb_arsip')
@@ -44,11 +44,11 @@ class DataArsipController extends Controller
         return view('Arsip/index', compact('arsip', 'rak', 'box', 'batch', 'status', 'tahun'));
     }
 
-    function getData(Request $request)
+    public function getData(Request $request)
     {
         $data = DataArsip::select([
             'tb_arsip.*',
-            'dokumen.nama_perusahaan', 'dokumen.tanggal_dokumen', 'dokumen.jenis_dokumen', 'dokumen.tahun_batch', 'dokumen.tahun_resensi'
+            'dokumen.nama_perusahaan', 'dokumen.tanggal_dokumen', 'dokumen.jenis_dokumen', 'dokumen.tahun_batch', 'dokumen.tahun_resensi',
         ])->leftJoin('dokumen', 'tb_arsip.no_pen', '=', 'dokumen.no_pen');
 
         if ($request->input('rak') != null) {
@@ -76,11 +76,14 @@ class DataArsipController extends Controller
         }
 
         if ($request->input('status') != null) {
-            if ($request->input('status') == 1)
+            if ($request->input('status') == 1) {
                 $data = $data->where('status', $request->status);
-            elseif ($request->input('status') == 2)
+            } elseif ($request->input('status') == 2) {
                 $data = $data->where('status', $request->status);
-            else $data = $data->where('status', $request->status);
+            } else {
+                $data = $data->where('status', $request->status);
+            }
+
         }
         return DataTables::of($data)->make(true);
     }
@@ -186,7 +189,6 @@ class DataArsipController extends Controller
             ->select('no_pen', 'nama_perusahaan', 'jenis_dokumen', 'tanggal_dokumen')
             ->limit(5);
 
-
         $search = !empty($request->cari) ? ($request->cari) : ('');
 
         if ($search) {
@@ -204,7 +206,7 @@ class DataArsipController extends Controller
                 "value" => $arsip->no_pen,
                 "perusahaan" => $arsip->nama_perusahaan,
                 "jenisDok" => $arsip->jenis_dokumen,
-                "tanggalDok" => $arsip->tanggal_dokumen
+                "tanggalDok" => $arsip->tanggal_dokumen,
             );
         }
         return response()->json($response);
@@ -240,7 +242,7 @@ class DataArsipController extends Controller
                 "id_dok" => $arsip->id_dok,
                 "perusahaan" => $arsip->nama_perusahaan,
                 "jenisDok" => $arsip->jenis_dokumen,
-                "tanggalDok" => $arsip->tanggal_dokumen
+                "tanggalDok" => $arsip->tanggal_dokumen,
             );
         }
         return response()->json($response);
@@ -272,8 +274,7 @@ class DataArsipController extends Controller
         return DataTables::of($data)->make(true);
     }
 
-
-    function exportDataArsip(Request $request)
+    public function exportDataArsip(Request $request)
     {
         $rak = $request->rak;
         $box = $request->box;
@@ -283,22 +284,31 @@ class DataArsipController extends Controller
             ->download('arsip-' . $rak . $batch . $tahun . '.xlsx');
     }
 
-    function exportDataArsipStatus(Request $request)
+    public function exportDataArsipStatus(Request $request)
     {
-        if ($request->status == 1) $ket = 'Akitf';
-        if ($request->status == 2) $ket = 'Dipinjam';
-        if ($request->status == 0) $ket = 'NonAktif';
+        if ($request->status == 1) {
+            $ket = 'Akitf';
+        }
+
+        if ($request->status == 2) {
+            $ket = 'Dipinjam';
+        }
+
+        if ($request->status == 0) {
+            $ket = 'NonAktif';
+        }
+
         return (new ArsipStatus)->kondisi($request->tahun, $request->status)
             ->download('arsipStatus-' . $ket . $request->tahun . '.xlsx');
     }
 
-    function exportDataArsipBulanan(Request $request)
+    public function exportDataArsipBulanan(Request $request)
     {
         return (new ArsipBulanan)->kondisi($request->bulan, $request->tahun)
             ->download('arsipBulan-' . $request->bulan . $request->tahun . '.xlsx');
     }
 
-    function listDataImport()
+    public function listDataImport()
     {
         $box = ImportArsip::pluck('box')->toArray();
         $batch = ImportArsip::pluck('batch')->toArray();
@@ -306,11 +316,11 @@ class DataArsipController extends Controller
         return view('arsip/import/listData', compact('box', 'batch', 'rak'));
     }
 
-    function importData(Request $request)
+    public function importData(Request $request)
     {
         // validasi file
         $this->validate($request, [
-            'file' => 'required|mimes:csv,xls,xlsx'
+            'file' => 'required|mimes:csv,xls,xlsx',
         ]);
 
         // Ambil file excel
@@ -320,7 +330,7 @@ class DataArsipController extends Controller
         // upload ke file_pt
         $file->move('file_arsip', $nama_file);
         // Import data
-        $data =  Excel::import(new ArsipImport, public_path('/file_arsip/' . $nama_file));
+        $data = Excel::import(new ArsipImport, public_path('/file_arsip/' . $nama_file));
         // notif session
         // redirect
         return redirect('/dataArsipImport');

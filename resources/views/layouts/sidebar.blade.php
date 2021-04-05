@@ -9,7 +9,7 @@
       <li class="menu-header">Dashboard</li>
         <li><a class="nav-link" href="/dashboard"><i class="fas fa-tachometer-alt"></i> <span>Home</span></a></li>
       </li>
-      @if (auth()->user()->role == 1)
+      @if (auth()->user()->role == 2)
       <li class="menu-header">Dokumen</li>
         <li class="nav-item dropdown">
           <a href="#" class="nav-link has-dropdown"><i class="fas fa-file-import"></i><span>Serah Terima</span></a>
@@ -20,7 +20,7 @@
         </li>
       </li>
       @endif
-      @if (auth()->user()->role == 0)
+      @if (auth()->user()->role == 1)
       <li class="menu-header">Arsip</li>
         <li class="nav-item dropdown">
           <a href="#" class="nav-link has-dropdown"><i class="fas fa-file-import"></i><span>Data Arsip</span></a>
@@ -32,22 +32,22 @@
         </li>
       </li>
       @endif
-      @if (auth()->user()->role == 1)
+      @if (auth()->user()->role == 2)
         <li class="menu-header">Jenis Dokumen</li>
             <li><a class="nav-link" href="/jenisDokumen"><i class="far fa-file-code"></i><span>Jenis Dokumen</span></a></li>
         </li>
       @endif
-      @if (auth()->user()->role == 0)
+      @if (auth()->user()->role == 1)
         <li class="menu-header">Non Display</li>
             <li><a class="nav-link" href="/karung"><i class="far fa-file-code"></i><span>Data Karung</span></a></li>
         </li>
       @endif
-      @if (auth()->user()->role == 0)
+      @if (auth()->user()->role == 1)
         <li class="menu-header">Peminjaman Dokumen</li>
             <li><a class="nav-link" href="/peminjaman"><i class="far fa-file-code"></i><span>Data Peminjaman</span></a></li>
         </li>
       @endif
-      @if (auth()->user()->role == 0)
+      @if (auth()->user()->role == 1)
         <li class="menu-header">Rak</li>
             <li><a class="nav-link" href="/rak"><i class="far fa-file-code"></i><span>Data Rak</span></a></li>
         </li>
@@ -55,7 +55,7 @@
       <li class="menu-header">Perusahaan</li>
           <li><a class="nav-link" href="/perusahaan"><i class="fas fa-folder-open"></i><span>List Perusahaan</span></a></li>
       </li>
-      @if (auth()->user()->role == 1)
+      @if (auth()->user()->role == 2)
         <li class="menu-header">Batch</li>
           <li><a class="nav-link" href="/batch"><i class="fas fa-file-alt"></i> <span>List Batch</span></a></li>
         </li>

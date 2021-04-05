@@ -81,7 +81,7 @@
 
     <!-- Template JS File -->
   <script src="{{ url('stisla/assets/js/scripts.js') }}"></script>
-  <script src="{{ url('stisla/assets/js/scripts.js') }}"></script>
+  {{-- <script src="{{ url('stisla/assets/js/scripts.js') }}"></script> --}}
   <script>
     // global app configuration object
     var config = {

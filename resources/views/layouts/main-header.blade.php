@@ -14,6 +14,9 @@
       @endif
         <div class="d-sm-none d-lg-inline-block">{{ Auth::user()->name }}</div></a>
         <div class="dropdown-menu dropdown-menu-right">
+          <form action="{{ route('profile.show') }}" method="get">
+            <button type="submit" class="dropdown-item has-icon">Profile</button>
+          </form>  
         <form action="{{ route('logout') }}" method="post">
           @csrf
           <button type="submit" class="dropdown-item has-icon text-danger">Logout</button>
