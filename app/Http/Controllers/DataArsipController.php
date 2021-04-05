@@ -114,6 +114,10 @@ class DataArsipController extends Controller
             $data->rak = $request->rak[$key];
             $data->box = $request->box[$key];
             $data->batch = $request->batch[$key];
+            $data->nama_pt = $request->namaPT[$key];
+            $data->jenis_dok = $request->jenisDok[$key];
+            $data->tanggal_dok = $request->tanggalDok[$key];
+            $data->user_id = auth()->user()->id;
             $data->save();
         }
         alert()->success('Success!', 'Data Berhasil Ditambahkan!')->autoclose(3500);
