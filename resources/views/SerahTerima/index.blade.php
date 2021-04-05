@@ -184,11 +184,11 @@
           @csrf
           <div class="form-group">
             <label for="exampleInputEmail1">Nama Seksi PKC</label>
-            <input type="text" class="form-control" name="nama">
+            <input type="text" class="form-control" value="<?= auth()->user()->name ?>" name="nama">
           </div>
           <div class="form-group">
             <label for="exampleInputPassword1">NIP</label>
-            <input type="number" class="form-control" name="nip">
+            <input type="number" class="form-control" value="<?= auth()->user()->nip ?>" name="nip">
           </div>
           <div class="form-group">
             <label for="exampleInputPassword1">Batch</label>

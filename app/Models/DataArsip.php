@@ -12,7 +12,7 @@ class DataArsip extends Model
     protected $table = 'tb_arsip';
     protected $primaryKey = 'id_dok';
     protected $fillable = [
-        'no_pen', 'status', 'box', 'batch', 'rak', 'nama_pt', 'jenis_dok', 'tanggal_dok', 'created_by',
+        'no_pen', 'status', 'box', 'batch', 'rak', 'nama_pt', 'jenis_dok', 'tanggal_dok', 'user_id',
     ];
 
     public function dokumen()

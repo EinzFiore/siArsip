@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Peminjaman;
 use App\Models\DataArsip;
-use DB;
+use App\Models\Peminjaman;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PeminjamanController extends Controller
 {
@@ -69,44 +69,20 @@ class PeminjamanController extends Controller
         return redirect('peminjaman');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
-        $peminjaman = DataArsip::findOrFail($id);
-        $peminjaman->update([
-            'status' => 1,
-        ]);
-        if ($peminjaman) {
-            alert()->success('Success!', 'Data Berhasil Ditambahkan!')->autoclose(3500);
+        DB::beginTransaction();
+        try {
+            $arsip = DataArsip::findOrFail($id);
+            $peminjaman = Peminjaman::where('no_pen', $arsip->no_pen)->first();
+            $dokumen = Peminjaman::where('no_nd', $peminjaman->no_nd)->select('no_pen')->get()->toArray();
+            DataArsip::whereIn('no_pen', $dokumen)->update(['status' => 1]);
+            DB::commit();
+            alert()->success('Success!', 'Data Berhasil Dikonfirmasi!')->autoclose(3500);
             return redirect('peminjaman');
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response($e);
         }
     }
 

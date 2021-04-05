@@ -65,6 +65,15 @@
             <x-jet-input id="email" type="email" class="mt-1 block w-full" wire:model.defer="state.email" />
             <x-jet-input-error for="email" class="mt-2" />
         </div>
+
+        @if(auth()->user()->role > 0)
+        <!-- NIP -->
+        <div class="col-span-6 sm:col-span-4">
+            <x-jet-label for="nip" value="{{ __('NIP') }}" />
+            <x-jet-input id="nip" type="text" class="mt-1 block w-full" wire:model.defer="state.nip" />
+            <x-jet-input-error for="nip" class="mt-2" />
+        </div>
+        @endif
     </x-slot>
 
     <x-slot name="actions">
