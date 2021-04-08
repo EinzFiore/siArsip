@@ -17,11 +17,11 @@ class TabelArsipImport extends Migration
             $table->id();
             $table->string('no_pen');
             $table->date('tanggal_dok');
-            $table->string('nama_perusahaan ');
+            $table->string('nama_perusahaan');
             $table->string('jenis_dok');
             $table->integer('rak');
             $table->string('box');
-            $table->string('batch');
+            $table->integer('batch');
             $table->timestamps();
         });
     }
