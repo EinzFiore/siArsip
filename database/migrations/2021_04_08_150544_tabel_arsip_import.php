@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTeamUserTable extends Migration
+class TabelArsipImport extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,16 @@ class CreateTeamUserTable extends Migration
      */
     public function up()
     {
-        Schema::create('team_user', function (Blueprint $table) {
+        Schema::create('tb_arsip', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('team_id');
-            $table->foreignId('user_id');
-            $table->string('role')->nullable();
+            $table->string('no_pen');
+            $table->date('tanggal_dok');
+            $table->string('nama_perusahaan ');
+            $table->string('jenis_dok');
+            $table->integer('rak');
+            $table->string('box');
+            $table->string('batch');
             $table->timestamps();
-
-            $table->unique(['team_id', 'user_id']);
         });
     }
 
@@ -31,6 +33,6 @@ class CreateTeamUserTable extends Migration
      */
     public function down()
     {
-        Schema::drop('team_user');
+        //
     }
 }

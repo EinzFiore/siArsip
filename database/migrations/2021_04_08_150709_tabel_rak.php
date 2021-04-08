@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateJenisDokumensTable extends Migration
+class TabelRak extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateJenisDokumensTable extends Migration
      */
     public function up()
     {
-        Schema::create('jenis_dokumen', function (Blueprint $table) {
-            $table->id('id');
-            $table->string('jenis_dokumen', 20);
+        Schema::create('rak', function (Blueprint $table) {
+            $table->id('noRak');
+            $table->timestamps();
         });
     }
 
@@ -26,6 +26,6 @@ class CreateJenisDokumensTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('jenis_dokumen');
+        //
     }
 }

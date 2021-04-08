@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddRoleToUsersTable extends Migration
+class Batch extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class AddRoleToUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->boolean('role')->default(0);
+        Schema::create('batch', function (Blueprint $table) {
+            $table->string('batches')->primary();
+            $table->year('tahun_batch');
+            $table->timestamps();
         });
     }
 
@@ -25,8 +27,6 @@ class AddRoleToUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            //
-        });
+        //
     }
 }

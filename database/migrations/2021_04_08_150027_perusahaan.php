@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSerahTerimasTable extends Migration
+class Perusahaan extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateSerahTerimasTable extends Migration
      */
     public function up()
     {
-        Schema::create('serah_terima', function (Blueprint $table) {
-            $table->id('no_surat');
-            $table->foreignId('id_perusahaan');
-            $table->date('tanggal');
+        Schema::create('perusahaan', function (Blueprint $table) {
+            $table->id('id_perusahaan');
+            $table->string('nama_perusahaan');
+            $table->timestamps();
         });
     }
 
@@ -27,6 +27,6 @@ class CreateSerahTerimasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('serah_terima');
+        //
     }
 }

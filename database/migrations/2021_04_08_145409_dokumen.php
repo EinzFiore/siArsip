@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRaksTable extends Migration
+class Dokumen extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,15 @@ class CreateRaksTable extends Migration
      */
     public function up()
     {
-        Schema::create('rak', function (Blueprint $table) {
+        Schema::create('dokumen', function (Blueprint $table) {
             $table->id();
-            $table->integer('noRak');
+            $table->string('no_pen');
+            $table->string('nama_perusahaan');
+            $table->date('tanggal_dokumen');
+            $table->string('batch');
+            $table->year('tahun_batch');
+            $table->year('tahun_resensi');
+            $table->timestamps();
         });
     }
 
@@ -26,6 +32,6 @@ class CreateRaksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('rak');
+        //
     }
 }

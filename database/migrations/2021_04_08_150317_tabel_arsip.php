@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDataArsipsTable extends Migration
+class TabelArsip extends Migration
 {
     /**
      * Run the migrations.
@@ -15,10 +15,15 @@ class CreateDataArsipsTable extends Migration
     {
         Schema::create('tb_arsip', function (Blueprint $table) {
             $table->id('id_dok');
-            $table->string('no_dok');
+            $table->string('no_pen');
+            $table->string('nama_pt');
+            $table->string('jenis_dok');
+            $table->date('tanggal_dok');
             $table->integer('rak');
-            $table->integer('status');
             $table->string('box');
+            $table->string('batch');
+            $table->integer('status');
+            $table->integer('user_id');
             $table->timestamps();
         });
     }
@@ -30,6 +35,6 @@ class CreateDataArsipsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tb_arsip');
+        //
     }
 }
