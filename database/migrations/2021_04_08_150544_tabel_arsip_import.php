@@ -13,7 +13,7 @@ class TabelArsipImport extends Migration
      */
     public function up()
     {
-        Schema::create('tb_arsip', function (Blueprint $table) {
+        Schema::create('tb_importarsip', function (Blueprint $table) {
             $table->id();
             $table->string('no_pen');
             $table->date('tanggal_dok');

@@ -13,7 +13,7 @@ class JenisDokumen extends Migration
      */
     public function up()
     {
-        Schema::create('dokumen', function (Blueprint $table) {
+        Schema::create('jenis_dokumen', function (Blueprint $table) {
             $table->id();
             $table->string('jenis_dokumen');
             $table->timestamps();
