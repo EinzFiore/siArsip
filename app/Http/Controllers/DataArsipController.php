@@ -317,7 +317,7 @@ class DataArsipController extends Controller
         $box = ImportArsip::pluck('box')->toArray();
         $batch = ImportArsip::pluck('batch')->toArray();
         $rak = ImportArsip::pluck('rak')->toArray();
-        return view('arsip/import/listData', compact('box', 'batch', 'rak'));
+        return view('Arsip/import/listData', compact('box', 'batch', 'rak'));
     }
 
     public function importData(Request $request)

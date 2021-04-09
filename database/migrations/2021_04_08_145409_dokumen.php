@@ -18,6 +18,7 @@ class Dokumen extends Migration
             $table->string('no_pen');
             $table->string('nama_perusahaan');
             $table->date('tanggal_dokumen');
+            $table->string('jenis_dokumen');
             $table->string('batch');
             $table->year('tahun_batch');
             $table->year('tahun_resensi');
