@@ -91,6 +91,7 @@
             getData: "{{ route('getData') }}",
             getDokumen: "{{ route('getDokumen') }}",
             getArsipImport: "{{ route('getArsipImport') }}",
+            getPeminjaman: "{{ route('getPeminjaman') }}",
         }
     };
 </script>

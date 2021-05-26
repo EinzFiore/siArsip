@@ -53,10 +53,9 @@
         Tambah Data
       </button>
     <div class="table-responsive">
-      <table class="table table-striped data" id="row">
+      <table class="table table-striped data" id="peminjaman">
         <thead>
           <tr>
-            <th scope="col">#</th>
             <th scope="col">Nama Peminjam</th>
             <th scope="col">Nomor ND</th>
             <th scope="col">Tanggal ND</th>
@@ -69,42 +68,6 @@
           </tr>
         </thead>
         <tbody>
-          @php
-              $no = 1;
-          @endphp
-          @foreach ($pinjam as $p)
-            <tr>
-              <th scope="row"><?= $no++ ?></th>
-              <td><?= $p->nama_peminjam ?></td>
-              <td><?= $p->no_nd ?></td>
-              <td><?= $p->tanggal_nd ?></td>
-              <td><button class="btn btn-primary" data-toggle="modal" data-target="#detailDokumen<?= $p->no_pen ?>"><?= $p->no_pen ?></button></td>
-              <td><?= date('d-m-Y', strtotime($p->tanggal_pinjam)) ?></td>
-              <td>
-                @if ($p->status == 2)
-                  <span class="badge badge-warning">belum kembali</span>
-                  @else
-                  <?= date('d-m-Y', strtotime($p->updated_at)) ?>
-                @endif
-                
-              </td>
-              <td><?= $p->seksi ?></td>
-              <td>
-                @if ($p->status == 2)
-                  <span class="badge badge-warning">Dipinjamkan</span>
-                  @else
-                  <span class="badge badge-success">Dikembalikan</span>
-                @endif
-              </td>
-              @if ($p->status == 2)
-              <td>
-                <button class="btn btn-info mb-2" data-toggle="modal" data-target="#konfirmasi<?= $p->no_pen ?>">Konfirmasi</button>
-              </td>
-              @else
-                <td>-</td>
-              @endif
-            </tr>
-          @endforeach
         </tbody>
       </table>
     </div>
@@ -223,8 +186,8 @@
 </div>
 @endforeach
 
-@foreach ($pinjam as $p)
 {{-- Modal Detail Dokumen --}}
+@foreach ($pinjam as $p)
 <div class="modal fade" id="detailDokumen<?= $p->no_pen ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">

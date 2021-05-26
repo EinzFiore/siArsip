@@ -13,7 +13,12 @@ class TeamUser extends Migration
      */
     public function up()
     {
-        
+        Schema::create('team_user', function (Blueprint $table) {
+            $table->foreignId('user_id')->index();
+            $table->string('name');
+            $table->boolean('personal_team');
+            $table->timestamps();
+        });
     }
 
     /**

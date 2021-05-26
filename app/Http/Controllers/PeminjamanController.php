@@ -6,26 +6,18 @@ use App\Models\DataArsip;
 use App\Models\Peminjaman;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Yajra\DataTables\Facades\DataTables;
 
 class PeminjamanController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        $pinjam = DB::table('peminjaman')
+        $data['pinjam'] = DB::table('peminjaman')
             ->join('tb_arsip', 'peminjaman.id_dok', '=', 'tb_arsip.id_dok')
             ->join('dokumen', 'peminjaman.no_pen', '=', 'dokumen.no_pen')
             ->select('peminjaman.*', 'dokumen.nama_perusahaan', 'dokumen.tanggal_dokumen', 'dokumen.jenis_dokumen', 'tb_arsip.rak', 'tb_arsip.box', 'tb_arsip.batch', 'tb_arsip.status')
             ->get();
-        if ($pinjam) {
-            return view('peminjaman.index', compact('pinjam'));
-        } else {
-            return view('peminjaman.index');
-        }
+        return view('peminjaman.index', $data);
     }
 
     /**
@@ -33,9 +25,13 @@ class PeminjamanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function getDataPeminjaman(Request $request)
     {
-        //
+        $data = DB::table('peminjaman')
+            ->join('tb_arsip', 'peminjaman.id_dok', '=', 'tb_arsip.id_dok')
+            ->join('dokumen', 'peminjaman.no_pen', '=', 'dokumen.no_pen')
+            ->select('peminjaman.*', 'dokumen.nama_perusahaan', 'dokumen.tanggal_dokumen', 'dokumen.jenis_dokumen', 'tb_arsip.rak', 'tb_arsip.box', 'tb_arsip.batch', 'tb_arsip.status');
+        return DataTables::of($data)->make(true);
     }
 
     /**

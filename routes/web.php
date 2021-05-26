@@ -56,6 +56,7 @@ Route::post('/getData', 'DataArsipController@getData')->name('getData');
 
 // Route Peminjaman
 Route::resource('peminjaman', PeminjamanController::class);
+Route::post('/get/peminjaman', 'PeminjamanController@getDataPeminjaman')->name('getPeminjaman');
 
 Route::get('/users/list', 'DashboardController@userList');
 

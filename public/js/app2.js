@@ -474,6 +474,58 @@ $(".filter").on('change', function(){
   tableImportArsip.ajax.reload(null,false)
 })
 
+// data table peminjaman
+const tablePeminjaman = $('#peminjaman').DataTable({
+  processing : true,
+  serverside : true,
+  ajax : {
+    url: config.routes.getPeminjaman,
+    type: "post",
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    // data: function(d){
+    //   d.monthPinjam = rak;
+    //   d.box = box;
+    //   d.batch = batch;
+    //   return d
+    // }
+  },
+  columns: [
+    {data: 'nama_peminjam', name:'nama_peminjam'},
+    {data: 'no_nd', name:'no_nd'},
+    {data: 'tanggal_nd', name:'tanggal_nd'},
+    {data: 'no_pen', name:'no_pen',
+      render: function (data) {
+          return `<button class="btn btn-primary" data-toggle="modal" data-target="#detailDokumen${data}">${data}</button>`;
+      }
+    },
+    {data: 'tanggal_pinjam', name:'tanggal_pinjam'},
+    {data: 'status', name:'tanggal_kembali',
+      render: function (data, type, row) {
+        if(data == 2){
+          return `<span class="badge badge-warning">belum kembali</span>`;
+        }else return `${row.updated_at}`;
+      }
+    },
+    {data: 'seksi', name:'seksi'},
+    {data: 'status', name:'status',
+    render: function (data) {
+      if(data == 2){
+        return `<span class="badge badge-warning">Dipinjamkan</span>`;
+      }else return `<span class="badge badge-success">Dikembalikan</span>`;
+    }
+  },
+  {data: 'status', name:'status',
+     render: function (data,type,row) {
+        if(data == 2){
+          return ` <button class="btn btn-info mb-2" data-toggle="modal" data-target="#konfirmasi${row.no_pen}">Konfirmasi</button>`;
+        }else return `-`;
+      }
+    },
+  ]
+});
+
 // Fungsi Filter PKC
 $(".filterDokumen").on('change', function(){
   batch = $("#filterBatch").val();
