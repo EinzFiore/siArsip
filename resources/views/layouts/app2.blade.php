@@ -92,6 +92,7 @@
             getDokumen: "{{ route('getDokumen') }}",
             getArsipImport: "{{ route('getArsipImport') }}",
             getPeminjaman: "{{ route('getPeminjaman') }}",
+            getListND: "{{ route('getListND') }}",
         }
     };
 </script>

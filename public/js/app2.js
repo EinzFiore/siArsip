@@ -349,6 +349,32 @@ $(document).ready(function(){
         }
     });
 });
+
+// Autocomplete search no ND
+$(document).ready(function(){
+    $( "#cek_no_nd" ).autocomplete({
+        source: function( request, response ) {
+            console.log(request.term)
+        $.ajax({
+            // url from global config in app2.blade.php
+            url:config.routes.getListND,
+            type: 'post',
+            dataType: "json",
+            data: {
+                _token: CSRF_TOKEN,
+                cari: request.term,
+            },
+            success: function( data ) {
+            response( data );
+            }
+        });
+        },
+        select: function (event, ui) {
+        $("#cek_no_nd").val(ui.item.value);
+        return false;
+        }
+    });
+});
   
   $(document).ready(function(){
     var count = 1;
@@ -474,6 +500,11 @@ $(".filter").on('change', function(){
   tableImportArsip.ajax.reload(null,false)
 })
 
+// var peminjaman
+let monthPinjam = $('#monthPinjam').val();
+let yearPinjam = $('#yearPinjam').val();
+let statusPinjam = $('#statusPinjam').val();
+
 // data table peminjaman
 const tablePeminjaman = $('#peminjaman').DataTable({
   processing : true,
@@ -483,13 +514,13 @@ const tablePeminjaman = $('#peminjaman').DataTable({
     type: "post",
     headers: {
       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    },
-    // data: function(d){
-    //   d.monthPinjam = rak;
-    //   d.box = box;
-    //   d.batch = batch;
-    //   return d
-    // }
+    },  
+    data: function(d){
+      d.month = monthPinjam;
+      d.year = yearPinjam;
+      d.status = statusPinjam;
+      return d
+    }
   },
   columns: [
     {data: 'nama_peminjam', name:'nama_peminjam'},
@@ -503,7 +534,7 @@ const tablePeminjaman = $('#peminjaman').DataTable({
     {data: 'tanggal_pinjam', name:'tanggal_pinjam'},
     {data: 'status', name:'tanggal_kembali',
       render: function (data, type, row) {
-        if(data == 2){
+        if(data == 0){
           return `<span class="badge badge-warning">belum kembali</span>`;
         }else return `${row.updated_at}`;
       }
@@ -511,20 +542,29 @@ const tablePeminjaman = $('#peminjaman').DataTable({
     {data: 'seksi', name:'seksi'},
     {data: 'status', name:'status',
     render: function (data) {
-      if(data == 2){
+      if(data == 0){
         return `<span class="badge badge-warning">Dipinjamkan</span>`;
       }else return `<span class="badge badge-success">Dikembalikan</span>`;
     }
   },
-  {data: 'status', name:'status',
-     render: function (data,type,row) {
-        if(data == 2){
-          return ` <button class="btn btn-info mb-2" data-toggle="modal" data-target="#konfirmasi${row.no_pen}">Konfirmasi</button>`;
-        }else return `-`;
-      }
-    },
+  // {data: 'status', name:'status',
+  //    render: function (data,type,row) {
+  //       if(data == 0){
+  //         return ` <button class="btn btn-info mb-2" data-toggle="modal" data-target="#konfirmasi${row.no_pen}${row.no_nd}">Konfirmasi</button>`;
+  //       }else return `-`;
+  //     }
+  //   },
   ]
 });
+
+// Filter Peminjaman
+$(".filterPeminjaman").on('change', function(){
+  monthPinjam = $('#monthPinjam').val();
+  yearPinjam = $('#yearPinjam').val();
+  statusPinjam = $('#statusPinjam').val();
+
+  tablePeminjaman.ajax.reload(null,false)
+})
 
 // Fungsi Filter PKC
 $(".filterDokumen").on('change', function(){
@@ -538,6 +578,67 @@ $(".filterDokumen").on('change', function(){
   tableDokumen.ajax.reload(null,false)
 })
 
+// cek data peminjaman by no nd
+$( "#searchND" ).click(function() {
+  let nd = $('#cek_no_nd').val();
+  $.ajax
+    ({ 
+        url: `/get/nd/${nd}`,
+        success: function(result)
+        {
+          const box = $('.box-peminjaman');
+          if(result['status'] == 'success'){
+            $('#konfirmasi').removeAttr("disabled");
+            const listData = `
+            <table class="table table-borderless mt-2 listPinjam">
+              <thead>
+                <tr>
+                  <th scope="col">Nomor Dokumen</th>
+                  <th scope="col">Nama Peminjam</th>
+                  <th scope="col">Seksi</th>
+                  <th scope="col">Tanggal Pinjam</th>
+                  <th scope="col">Status</th>
+                </tr>
+              </thead>
+              <tbody id="listPeminjaman">
+              </tbody>
+            </table>
+            `
+            $(box).empty();
+            $(listData).appendTo(box);
+            $.each(result['data'], function(key, value){
+              let tbody = $('#listPeminjaman');
+              let badge = "";
+              if(value.status == 1){
+                badge = '<span class="badge badge-success">Dikembalikan</span>';
+              } else {
+                badge = '<span class="badge badge-warning">Dipinjam</span>';
+              }
+              let data = `
+                <tr>
+                  <td>${value.no_pen}</td>
+                  <td>${value.nama_peminjam}</td>
+                  <td>${value.seksi}</td>
+                  <td>${value.tanggal_pinjam}</td>
+                  <td>${badge}</td>
+                </tr>
+              `;
+              $(data).appendTo(tbody);
+            });
+            $('.listPinjam').DataTable();
+          } else {
+            $('#konfirmasi').attr("disabled","disabled");
+            const listData = `
+            <div class="alert alert-danger mt-2" role="alert">
+              ${result['message']}
+            </div>
+            `;
+            $(box).empty();
+            $(listData).appendTo(box);
+          }
+        }
+    });
+});
+
 let today = new Date().toISOString().slice(0, 10);
 document.getElementById('tanggal').value=today;
-

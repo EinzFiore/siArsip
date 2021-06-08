@@ -7,14 +7,14 @@
       <h4>Data Peminjaman BC.25</h4>
     </div>
     <div class="card-body">
-      <label><strong>Filter Data Peminjaman Berdasarkan Waktu Peminjaman</strong></label>
+      <label><strong>Filter Data Peminjaman</strong></label>
       <hr>
       <div class="row mb-2">
         <div class="col-sm-2">
           <div class="Batch">
             <label>Bulan Pinjam</label>
             <div class="form-group">
-              <select name="bulan" class="form-control select2 filter" id="filterBulan">
+              <select name="bulan" class="form-control select2 filterPeminjaman" id="monthPinjam">
                 <option value="">Pilih Bulan</option>
                 <option value="01">Januari</option>
                 <option value="02">Februari</option>
@@ -36,7 +36,7 @@
           <div class="Batch">
             <label>Tahun Pinjam</label>
             <div class="form-group">
-              <input type="text" name="tahun" id="tahun-pinjam" class="form-control">
+              <input type="text" name="tahun" id="yearPinjam" class="form-control filterPeminjaman">
             </div>
           </div>
         </div>
@@ -44,13 +44,20 @@
           <div class="Batch">
             <label>Status</label>
             <div class="form-group">
-              <input type="text" name="status" id="statusPinjam" class="form-control">
+              <select name="bulan" class="form-control select2 filterPeminjaman" id="statusPinjam">
+                <option value="">Pilih Status</option>
+                <option value="1">Dikembalikan</option>
+                <option value="0">Dipinjam</option>
+              </select>
             </div>
           </div>
         </div>
       </div>
       <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#staticBackdrop">
         Tambah Data
+      </button>
+      <button type="button" class="btn btn-info mb-2" data-toggle="modal" data-target="#pengembalian">
+        Pengembalian BC.25
       </button>
     <div class="table-responsive">
       <table class="table table-striped data" id="peminjaman">
@@ -64,7 +71,7 @@
             <th scope="col">Tanggal Kembali</th>
             <th scope="col">Seksi</th>
             <th scope="col">Status</th>
-            <th scope="col">Action</th>
+            {{-- <th scope="col">Action</th> --}}
           </tr>
         </thead>
         <tbody>
@@ -160,31 +167,68 @@
   </div>
 
 <!-- Modal Konfirmasi -->
-@foreach ($pinjam as $p)
-<div class="modal fade" id="konfirmasi<?= $p->no_pen ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
+<div class="modal fade" id="pengembalian" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Konfirmasi Pengembalian Dokumen</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Cek Nomor ND</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        Konfirmasi dokumen <span class="badge badge-light"><?= $p->no_pen ?></span> dengan nomor ND <span class="badge badge-light"><?= $p->no_nd ?></span>?
+        <div class="row mb-2">
+          <div class="col-sm-6 d-flex">
+            <input type="text" name="cek_nd" id="cek_no_nd" class="form-control mr-2" placeholder="Nomor ND Peminjaman">
+            <button type="submit" class="btn btn-primary" id="searchND">Cari</button>
+          </div>
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#konfirmasi" id="konfirmasi" disabled>
+            Konfirmasi Pengembalian
+          </button>
+        </div>
+        <div class="box-peminjaman">
+        </div>
       </div>
-      <form action="<?= route('peminjaman.update', $p->id_dok) ?>" method="POST">
+      <form action="" method="POST">
         @csrf
         @method('PUT')
+        <input type="hidden" name="no_nd" value="">
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Ya</button>
         </div>
       </form>
     </div>
   </div>
 </div>
-@endforeach
+
+<div class="modal fade" id="konfirmasi" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Detail Dokumen : </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th scope="col">Nama Perusahaan</th>
+              <th scope="col">Tanggal Dokumen</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 {{-- Modal Detail Dokumen --}}
 @foreach ($pinjam as $p)
