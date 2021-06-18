@@ -68,6 +68,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
   <script src="{{url('/js/jquery.rowspanizer.min.js')}}"></script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   @include('sweet::alert')
 
   <script src="{{ url('stisla/assets/js/stisla.js') }}"></script>

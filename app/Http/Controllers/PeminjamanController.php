@@ -71,18 +71,15 @@ class PeminjamanController extends Controller
         return redirect('peminjaman');
     }
 
-    public function update(Request $request, $id)
+    public function update($no_nd)
     {
         DB::beginTransaction();
         try {
-            $arsip = DataArsip::findOrFail($id);
-            $peminjaman = Peminjaman::where('no_pen', $arsip->no_pen)->first();
-            $dokumen = Peminjaman::where('no_nd', $peminjaman->no_nd)->select('no_pen')->get()->toArray();
+            $dokumen = Peminjaman::where('no_nd', $no_nd)->select('no_pen')->get()->toArray();
             DataArsip::whereIn('no_pen', $dokumen)->update(['status' => 1]);
-            Peminjaman::where('no_nd', $request->no_nd)->update(['status' => 1]);
+            $peminjaman = Peminjaman::where('no_nd', $no_nd)->update(['status' => 1]);
             DB::commit();
-            alert()->success('Success!', 'Data Berhasil Dikonfirmasi!')->autoclose(3500);
-            return redirect('peminjaman');
+            return response()->json(['success' => $peminjaman]);
         } catch (\Exception $e) {
             DB::rollback();
             return response($e);

@@ -268,19 +268,19 @@ $(document).ready(function(){
       var tambahkotak = $('#kotak');
       event.preventDefault();
       field = `
-    <tr id="newRow">
-      <td>${count}</td>
-      <td><input type="number" name="noDok[]" class="form-control noDok" value="" id="noDok"></td>
-      <td><input type="text" name="namaPT[]"  class="form-control namaPT" id="namaPT"></td>
-      <td><input type="text" name="jenisDok[]" class="form-control jenisDok" id="jenisDok"></td>
-      <td><input type="date" name="tanggalDok[]" class="form-control tanggalDok" id="tanggalDok"></td>
-      <td>
-        <button class="btn btn-danger" id="remove">Hapus</button>
-      </td>
-      <input type="hidden" name="rak[]" class="form-control newRak">
-      <input type="hidden" name="box[]" class="form-control newBox">
-      <input type="hidden" name="batch[]" class="form-control newBatch">
-    </tr>
+      <tr id="newRow">
+        <td>${count}</td>
+        <td><input type="number" name="noDok[]" class="form-control noDok" value="" id="noDok"></td>
+        <td><input type="text" name="namaPT[]"  class="form-control namaPT" id="namaPT"></td>
+        <td><input type="text" name="jenisDok[]" class="form-control jenisDok" id="jenisDok"></td>
+        <td><input type="date" name="tanggalDok[]" class="form-control tanggalDok" id="tanggalDok"></td>
+        <td>
+          <button class="btn btn-danger" id="remove">Hapus</button>
+        </td>
+        <input type="hidden" name="rak[]" class="form-control newRak">
+        <input type="hidden" name="box[]" class="form-control newBox">
+        <input type="hidden" name="batch[]" class="form-control newBatch">
+      </tr>
     `;
       $(field).appendTo(tambahkotak)
       $('.noDok').autocomplete({
@@ -383,22 +383,22 @@ $(document).ready(function(){
       var tambahkotak = $('#kotak');
       event.preventDefault();
       field = `
-    <tr id="newRow">
-      <td>${count}</td>
-      <td><input type="number" id="noPen" name="noDok[]" class="form-control noDok"></td>
-      <td><input type="date" class="form-control tanggalDok" placeholder="mm/dd/yyy" name="tanggalDok[]"></td>
-      <td><input type="text" name="namaPT[]" class="form-control namaPT"></td>
-      <td><input type="text" name="jenisDok[]" class="form-control jenisDok"></td>
-      <td>
-        <input type="hidden" class="form-control idDok" name="newID[]"  required>
-        <input type="hidden" class="form-control newNama" name="newNama[]" required>
-        <input type="hidden" class="form-control newSeksi" name="newSeksi[]" required>
-        <input type="hidden" class="form-control newTanggal" name="newTanggal[]" required>
-        <input type="hidden" class="form-control newNoND" name="newNoND[]" required>
-        <input type="hidden" class="form-control newTanggalND" name="newTanggalND[]" required>
-        <button class="btn btn-danger" id="remove">Hapus</button>
-      </td>
-    </tr>
+      <tr id="newRow">
+        <td>${count}</td>
+        <td><input type="number" id="noPen" name="noDok[]" class="form-control noDok"></td>
+        <td><input type="date" class="form-control tanggalDok" placeholder="mm/dd/yyy" name="tanggalDok[]"></td>
+        <td><input type="text" name="namaPT[]" class="form-control namaPT"></td>
+        <td><input type="text" name="jenisDok[]" class="form-control jenisDok"></td>
+        <td>
+          <input type="hidden" class="form-control idDok" name="newID[]" required readonly>
+          <input type="hidden" class="form-control newNama" name="newNama[]" required readonly>
+          <input type="hidden" class="form-control newSeksi" name="newSeksi[]" required readonly>
+          <input type="hidden" class="form-control newTanggal" name="newTanggal[]" required readonly>
+          <input type="hidden" class="form-control newNoND" name="newNoND[]" required readonly>
+          <input type="hidden" class="form-control newTanggalND" name="newTanggalND[]" required readonly>
+          <button class="btn btn-danger" id="remove">Hapus</button>
+        </td>
+      </tr>
     `;
       $(field).appendTo(tambahkotak)
       $('.noDok').autocomplete({
@@ -639,6 +639,49 @@ $( "#searchND" ).click(function() {
         }
     });
 });
+
+$( "#konfirmasi" ).click(function() {
+  let id = $('#cek_no_nd').val();
+  $('#pengembalian').modal('hide');
+  Swal.fire({
+    title: 'Konfirmasi pengembalian?',
+    text: "You won't be able to revert this!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Konfirmasi'
+  }).then((result) => {
+    if (result.isConfirmed) {
+        $.ajax({
+          url: `/update/peminjaman/${id}`,
+          dataType: 'JSON',
+          success: function (results) {
+              if (results.success === 1) {
+                Swal.fire(
+                  'Berhasil!',
+                  'Data telah terkonfirmasi.',
+                  'success'
+                );
+                setInterval(function(res){ 
+                  location.reload();
+              }, 1000);
+              } else {
+                Swal.fire(
+                  'Failed!',
+                  'Something error while process data.',
+                  'error'
+                );
+              }
+          }
+      })
+    } else {
+      $('#pengembalian').modal('show');
+    }
+  })
+});
+
+
 
 let today = new Date().toISOString().slice(0, 10);
 document.getElementById('tanggal').value=today;
