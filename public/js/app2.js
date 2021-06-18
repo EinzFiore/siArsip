@@ -657,7 +657,7 @@ $( "#konfirmasi" ).click(function() {
           url: `/update/peminjaman/${id}`,
           dataType: 'JSON',
           success: function (results) {
-              if (results.success === 1) {
+              if (results.success === true) {
                 Swal.fire(
                   'Berhasil!',
                   'Data telah terkonfirmasi.',

@@ -79,10 +79,10 @@ class PeminjamanController extends Controller
             DataArsip::whereIn('no_pen', $dokumen)->update(['status' => 1]);
             $peminjaman = Peminjaman::where('no_nd', $no_nd)->update(['status' => 1]);
             DB::commit();
-            return response()->json(['success' => $peminjaman]);
+            return response()->json(['success' => true]);
         } catch (\Exception $e) {
             DB::rollback();
-            return response($e);
+            return response()->json(['success' => false]);
         }
     }
 
