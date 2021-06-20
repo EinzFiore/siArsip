@@ -8,8 +8,17 @@
     </div>
     <div class="card-body">
         <a href="<?= route('rak.index') ?>" class="btn btn-warning mb-2"><i class="fas fa-backward mr-2"></i>Kembali</a>
-        <button type="button" class="btn btn-primary mb-2">
-            Rak <span class="badge badge-light"><?= $id ?></span>
+        <button type="button" class="btn btn-primary mb-2" disabled>
+            Rak <span class="badge badge-light"><?= $no_rak ?></span>
+        </button>
+        <button type="button" class="btn btn-info mb-2" disabled>
+            Box <span class="badge badge-light"><?= $box ?></span>
+        </button>
+        <button type="button" class="btn btn-warning mb-2" disabled>
+            Tahun <span class="badge badge-light"><?= $year ?></span>
+        </button>
+        <button type="button" class="btn btn-success mb-2" data-toggle="modal" data-target="#pindahKarung"><i class="fas fa-box-open"></i>
+          Pindah ke Karung
         </button>
         <div class="table-responsive">
             <table class="table table-striped data" id="row">
@@ -35,10 +44,10 @@
                   <td>{{$ld->rak}}</td>
                   <td>{{$ld->box}}</td>
                   <td>{{$ld->batch}}</td>
-                  <td>{{$ld->nama_perusahaan}}</td>
-                  <td>{{$ld->tanggal_dokumen}}</td>
-                  <td>{{$ld->jenis_dokumen}}</td>
-                  <td>{{$ld->tahun_batch}}</td>
+                  <td>{{$ld->nama_pt}}</td>
+                  <td>{{$ld->tanggal_dok}}</td>
+                  <td>{{$ld->jenis_dok}}</td>
+                  <td>{{$ld->tanggal_dok}}</td>
                 </tr>
                 @empty
                 <div class="alert alert-danger">
@@ -50,3 +59,27 @@
         </div>
   </div>
 @endsection
+
+<!-- Modal -->
+<div class="modal fade" id="pindahKarung" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Tambah Data Karung</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Pilih Karung</label>
+          <input type="number" name="karung" id="karung" class="form-control" placeholder="Input No Karung">
+        </div>
+      </div>  
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+        <button type="button" class="btn btn-primary">Pindah</button>
+      </div>
+    </div>
+  </div>
+</div>

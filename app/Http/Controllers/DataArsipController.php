@@ -32,10 +32,8 @@ class DataArsipController extends Controller
     public function index()
     {
         $arsip = DB::table('tb_arsip')
-            ->join('dokumen', 'tb_arsip.no_pen', '=', 'dokumen.no_pen')
-            ->select('tb_arsip.*', 'dokumen.nama_perusahaan', 'dokumen.tanggal_dokumen', 'dokumen.jenis_dokumen', 'dokumen.tahun_batch')
+            ->select('tb_arsip.*')
             ->get();
-
         $box = DataArsip::pluck('box')->toArray();
         $batch = DataArsip::pluck('batch')->toArray();
         $status = DataArsip::pluck('status')->toArray();
@@ -124,35 +122,22 @@ class DataArsipController extends Controller
         return redirect('dataArsip');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function findDokumenByRak($rak, $box, $batch, $tahun)
     {
-        //
+        $data = DataArsip::where('rak', $rak)->where('box', $box)->where('batch', $batch)->whereYear('tanggal_dok', $tahun)->get();
+        if (count($data) > 0) {
+            return response()->json([
+                'status' => 'success',
+                'data' => $data,
+            ]);
+        } else {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Data arsip tidak ditemukan!',
+            ]);
+        }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $arsip = DataArsip::findOrFail($id);

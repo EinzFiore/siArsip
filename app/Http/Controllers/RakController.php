@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use Alert;
-use Illuminate\Http\Request;
 use App\Models\Rak;
-use DB;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class RakController extends Controller
 {
@@ -16,26 +17,25 @@ class RakController extends Controller
      */
     public function index()
     {
-        $rak =  Rak::get()->all();
+        $rak = DB::table('rak')
+            ->leftJoin('tb_arsip as arsip', 'rak.noRak', 'arsip.rak')
+            ->select('rak.noRak', 'arsip.box', 'arsip.batch', 'arsip.tanggal_dok')
+            ->orderBy('rak.noRak', 'ASC')
+            ->get();
+        $rak->map(function ($data) {
+            if ($data->tanggal_dok == null and $data->box == null and $data->batch == null) {
+                $data->tanggal_dok = "-";
+                $data->box = "-";
+                $data->batch = "-";
+            } else {
+                $data->tanggal_dok = Carbon::createFromFormat('Y-m-d', $data->tanggal_dok)->format('Y');
+            }
+            return $data;
+        });
+
         return view('Rak/index', compact('rak'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -49,35 +49,6 @@ class RakController extends Controller
         return redirect('rak');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $this->validate($request, [
@@ -112,14 +83,23 @@ class RakController extends Controller
         }
     }
 
-    function listDokumen($id)
+    public function listDokumen($id, $box, $batch, $year)
     {
         $listDokumenInRak = DB::table('tb_arsip')
-            ->join('dokumen', 'tb_arsip.no_pen', '=', 'dokumen.no_pen')
             ->join('rak', 'tb_arsip.rak', '=', 'rak.noRak')
             ->where('tb_arsip.rak', '=', $id)
-            ->select('tb_arsip.*', 'dokumen.nama_perusahaan', 'dokumen.tanggal_dokumen', 'dokumen.jenis_dokumen', 'dokumen.tahun_batch')
+            ->where('tb_arsip.box', '=', $box)
+            ->where('tb_arsip.batch', '=', $batch)
+            ->whereYear('tb_arsip.tanggal_dok', '=', $year)
+            ->select('tb_arsip.*')
             ->get();
-        return view('rak.listDokumen', compact('listDokumenInRak'))->with('id', $id);
+        $data = [
+            'no_rak' => $id,
+            'box' => $box,
+            'batch' => $batch,
+            'year' => $year,
+            'total' => count($listDokumenInRak),
+        ];
+        return view('rak.listDokumen', compact('listDokumenInRak'))->with($data);
     }
 }

@@ -122,7 +122,7 @@
         </div>
       </div>
       <div class="table-responsive">
-        <button class="btn btn-success mb-2" data-toggle="modal" data-target="#exportData">Export Arsip</button>
+        <button class="btn btn-success mb-2" data-toggle="modal" data-target="#exportData"><i class="fa fa-table mr-2" aria-hidden="true"></i>Export Arsip</button>
         <button class="btn btn-success mb-2" data-toggle="modal" data-target="#exportDataBulan">Export Rekap Bulanan</button>
         <table class="table display table-bordered" id="arsip">
           <thead>

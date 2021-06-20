@@ -7,25 +7,28 @@
       <h4>Data Rak</h4>
     </div>
     <div class="card-body">
-        <button class="btn btn-primary mb-2" data-toggle="modal" data-target="#tambahRak">Tambah Rak</button>
-      <table class="table data table-striped" id="row">
+        <button class="btn btn-primary mb-2" data-toggle="modal" data-target="#tambahRak"><i class="fas fa-plus-circle mr-2"></i>Tambah Rak</button>
+      <table class="table rakTable table-striped" id="row">
         <thead>
           <tr>
-            <th scope="col">#</th>
             <th scope="col">Nomor Rak</th>
+            <th scope="col">Box</th>
+            <th scope="col">Batch</th>
+            <th scope="col">Tahun</th>
             <th scope="col">Action</th>
           </tr>
         </thead>
         <tbody>
-          <?php $no = 1; ?>
           @forelse ($rak as $r)
             <tr>
-                <th scope="row"><?= $no++ ?></th>
                 <td>{{$r->noRak}}</td>
+                <td>{{$r->box}}</td>
+                <td>{{$r->batch}}</td>
+                <td>{{$r->tanggal_dok}}</td>
                 <td>
-                  <button class="btn btn-warning" data-toggle="modal" data-target="#editRak<?= $r->noRak ?>">Edit</button>
-                  <button class="btn btn-danger" data-toggle="modal" data-target="#hapusRak<?= $r->noRak ?>">Hapus</button>
-                  <a href="<?= route('listDokumen', $r->noRak) ?>" class="btn btn-primary">Lihat Dokumen</a>
+                  {{-- <button class="btn btn-warning" data-toggle="modal" data-target="#editRak<?= $r->noRak ?>">Edit</button>
+                  <button class="btn btn-danger" data-toggle="modal" data-target="#hapusRak<?= $r->noRak ?>">Hapus</button> --}}
+                  <a href="{{ "rak/{$r->noRak}/{$r->box}/{$r->batch}/{$r->tanggal_dok}" }}" class="btn btn-primary"><i class="fas fa-eye mr-2"></i>Lihat Dokumen</a>
                 </td>
             </tr>
           @empty

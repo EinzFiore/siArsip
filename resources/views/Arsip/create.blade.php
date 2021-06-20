@@ -59,7 +59,7 @@
                       <td><input type="text" name="jenisDok[]" class="form-control jenisDok"></td>
                       <td><input type="date" name="tanggalDok[]" class="form-control tanggalDok"></td>
                       <td>
-                        <button class="btn btn-primary" id="add">Tambah</button>
+                        <button class="btn btn-primary" id="add"><i class="fas fa-plus"></i></button>
                       </td>
                       <input type="hidden" name="rak[]" class="form-control newRak">
                       <input type="hidden" name="box[]" class="form-control newBox">

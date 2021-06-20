@@ -84,7 +84,7 @@
         </div>
       </div>
       <div class="table-responsive">
-        <button class="btn btn-success mb-2" data-toggle="modal" data-target="#importData">Import Data</button>
+        <button class="btn btn-success mb-2" data-toggle="modal" data-target="#importData"><i class="fas fa-file-import mr-2"></i>Import Data</button>
         <table class="table display table-bordered" id="importArsip">
           <thead>
             <tr>

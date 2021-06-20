@@ -57,8 +57,8 @@ const tableArsip = $('#arsip').DataTable({
       return `<span class="badge badge-light">${data}</span>`
     }
   },
-    {data: 'nama_perusahaan', name:'nama_perusahaan'},
-    {data: 'tanggal_dokumen', name:'tanggal_dok'},
+    {data: 'nama_pt', name:'nama_perusahaan'},
+    {data: 'tanggal_dok', name:'tanggal_dok'},
     {data: 'status', name:'status',
       render: function (data) {
         if(data == 1){
@@ -71,8 +71,8 @@ const tableArsip = $('#arsip').DataTable({
     },
     {data: 'id_dok',
       render: function (data) {
-      return `<button class="btn btn-primary mb-2" data-toggle="modal" data-target="#editArsip${data}">Edit</button>
-              <button class="btn btn-danger" data-toggle="modal" data-target="#hapusArsip${data}">Hapus</button>
+      return `<button class="btn btn-primary mb-2" data-toggle="modal" data-target="#editArsip${data}"><i class="fas fa-pencil-alt mr-2"></i>Edit</button>
+              <button class="btn btn-danger" data-toggle="modal" data-target="#hapusArsip${data}"><i class="fas fa-trash-alt mr-2"></i>Hapus</button>
       `;
     }
   },
@@ -169,6 +169,11 @@ $(document).ready(function(){
       buttons: [
           'copy', 'csv', 'excel', 'pdf', 'print'
       ]
+    });
+});
+$(document).ready(function(){
+    $('.rakTable').DataTable({
+      rowsGroup : [0,1,2,3,4],
     });
 });
 
@@ -275,7 +280,7 @@ $(document).ready(function(){
         <td><input type="text" name="jenisDok[]" class="form-control jenisDok" id="jenisDok"></td>
         <td><input type="date" name="tanggalDok[]" class="form-control tanggalDok" id="tanggalDok"></td>
         <td>
-          <button class="btn btn-danger" id="remove">Hapus</button>
+          <button class="btn btn-danger" id="remove"><i class="fas fa-minus"></i></button>
         </td>
         <input type="hidden" name="rak[]" class="form-control newRak">
         <input type="hidden" name="box[]" class="form-control newBox">
@@ -396,7 +401,7 @@ $(document).ready(function(){
           <input type="hidden" class="form-control newTanggal" name="newTanggal[]" required readonly>
           <input type="hidden" class="form-control newNoND" name="newNoND[]" required readonly>
           <input type="hidden" class="form-control newTanggalND" name="newTanggalND[]" required readonly>
-          <button class="btn btn-danger" id="remove">Hapus</button>
+          <button class="btn btn-danger" id="remove"><i class="fas fa-minus"></i></button>
         </td>
       </tr>
     `;
@@ -464,7 +469,7 @@ $(document).ready(function(){
         <input type="hidden" id="newBatch" class="form-control newBatch" name="newBatch[]" required>
         <input type="hidden" id="newYear" class="form-control newYear" name="newYear[]" required>
       <td>
-        <button class="btn btn-danger" id="remove">Hapus</button>
+        <button class="btn btn-danger" id="remove"><i class="fas fa-minus"></i></button>
       </td>
     </tr>
     `;
@@ -681,7 +686,65 @@ $( "#konfirmasi" ).click(function() {
   })
 });
 
-
+$( "#cariArsip" ).click(function() {
+  let rak = $('#rak').val();
+  let box = $('#box').val();
+  let batch = $('#batch').val();
+  let tahun = $('#tahun').val();
+  $.ajax
+    ({ 
+        url: `/get/arsip/${rak}/${box}/${batch}/${tahun}`,
+        success: function(result)
+        {
+          const box = $('.box-karung');
+          if(result['status'] == 'success'){
+            const listData = `
+            <table class="table table-borderless mt-2 listDokumen">
+              <thead>
+                <tr>
+                  <th scope="col">Nomor Dokumen</th>
+                  <th scope="col">Nama Perusahaan</th>
+                  <th scope="col">Jenis Dokumen</th>
+                  <th scope="col">Tanggal Dokumen</th>
+                </tr>
+              </thead>
+              <tbody id="listDokumen">
+              </tbody>
+            </table>
+            `
+            $(box).empty();
+            $(listData).appendTo(box);
+            $.each(result['data'], function(key, value){
+              let tbody = $('#listDokumen');
+              let badge = "";
+              if(value.status == 1){
+                badge = '<span class="badge badge-success">Dikembalikan</span>';
+              } else {
+                badge = '<span class="badge badge-warning">Dipinjam</span>';
+              }
+              let data = `
+                <tr>
+                  <td>${value.no_pen}</td>
+                  <td>${value.nama_pt}</td>
+                  <td>${value.jenis_dok}</td>
+                  <td>${value.tanggal_dok}</td>
+                </tr>
+              `;
+              $(data).appendTo(tbody);
+            });
+            $('.listDokumen').DataTable();
+          } else {
+            const listData = `
+            <div class="alert alert-danger mt-2" role="alert">
+              ${result['message']}
+            </div>
+            `;
+            $(box).empty();
+            $(listData).appendTo(box);
+          }
+        }
+    });
+});
 
 let today = new Date().toISOString().slice(0, 10);
 document.getElementById('tanggal').value=today;

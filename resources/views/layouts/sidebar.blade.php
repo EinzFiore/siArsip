@@ -39,7 +39,7 @@
       @endif
       @if (auth()->user()->role == 1)
         <li class="menu-header">Non Display</li>
-            <li><a class="nav-link" href="/karung"><i class="far fa-file-code"></i><span>Data Karung</span></a></li>
+            <li><a class="nav-link" href="{{ route('karung.index') }}"><i class="fas fa-box-open"></i><span>Data Karung</span></a></li>
         </li>
       @endif
       @if (auth()->user()->role == 1)
@@ -54,7 +54,7 @@
       @endif
       @if (auth()->user()->role == 1)
         <li class="menu-header">Rak</li>
-            <li><a class="nav-link" href="/rak"><i class="far fa-file-code"></i><span>Data Rak</span></a></li>
+            <li><a class="nav-link" href="/rak"><i class="fas fa-archive"></i><span>Data Rak</span></a></li>
         </li>
       @endif
       <li class="menu-header">Perusahaan</li>

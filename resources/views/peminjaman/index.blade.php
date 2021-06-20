@@ -53,10 +53,10 @@
           </div>
         </div>
       </div>
-      <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#staticBackdrop">
+      <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#staticBackdrop"><i class="fas fa-plus-circle"></i>
         Tambah Data
       </button>
-      <button type="button" class="btn btn-info mb-2" data-toggle="modal" data-target="#pengembalian">
+      <button type="button" class="btn btn-info mb-2" data-toggle="modal" data-target="#pengembalian"><i class="fas fa-undo"></i>
         Pengembalian BC.25
       </button>
     <div class="table-responsive">
@@ -151,7 +151,7 @@
                       <input type="hidden" class="form-control newNoND" name="newNoND[]" required>
                       <input type="hidden" class="form-control newTanggalND" name="newTanggalND[]" required>
                       <td>
-                        <button class="btn btn-primary" id="tambahPinjam">Tambah</button>
+                        <button class="btn btn-primary" id="tambahPinjam"><i class="fas fa-plus"></i></button>
                       </td>
                     </tr>
                   </tbody>
@@ -180,7 +180,7 @@
         <div class="row mb-2">
           <div class="col-sm-6 d-flex">
             <input type="text" name="cek_nd" id="cek_no_nd" class="form-control mr-2" placeholder="Nomor ND Peminjaman">
-            <button type="submit" class="btn btn-primary" id="searchND">Cari</button>
+            <button type="submit" class="btn btn-primary" id="searchND"><i class="fas fa-search"></i></button>
           </div>
           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#konfirmasi" id="konfirmasi" disabled>
             Konfirmasi Pengembalian

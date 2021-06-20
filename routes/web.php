@@ -40,7 +40,7 @@ Route::resource('jenisDokumen', JDController::class);
 
 // Route Rak
 Route::resource('rak', RakController::class);
-Route::get('rak/{id}/listDokumen', 'RakController@listDokumen')->name('listDokumen');
+Route::get('rak/{id}/{box}/{batch}/{year}', 'RakController@listDokumen')->name('listDokumen');
 
 // Route DataArsip
 Route::resource('dataArsip', DataArsipController::class);
@@ -50,6 +50,7 @@ Route::post('/arsip/export', 'DataArsipController@exportDataArsip');
 Route::post('/arsipStatus/export', 'DataArsipController@exportDataArsipStatus');
 Route::post('/arsip/exportPerBulan', 'DataArsipController@exportDataArsipBulanan');
 Route::get('/dataArsipImport', 'DataArsipController@listDataImport');
+Route::get('/get/arsip/{rak}/{box}/{batch}/{tahun}', 'DataArsipController@findDokumenByRak');
 Route::post('/importDataArsip', 'DataArsipController@importData')->name('importData');
 Route::post('/getArsipImport', 'DataArsipController@getArsipImport')->name('getArsipImport');
 Route::post('/getData', 'DataArsipController@getData')->name('getData');
@@ -60,6 +61,10 @@ Route::post('/get/peminjaman', 'PeminjamanController@getDataPeminjaman')->name('
 Route::post('/get/nd', 'PeminjamanController@getListND')->name('getListND');
 Route::get('/get/nd/{nd}', 'PeminjamanController@getDataPeminjamanByND')->name('getByND');
 Route::get('/update/peminjaman/{no_nd}', 'PeminjamanController@update');
+
+Route::resource('karung', DataKarungController::class);
+Route::group(['prefix' => 'karung'], function () {
+});
 
 Route::get('/users/list', 'DashboardController@userList');
 
