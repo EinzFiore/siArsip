@@ -552,13 +552,6 @@ const tablePeminjaman = $('#peminjaman').DataTable({
       }else return `<span class="badge badge-success">Dikembalikan</span>`;
     }
   },
-  // {data: 'status', name:'status',
-  //    render: function (data,type,row) {
-  //       if(data == 0){
-  //         return ` <button class="btn btn-info mb-2" data-toggle="modal" data-target="#konfirmasi${row.no_pen}${row.no_nd}">Konfirmasi</button>`;
-  //       }else return `-`;
-  //     }
-  //   },
   ]
 });
 

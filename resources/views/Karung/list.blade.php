@@ -1,10 +1,10 @@
 @extends('layouts/app2');
-@section('title', 'Data Peminjaman Dokumen | SiArsip')
-@section('judul', 'Data Peminjaman')
+@section('title', 'Data Karung | SiArsip')
+@section('judul', 'Data Karung')
 @section('content')
 <div class="card">
     <div class="card-header">
-      <h4>Data Peminjaman BC.25</h4>
+      <h4>Data Karung BC.25</h4>
     </div>
     <div class="card-body">
       <label><strong>Filter Data Karung</strong></label>
@@ -38,13 +38,15 @@
         Cari Dokumen
       </button>
     <div class="table-responsive">
-      <table class="table table-striped data" id="karung">
+      <table class="table table-striped" id="karung">
         <thead>
           <tr>
             <th scope="col">Nomor Karung</th>
+            <th scope="col">Rak</th>
+            <th scope="col">Box</th>
             <th scope="col">Tahun</th>
-            <th scope="col">Total Dokumen</th>
-            <th scope="col">Action</th>
+            <th scope="col">Status</th>
+            {{-- <th scope="col">Action</th> --}}
           </tr>
         </thead>
         <tbody>
@@ -54,34 +56,94 @@
   </div>
 @endsection
 
-<!-- Modal Konfirmasi -->
-<div class="modal fade" id="tambahKarung" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Tambah Data Karung</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+<!-- Modal -->
+<div class="modal fade" id="tambahKarung" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Tambah Karung</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Nomor Karung</label>
+          <input type="number" name="karung" class="form-control no-karung" placeholder="Nomor Karung">
         </div>
-        <div class="modal-body">
-          <div class="row mb-2">
-            <div class="col-sm-10 d-flex">
-              <input type="number" name="rak" id="rak" class="form-control mr-2" placeholder="Rak">
-              <input type="text" name="box" id="box" class="form-control mr-2" placeholder="Box">
-              <input type="text" name="batch" id="batch" class="form-control mr-2" placeholder="Batch">
-              <input type="number" name="tahun" id="tahun" class="form-control mr-2" placeholder="Tahun">
-              <button type="submit" class="btn btn-primary" id="cariArsip">Cari</button>
-            </div>
-          </div>
-          <div class="box-karung">
-          </div>
-        </div>
-        <form action="" method="POST">
-          @csrf
-          @method('PUT')
-          <input type="hidden" name="no_nd" value="">
-        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="addKarung" class="btn btn-primary">Tambah</button>
       </div>
     </div>
   </div>
+</div>
+
+
+@push('script')
+<script>
+  // data table peminjaman
+  const tableKarung = $('#karung').DataTable({
+    processing : true,
+    serverside : true,
+    ajax : {
+      url: '/karung/get',
+      type: "post",
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },  
+      // data: function(d){
+      //   d.month = monthPinjam;
+      //   d.year = yearPinjam;
+      //   d.status = statusPinjam;
+      //   return d
+      // }
+    },
+    columns: [
+      {data: 'no_karung', name:'no_karung'},
+      {data: 'rak', name:'rak'},
+      {data: 'box', name:'box'},
+      {data: 'tahun', name:'tahun'},
+      {data: 'status', name:'status',
+      render: function (data) {
+        if(data == 0){
+          return `<span class="badge badge-danger">Kosong</span>`;
+        }else return `<span class="badge badge-success">Terisi</span>`;
+      }
+    },
+    ]
+  });
+
+  $( "#addKarung" ).click(function() {
+    let karung = $('.no-karung').val();
+    $.ajax({
+          url: `/karung`,
+          type: "post",
+          headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          data: {
+            karung: karung,
+          },
+          success: function (results) {
+              if (results.success === true) {
+                Swal.fire(
+                  'Berhasil!',
+                  'Data telah ditambahkan!.',
+                  'success'
+                );
+                setInterval(function(res){ 
+                  location.reload();
+              }, 1000);
+              } else {
+                Swal.fire(
+                  'Failed!',
+                  'Something error while process data.',
+                  'error'
+                );
+              }
+          }
+      })
+  });
+</script>
+@endpush

@@ -98,8 +98,7 @@
     };
 </script>
   <script src="{{ url('js/app2.js') }}"></script>
-
-    <!-- Page Specific JS File -->
+  @stack('script')
   <script src="{{ url('stisla/assets/js/page/index.js') }}"></script>
 </body>
 </html>

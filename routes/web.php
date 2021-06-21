@@ -64,6 +64,7 @@ Route::get('/update/peminjaman/{no_nd}', 'PeminjamanController@update');
 
 Route::resource('karung', DataKarungController::class);
 Route::group(['prefix' => 'karung'], function () {
+    Route::post('/get', 'DataKarungController@getDataKarung');
 });
 
 Route::get('/users/list', 'DashboardController@userList');
