@@ -103,7 +103,7 @@ class RakController extends Controller
             'total' => count($listDokumenInRak),
             'karung' => $karung,
         ];
-        return view('rak.listDokumen', compact('listDokumenInRak'))->with($data);
+        return view('Rak.listDokumen', compact('listDokumenInRak'))->with($data);
     }
 
     public function showRak($rak, $box, $year)
@@ -127,6 +127,6 @@ class RakController extends Controller
             return $data;
         });
 
-        return view('rak.listRak', compact('rak'));
+        return view('Rak.listRak', compact('rak'));
     }
 }
