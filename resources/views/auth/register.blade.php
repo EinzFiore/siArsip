@@ -34,7 +34,7 @@
                 <select name="role" id="role" class="block form-control w-full mt-2">
                     <option value="1">Arsip PDAD</option>
                     <option value="2">Arsip PKC</option>
-                    <option value="3">Peminjam</option>
+                    {{-- <option value="3">Peminjam</option> --}}
                 </select>
                 {{-- <x-jet-input class="block mt-1 w-full" type="tex" name="email" :value="old('email')" required /> --}}
             </div>
