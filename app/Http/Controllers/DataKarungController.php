@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DataKarung;
 use App\Models\Karung;
+use App\Models\Rak;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -18,15 +20,33 @@ class DataKarungController extends Controller
 
     public function index()
     {
-        return view('Karung.list');
+        $karung = Karung::all();
+        $rak = Rak::all();
+        $data = [
+            'karung' => $karung,
+            'rak' => $rak,
+        ];
+        return view('Karung.list', $data);
     }
 
     public function getDataKarung(Request $request)
     {
         $data = DB::table('karung')
             ->leftJoin('data_karung', 'karung.no_karung', 'data_karung.no_karung')
-            ->select('karung.no_karung', 'data_karung.rak', 'data_karung.box', 'data_karung.tahun', 'karung.status')
-            ->get();
+            ->select('karung.no_karung', 'data_karung.rak', 'data_karung.box', 'data_karung.tahun', 'karung.status');
+        if ($request->karung != null) {
+            $data->where('karung.no_karung', $request->karung);
+        }
+        if ($request->rak != null) {
+            $data->where('data_karung.rak', $request->rak);
+        }
+        if ($request->box != null) {
+            $data->where('data_karung.box', $request->box);
+        }
+        if ($request->tahun != null) {
+            $data->where('data_karung.tahun', $request->tahun);
+        }
+        $data = $data->get();
         $data->map(function ($data) {
             if ($data->rak == null) {
                 $data->rak = "-";
@@ -44,6 +64,10 @@ class DataKarungController extends Controller
 
     public function store(Request $request)
     {
+        $data = $this->karung->where('no_karung', $request->karung)->first();
+        if ($data) {
+            return response()->json(['success' => false]);
+        }
         try {
             $this->karung->create(['no_karung' => $request->karung]);
             return response()->json(['success' => true]);
@@ -52,4 +76,24 @@ class DataKarungController extends Controller
         }
     }
 
+    public function addDataKarung(Request $request)
+    {
+        $data = [
+            'no_karung' => $request->karung,
+            'rak' => $request->rak,
+            'box' => $request->box,
+            'tahun' => $request->tahun,
+        ];
+        $cek = DataKarung::where('no_karung', $request->karung)->where('rak', $request->rak)->where('box', $request->box)->where('tahun', $request->tahun)->first();
+        if ($cek) {
+            return response()->json(['success' => false]);
+        }
+        try {
+            DataKarung::create($data);
+            Karung::where('no_karung', $request->karung)->update(['status' => 1]);
+            return response()->json(['success' => true]);
+        } catch (QueryException $e) {
+            return response()->json(['success' => false]);
+        }
+    }
 }

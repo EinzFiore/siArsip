@@ -12,21 +12,43 @@
       <div class="row mb-2">
         <div class="col-sm-2">
           <div class="Batch">
-            <label>Tahun Pinjam</label>
+            <label>Karung</label>
             <div class="form-group">
-              <input type="text" name="tahun" id="yearPinjam" class="form-control filterPeminjaman">
+              <select name="karung" id="karungSelect" class="form-control filter-karung"> 
+                <option value="">-- Pilih Karung --</option>
+                @foreach ($karung as $k)
+                    <option value="<?= $k->no_karung ?>"><?= $k->no_karung ?></option>
+                @endforeach
+              </select>
             </div>
           </div>
         </div>
         <div class="col-sm-2">
           <div class="Batch">
-            <label>Status</label>
+            <label>Rak</label>
             <div class="form-group">
-              <select name="bulan" class="form-control select2 filterPeminjaman" id="statusPinjam">
-                <option value="">Pilih Status</option>
-                <option value="1">Dikembalikan</option>
-                <option value="0">Dipinjam</option>
+              <select name="rak" id="rak" class="form-control filter-karung"> 
+                <option value="">-- Pilih Rak --</option>
+                @foreach ($rak as $r)
+                    <option value="<?= $r->noRak ?>"><?= $r->noRak ?></option>
+                @endforeach
               </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="Batch">
+            <label>Box</label>
+            <div class="form-group">
+              <input type="text" name="box" id="box" class="form-control filter-karung" placeholder="Ketik Box">
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="Batch">
+            <label>Tahun</label>
+            <div class="form-group">
+              <input type="number" name="tahun" id="tahun" class="form-control filter-karung" placeholder="Tahun">
             </div>
           </div>
         </div>
@@ -34,9 +56,9 @@
       <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#tambahKarung">
         Tambah Data
       </button>
-      <button type="button" class="btn btn-info mb-2" data-toggle="modal" data-target="#pengembalian">
+      {{-- <button type="button" class="btn btn-info mb-2" data-toggle="modal" data-target="#pengembalian">
         Cari Dokumen
-      </button>
+      </button> --}}
     <div class="table-responsive">
       <table class="table table-striped" id="karung">
         <thead>
@@ -46,7 +68,7 @@
             <th scope="col">Box</th>
             <th scope="col">Tahun</th>
             <th scope="col">Status</th>
-            {{-- <th scope="col">Action</th> --}}
+            <th scope="col">Action</th>
           </tr>
         </thead>
         <tbody>
@@ -82,9 +104,13 @@
 
 @push('script')
 <script>
-  // data table peminjaman
+  let karungSelect = $('#karungSelect').val();
+  let rakKarung = $('#rakSelect').val();
+  let boxKarung = $('#boxSelect').val();
+  let tahunKarung = $('#tahunSelect').val();
   const tableKarung = $('#karung').DataTable({
     processing : true,
+    rowsGroup : [0,1],
     serverside : true,
     ajax : {
       url: '/karung/get',
@@ -92,12 +118,13 @@
       headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
       },  
-      // data: function(d){
-      //   d.month = monthPinjam;
-      //   d.year = yearPinjam;
-      //   d.status = statusPinjam;
-      //   return d
-      // }
+      data: function(d){
+        d.karung = karungSelect;
+        d.rak = rakKarung;
+        d.box = boxKarung;
+        d.tahun = tahunKarung;
+        return d
+      }
     },
     columns: [
       {data: 'no_karung', name:'no_karung'},
@@ -108,11 +135,26 @@
       render: function (data) {
         if(data == 0){
           return `<span class="badge badge-danger">Kosong</span>`;
-        }else return `<span class="badge badge-success">Terisi</span>`;
-      }
+          }
+          else return `<span class="badge badge-success">Terisi</span>`;
+        },
+      },
+      {data: 'status', name:'status',
+      render: function (data, type, row) {
+        return `<a href="rak/${row.rak}/${row.box}/${row.tahun}" class="btn btn-primary"><i class="fas fa-eye mr-2"></i>Lihat Rak</a>`;
+      },
     },
     ]
   });
+
+  $(".filter-karung").on('change', function(){
+  karungSelect = $('#karungSelect').val();
+  rakKarung = $('#rakSelect').val();
+  boxKarung = $('#boxSelect').val();
+  tahunKarung = $('#tahunSelect').val();
+
+  tableKarung.ajax.reload(null,false)
+})
 
   $( "#addKarung" ).click(function() {
     let karung = $('.no-karung').val();

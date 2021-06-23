@@ -7,15 +7,15 @@
       <h4>Data List Dokumen</h4>
     </div>
     <div class="card-body">
-        <a href="<?= route('rak.index') ?>" class="btn btn-warning mb-2"><i class="fas fa-backward mr-2"></i>Kembali</a>
+        <a href="{{ url()->previous() }}" class="btn btn-warning mb-2"><i class="fas fa-backward mr-2"></i>Kembali</a>
         <button type="button" class="btn btn-primary mb-2" disabled>
-            Rak <span class="badge badge-light"><?= $no_rak ?></span>
+            Rak <span class="badge badge-light" id="no_rak"><?= $no_rak ?></span>
         </button>
         <button type="button" class="btn btn-info mb-2" disabled>
-            Box <span class="badge badge-light"><?= $box ?></span>
+            Box <span class="badge badge-light" id="boxSpan"><?= $box ?></span>
         </button>
         <button type="button" class="btn btn-warning mb-2" disabled>
-            Tahun <span class="badge badge-light"><?= $year ?></span>
+            Tahun <span class="badge badge-light" id="tahunSpan"><?= $year ?></span>
         </button>
         <button type="button" class="btn btn-success mb-2" data-toggle="modal" data-target="#pindahKarung"><i class="fas fa-box-open"></i>
           Pindah ke Karung
@@ -73,13 +73,60 @@
       <div class="modal-body">
         <div class="form-group">
           <label>Pilih Karung</label>
-          <input type="number" name="karung" id="karung" class="form-control" placeholder="Input No Karung">
+          <select name="karung" id="karungSelect" class="form-control"> 
+            <option>-- Pilih Karung --</option>
+            @foreach ($karung as $k)
+                <option value="<?= $k->no_karung ?>"><?= $k->no_karung ?></option>
+            @endforeach
+          </select>
         </div>
       </div>  
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-        <button type="button" class="btn btn-primary">Pindah</button>
+        <button type="button" id="btnPindahKarung" class="btn btn-primary">Pindah</button>
       </div>
     </div>
   </div>
 </div>
+
+@push('script')
+    <script>
+    $( "#btnPindahKarung" ).click(function() {
+        let karung = $('#karungSelect').val();
+        let rak = $('#no_rak').text();
+        let box = $('#boxSpan').text();
+        let tahun = $('#tahunSpan').text();
+        $.ajax({
+            url: `/karung/add/data`,
+            type: "post",
+            headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+              karung: karung,
+              rak: rak,
+              box: box,
+              tahun: tahun,
+            },
+            success: function (results) {
+                if (results.success === true) {
+                  Swal.fire(
+                    'Berhasil!',
+                    'Data telah ditambahkan!.',
+                    'success'
+                  );
+                  setInterval(function(res){ 
+                    location.reload();
+                }, 1000);
+                } else {
+                  Swal.fire(
+                    'Failed!',
+                    'Something error while process data.',
+                    'error'
+                  );
+                }
+            }
+        })
+    });
+    </script>
+@endpush

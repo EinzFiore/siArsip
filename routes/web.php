@@ -41,6 +41,7 @@ Route::resource('jenisDokumen', JDController::class);
 // Route Rak
 Route::resource('rak', RakController::class);
 Route::get('rak/{id}/{box}/{batch}/{year}', 'RakController@listDokumen')->name('listDokumen');
+Route::get('rak/{rak}/{box}/{year}', 'RakController@showRak');
 
 // Route DataArsip
 Route::resource('dataArsip', DataArsipController::class);
@@ -65,6 +66,7 @@ Route::get('/update/peminjaman/{no_nd}', 'PeminjamanController@update');
 Route::resource('karung', DataKarungController::class);
 Route::group(['prefix' => 'karung'], function () {
     Route::post('/get', 'DataKarungController@getDataKarung');
+    Route::post('/add/data', 'DataKarungController@addDataKarung');
 });
 
 Route::get('/users/list', 'DashboardController@userList');

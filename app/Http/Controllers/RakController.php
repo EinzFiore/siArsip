@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Alert;
+use App\Models\Karung;
 use App\Models\Rak;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -93,13 +94,39 @@ class RakController extends Controller
             ->whereYear('tb_arsip.tanggal_dok', '=', $year)
             ->select('tb_arsip.*')
             ->get();
+        $karung = Karung::all();
         $data = [
             'no_rak' => $id,
             'box' => $box,
             'batch' => $batch,
             'year' => $year,
             'total' => count($listDokumenInRak),
+            'karung' => $karung,
         ];
         return view('rak.listDokumen', compact('listDokumenInRak'))->with($data);
+    }
+
+    public function showRak($rak, $box, $year)
+    {
+        $rak = DB::table('rak')
+            ->leftJoin('tb_arsip as arsip', 'rak.noRak', 'arsip.rak')
+            ->select('rak.noRak', 'arsip.box', 'arsip.batch', 'arsip.tanggal_dok')
+            ->where('arsip.rak', '=', $rak)
+            ->where('arsip.box', '=', $box)
+            ->whereYear('arsip.tanggal_dok', '=', $year)
+            ->orderBy('rak.noRak', 'ASC')
+            ->get();
+        $rak->map(function ($data) {
+            if ($data->tanggal_dok == null and $data->box == null and $data->batch == null) {
+                $data->tanggal_dok = "-";
+                $data->box = "-";
+                $data->batch = "-";
+            } else {
+                $data->tanggal_dok = Carbon::createFromFormat('Y-m-d', $data->tanggal_dok)->format('Y');
+            }
+            return $data;
+        });
+
+        return view('rak.listRak', compact('rak'));
     }
 }
