@@ -34,17 +34,17 @@ class DataKarungController extends Controller
         $data = DB::table('karung')
             ->leftJoin('data_karung', 'karung.no_karung', 'data_karung.no_karung')
             ->select('karung.no_karung', 'data_karung.rak', 'data_karung.box', 'data_karung.tahun', 'karung.status');
-        if ($request->karung != null) {
-            $data->where('karung.no_karung', $request->karung);
+        if ($request->noKarung != null) {
+            $data->where('karung.no_karung', $request->noKarung);
         }
-        if ($request->rak != null) {
-            $data->where('data_karung.rak', $request->rak);
+        if ($request->rakKarung != null) {
+            $data->where('data_karung.rak', $request->rakKarung);
         }
-        if ($request->box != null) {
-            $data->where('data_karung.box', $request->box);
+        if ($request->boxKarung != null) {
+            $data->where('data_karung.box', $request->boxKarung);
         }
-        if ($request->tahun != null) {
-            $data->where('data_karung.tahun', $request->tahun);
+        if ($request->tahunKarung != null) {
+            $data->where('data_karung.tahun', $request->tahunKarung);
         }
         $data = $data->get();
         $data->map(function ($data) {

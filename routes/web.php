@@ -65,7 +65,7 @@ Route::get('/update/peminjaman/{no_nd}', 'PeminjamanController@update');
 
 Route::resource('karung', DataKarungController::class);
 Route::group(['prefix' => 'karung'], function () {
-    Route::post('/get', 'DataKarungController@getDataKarung');
+    Route::post('/get', 'DataKarungController@getDataKarung')->name('getKarung');
     Route::post('/add/data', 'DataKarungController@addDataKarung');
 });
 

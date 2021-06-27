@@ -27,7 +27,7 @@
           <div class="Batch">
             <label>Rak</label>
             <div class="form-group">
-              <select name="rak" id="rak" class="form-control filter-karung"> 
+              <select name="rak" id="rakSelect" class="form-control filter-karung"> 
                 <option value="">-- Pilih Rak --</option>
                 @foreach ($rak as $r)
                     <option value="<?= $r->noRak ?>"><?= $r->noRak ?></option>
@@ -40,7 +40,7 @@
           <div class="Batch">
             <label>Box</label>
             <div class="form-group">
-              <input type="text" name="box" id="box" class="form-control filter-karung" placeholder="Ketik Box">
+              <input type="text" name="box" id="boxSelect" class="form-control filter-karung" placeholder="Ketik Box">
             </div>
           </div>
         </div>
@@ -48,7 +48,7 @@
           <div class="Batch">
             <label>Tahun</label>
             <div class="form-group">
-              <input type="number" name="tahun" id="tahun" class="form-control filter-karung" placeholder="Tahun">
+              <input type="number" name="tahun" id="tahunSelect" class="form-control filter-karung" placeholder="Tahun">
             </div>
           </div>
         </div>
@@ -104,25 +104,25 @@
 
 @push('script')
 <script>
-  let karungSelect = $('#karungSelect').val();
-  let rakKarung = $('#rakSelect').val();
-  let boxKarung = $('#boxSelect').val();
-  let tahunKarung = $('#tahunSelect').val();
-  const tableKarung = $('#karung').DataTable({
+let karungSelect = $('#karungSelect').val();
+let rakKarung = $('#rakSelect').val();
+let boxKarung = $('#boxSelect').val();
+let tahunKarung = $('#tahunSelect').val();
+const tableKarung = $('#karung').DataTable({
     processing : true,
     rowsGroup : [0,1],
     serverside : true,
     ajax : {
-      url: '/karung/get',
+      url: config.routes.getKarung,
       type: "post",
       headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
       },  
       data: function(d){
-        d.karung = karungSelect;
-        d.rak = rakKarung;
-        d.box = boxKarung;
-        d.tahun = tahunKarung;
+        d.noKarung = karungSelect;
+        d.rakKarung = rakKarung;
+        d.boxKarung = boxKarung;
+        d.tahunKarung = tahunKarung;
         return d
       }
     },
@@ -148,13 +148,12 @@
   });
 
   $(".filter-karung").on('change', function(){
-  karungSelect = $('#karungSelect').val();
-  rakKarung = $('#rakSelect').val();
-  boxKarung = $('#boxSelect').val();
-  tahunKarung = $('#tahunSelect').val();
-
-  tableKarung.ajax.reload(null,false)
-})
+    karungSelect = $('#karungSelect').val();
+    rakKarung = $('#rakSelect').val();
+    boxKarung = $('#boxSelect').val();
+    tahunKarung = $('#tahunSelect').val();
+    tableKarung.ajax.reload(null,false)
+  })
 
   $( "#addKarung" ).click(function() {
     let karung = $('.no-karung').val();
