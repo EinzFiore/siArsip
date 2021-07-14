@@ -83,6 +83,12 @@ class DataArsipController extends Controller
             }
 
         }
+
+        if ($request->start_date and $request->end_date != null) {
+            $data->whereDate('tb_arsip.created_at', '>=', $request->start_date)
+                ->whereDate('tb_arsip.created_at', '<=', $request->end_date);
+        }
+
         return DataTables::of($data)->make(true);
     }
 

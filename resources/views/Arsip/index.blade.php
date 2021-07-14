@@ -120,6 +120,22 @@
             </div>
           </div>
         </div>
+        <div class="col-sm-2">
+          <div class="Batch">
+            <label>Tanggal Mulai</label>
+            <div class="form-group">
+              <input type="date" name="start_date" class="form-control filter" id="start_date">
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="Batch">
+            <label>Tanggal Akhir</label>
+            <div class="form-group">
+                <input type="date" name="end_date" class="form-control filter" id="end_date">
+            </div>
+          </div>
+        </div>
       </div>
       <div class="table-responsive">
         <button class="btn btn-success mb-2" data-toggle="modal" data-target="#exportData"><i class="fa fa-table mr-2" aria-hidden="true"></i>Export Arsip</button>

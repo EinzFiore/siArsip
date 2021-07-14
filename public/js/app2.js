@@ -6,6 +6,8 @@
   let tahun = $("#filterTahun").val();
   let tahunInput = $("#filterTahunInput").val();
   let status = $("#filterStatus").val();
+  let start_date = $('#start_date').val();
+  let end_date = $('#end_date').val();
   let year = new Date().getFullYear();
 
 // Select2 untuk form input yang memiliki class ".select2"
@@ -32,6 +34,8 @@ const tableArsip = $('#arsip').DataTable({
       d.bulan = bulan;
       d.tahunInput = tahunInput;
       d.status = status;
+      d.start_date = start_date;
+      d.end_date = end_date;
       return d
     }
   },
@@ -491,6 +495,8 @@ $(".filter").on('change', function(){
   tahun = $("#filterTahun").val();
   tahunInput = $("#filterTahunInput").val();
   status = $("#filterStatus").val();
+  start_date = $('#start_date').val();
+  end_date = $('#end_date').val();
 
   tableArsip.ajax.reload(null,false)
 })
