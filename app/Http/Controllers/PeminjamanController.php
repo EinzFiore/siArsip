@@ -63,6 +63,7 @@ class PeminjamanController extends Controller
             $data->tanggal_pinjam = $request->newTanggal[$key];
             $data->no_nd = $request->newNoND[$key];
             $data->tanggal_nd = $request->newTanggalND[$key];
+            $data->created_by = auth()->user()->username;
             $data->save();
 
             DataArsip::where('id_dok', $request->newID[$key])->update(['status' => 2]);
