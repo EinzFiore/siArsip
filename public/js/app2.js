@@ -552,10 +552,10 @@ const tablePeminjaman = $('#peminjaman').DataTable({
     },
     {data: 'seksi', name:'seksi'},
     {data: 'status', name:'status',
-    render: function (data) {
+    render: function (data, type, row) {
       if(data == 0){
         return `<span class="badge badge-warning">Dipinjamkan</span>`;
-      }else return `<span class="badge badge-success">Dikembalikan</span>`;
+      }else return `<span class="badge badge-success">Dikembalikan <br> by ${row.updated_by}</span>`;
     }
   },
   ]

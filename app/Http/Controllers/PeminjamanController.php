@@ -77,7 +77,7 @@ class PeminjamanController extends Controller
         try {
             $dokumen = Peminjaman::whereIn('id', $request->id)->select('no_pen')->get()->toArray();
             DataArsip::whereIn('no_pen', $dokumen)->update(['status' => 1]);
-            $peminjaman = Peminjaman::whereIn('id', $request->id)->update(['status' => 1]);
+            $peminjaman = Peminjaman::whereIn('id', $request->id)->update(['status' => 1, 'updated_by' => auth()->user()->username]);
             DB::commit();
             return response()->json(['success' => true]);
         } catch (\Exception $e) {
