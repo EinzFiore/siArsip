@@ -597,6 +597,7 @@ $( "#searchND" ).click(function() {
             <table class="table table-borderless mt-2 listPinjam">
               <thead>
                 <tr>
+                  <th scope="col"></th>
                   <th scope="col">Nomor Dokumen</th>
                   <th scope="col">Nama Peminjam</th>
                   <th scope="col">Seksi</th>
@@ -620,6 +621,7 @@ $( "#searchND" ).click(function() {
               }
               let data = `
                 <tr>
+                  <td><input type="checkbox" class="form-check-input position-static dok_id" value="${value.id}"></td>
                   <td>${value.no_pen}</td>
                   <td>${value.nama_peminjam}</td>
                   <td>${value.seksi}</td>
@@ -629,7 +631,6 @@ $( "#searchND" ).click(function() {
               `;
               $(data).appendTo(tbody);
             });
-            $('.listPinjam').DataTable();
           } else {
             $('#konfirmasi').attr("disabled","disabled");
             const listData = `
@@ -645,7 +646,10 @@ $( "#searchND" ).click(function() {
 });
 
 $( "#konfirmasi" ).click(function() {
-  let id = $('#cek_no_nd').val();
+  let id = []
+  $(".dok_id").each(function(){
+    id.push($(this).val());
+  });
   $('#pengembalian').modal('hide');
   Swal.fire({
     title: 'Konfirmasi pengembalian?',
@@ -658,8 +662,9 @@ $( "#konfirmasi" ).click(function() {
   }).then((result) => {
     if (result.isConfirmed) {
         $.ajax({
-          url: `/update/peminjaman/${id}`,
+          url: `/update/peminjaman`,
           dataType: 'JSON',
+          data: {id: id},
           success: function (results) {
               if (results.success === true) {
                 Swal.fire(

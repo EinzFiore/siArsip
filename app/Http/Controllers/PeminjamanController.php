@@ -71,13 +71,13 @@ class PeminjamanController extends Controller
         return redirect('peminjaman');
     }
 
-    public function update($no_nd)
+    public function update(Request $request)
     {
         DB::beginTransaction();
         try {
-            $dokumen = Peminjaman::where('no_nd', $no_nd)->select('no_pen')->get()->toArray();
+            $dokumen = Peminjaman::whereIn('id', $request->id)->select('no_pen')->get()->toArray();
             DataArsip::whereIn('no_pen', $dokumen)->update(['status' => 1]);
-            $peminjaman = Peminjaman::where('no_nd', $no_nd)->update(['status' => 1]);
+            $peminjaman = Peminjaman::whereIn('id', $request->id)->update(['status' => 1]);
             DB::commit();
             return response()->json(['success' => true]);
         } catch (\Exception $e) {
@@ -110,7 +110,7 @@ class PeminjamanController extends Controller
 
     public function getDataPeminjamanByND($nd)
     {
-        $data = Peminjaman::where('no_nd', $nd)->get();
+        $data = Peminjaman::where('no_nd', $nd)->where('status', 0)->get();
         if (count($data) > 0) {
             return response()->json([
                 'status' => 'success',

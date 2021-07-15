@@ -96,4 +96,9 @@ class DataKarungController extends Controller
             return response()->json(['success' => false]);
         }
     }
+
+    public function cariDokumen(Request $request)
+    {
+
+    }
 }
